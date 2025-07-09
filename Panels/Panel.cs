@@ -8,6 +8,11 @@ using System.Xml;
 
 namespace Panels
 {
+    public struct PanelOptions
+    {
+        public int FontSize { get; init; }
+    }
+
     class Panel : IPositionable, IRenderable
     {
         private Comic parent;
@@ -15,7 +20,7 @@ namespace Panels
         List<Element> elements = new List<Element>();
         PointF position;
 
-        public Panel(Comic parent, XmlNode xmlPanel)
+        public Panel(Comic parent, XmlNode xmlPanel, PanelOptions panelOptions = new PanelOptions())
         {
             this.parent = parent;
             if (xmlPanel.Attributes["image"] == null)
@@ -37,10 +42,15 @@ namespace Panels
             foreach (XmlNode xmlElement in xmlPanel.ChildNodes)
             {
                 Element element = null;
-                if (xmlElement.Name == "description")
+                if (xmlElement.Name == "description") {
                     element = new Description(xmlElement, this);
-                else if (xmlElement.Name == "text")
-                    element = new Text(xmlElement, this);
+                }
+                else if (xmlElement.Name == "text") {
+                    TextOptions textOptions = new TextOptions {
+                        FontSize = panelOptions.FontSize
+                    };
+                    element = new Text(xmlElement, this, textOptions);
+                }
 
                 if (element != null)
                 {
@@ -69,11 +79,11 @@ namespace Panels
             return this.position;
         }
 
-        public void Crop(Document doc, float decoupageGauche, float horizontalOffset, float decoupageHaut = 0, float verticalOffset = 0)
+        public void Crop(Document doc, float leftCropping, float horizontalOffset, float decoupageHaut = 0, float verticalOffset = 0)
         {
-            this.image.Crop(doc, decoupageGauche, horizontalOffset, decoupageHaut, verticalOffset);
+            this.image.Crop(doc, leftCropping, horizontalOffset, decoupageHaut, verticalOffset);
             foreach (Element element in elements)
-                element.Crop(doc, decoupageGauche, horizontalOffset);
+                element.Crop(doc, leftCropping, horizontalOffset);
         }
 
         // IPositionable

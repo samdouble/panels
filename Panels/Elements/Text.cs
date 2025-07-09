@@ -8,23 +8,29 @@ using System.Xml;
 
 namespace Panels.Elements
 {
+    public struct TextOptions
+    {
+        public int FontSize { get; init; }
+    }
+
     class Text : Element
     {
         protected Panel parent;
         protected string text;
         protected Color color = ColorConstants.BLACK;
-        protected const int FONT_SIZE = 13;
         protected const int LINE_HEIGHT = 12;
         protected const int MARGIN = 5;
         protected PdfFont font;
+        protected int fontSize;
         protected float left = 0;
         protected float top = 0;
         protected float? width;
 
-        public Text(XmlNode element, Panel parent) : base(element)
+        public Text(XmlNode element, Panel parent, TextOptions textOptions = new TextOptions()) : base(element)
         {
             this.parent = parent;
             this.text = element.Attributes["text"]?.InnerText;
+            this.fontSize = textOptions.FontSize;
             // Optional
             this.left = element?.Attributes["left"] != null ? float.Parse(element.Attributes["left"].InnerText) : 0.0f;
             this.top = element?.Attributes["top"] != null ? float.Parse(element.Attributes["top"].InnerText) : 0.0f;
@@ -54,7 +60,7 @@ namespace Panels.Elements
             phrase.SetVerticalAlignment(iText.Layout.Properties.VerticalAlignment.TOP);
             phrase.SetHeight(top - bottom);
             phrase.SetFont(this.font);
-            phrase.SetFontSize(FONT_SIZE);
+            phrase.SetFontSize(this.fontSize);
             phrase.SetFixedPosition(this.noPage, left, bottom, phraseWidth);
             phrase.SetFontColor(this.color);
             doc.Add(phrase);

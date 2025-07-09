@@ -40,9 +40,9 @@ namespace Panels
             return this.image.GetImageScaledWidth();
         }
 
-        public void Crop(Document doc, float decoupageGauche, float horizontalOffset, float decoupageHaut = 0, float verticalOffset = 0)
+        public void Crop(Document doc, float leftCropping, float horizontalOffset, float decoupageHaut = 0, float verticalOffset = 0)
         {
-            this.image.SetFixedPosition(-decoupageGauche, -decoupageHaut);
+            this.image.SetFixedPosition(-leftCropping, -decoupageHaut);
             Rectangle rectangle = new Rectangle(this.image.GetImageScaledWidth() - horizontalOffset, this.image.GetImageScaledHeight() - verticalOffset);
             PdfFormXObject template = new PdfFormXObject(rectangle);
             Canvas canvas = new Canvas(template, doc.GetPdfDocument());

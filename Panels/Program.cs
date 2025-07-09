@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Panels
 {
-    class Program
+    public class Program
     {
         public class Options
         {
@@ -26,11 +26,11 @@ namespace Panels
         static void Main(string[] args)
         {
             Parser.Default.ParseArguments<Options>(args)
-              .WithParsed(RunOptions)
-              .WithNotParsed(HandleParseError);
+                .WithParsed(RunOptions)
+                .WithNotParsed(HandleParseError);
         }
 
-        static void RunOptions(Options opts)
+        public static void RunOptions(Options opts)
         {
             Console.WriteLine("Starting PDF generation...");
             PdfWriter writer = new PdfWriter(@"" + opts.Output);

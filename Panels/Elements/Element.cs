@@ -14,7 +14,7 @@ namespace Panels
 
         }
 
-        public virtual void Crop(Document doc, float decoupageGauche, float offset)
+        public virtual void Crop(Document doc, float leftCropping, float offset)
         {
 
         }

@@ -11,6 +11,8 @@ namespace Panels
     class Comic : IRenderable
     {
         private List<object> children = new List<object>();
+        protected const int DEFAULT_FONT_SIZE = 12;
+        private int fontSize;
         private float leftMargin;
         private float rightMargin;
         private float topMargin;
@@ -29,6 +31,9 @@ namespace Panels
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.Load(@"" + configFile);
             XmlNode xmlComic = xmlDocument.DocumentElement;
+            this.fontSize = xmlComic?.Attributes["fontSize"] != null
+                ? int.Parse(xmlComic.Attributes["fontSize"].InnerText)
+                : DEFAULT_FONT_SIZE;
             this.leftMargin = float.Parse(xmlComic?.Attributes["leftMargin"].InnerText);
             this.rightMargin = float.Parse(xmlComic?.Attributes["rightMargin"].InnerText);
             this.topMargin = float.Parse(xmlComic?.Attributes["topMargin"].InnerText);
@@ -38,12 +43,15 @@ namespace Panels
             this.rowsPerPage = float.Parse(xmlComic?.Attributes["rowsPerPage"].InnerText);
 
             List<XmlNode> xmlNodes = new List<XmlNode>(xmlComic.ChildNodes.Cast<XmlNode>());
+            SlotOptions slotOptions = new SlotOptions {
+                FontSize = this.fontSize
+            };
             foreach (XmlNode xmlNode in xmlNodes) {
                 if (xmlNode.Name == "newpage") {
                     this.children.Add(new NewPage(this, xmlNode));
                 }
                 if (xmlNode.Name == "slot") {
-                    this.children.Add(new Slot(this, xmlNode));
+                    this.children.Add(new Slot(this, xmlNode, slotOptions));
                 }
             }
         }
@@ -62,12 +70,12 @@ namespace Panels
         public void Render(Document doc)
         {
             PageSize pageSize = doc.GetPdfDocument().GetDefaultPageSize();
-            float hauteurCase = (pageSize.GetHeight() - this.topMargin - this.bottomMargin - (this.rowsPerPage - 1) * this.verticalPanelSpacing) / this.rowsPerPage;
+            float panelHeight = (pageSize.GetHeight() - this.topMargin - this.bottomMargin - (this.rowsPerPage - 1) * this.verticalPanelSpacing) / this.rowsPerPage;
             float rowWidth = pageSize.GetWidth() - this.rightMargin - this.leftMargin;
             int page = 1;
             float x = 0;
-            float y = hauteurCase + this.verticalPanelSpacing;
-            float noRangee = 1;
+            float y = panelHeight + this.verticalPanelSpacing;
+            float rowNo = 1;
             for (int i = 0; i < this.children.Count;)
             {
                 // Handle newpage elements
@@ -75,7 +83,7 @@ namespace Panels
                     if (x != 0 || y != 0) {
                         doc.GetPdfDocument().AddNewPage();
                         page++;
-                        noRangee = page * this.rowsPerPage;
+                        rowNo = page * this.rowsPerPage;
                         x = 0;
                         y = 0;
                     }
@@ -84,7 +92,7 @@ namespace Panels
                 }
 
                 int nbPanelsInRow = 0;
-                // On trouve le nombre de cases qu'on peut fitter dans la rangée
+                // We find the number of cases that can fit in the row
                 float minWidth = 0;
                 float maxWidth = 0;
                 for (; i + nbPanelsInRow < this.children.Count && minWidth < rowWidth; ++nbPanelsInRow)
@@ -92,79 +100,79 @@ namespace Panels
                     if (this.children[i + nbPanelsInRow].GetType() != typeof(Slot))
                         break;
                     Slot slot = (Slot) this.children[i + nbPanelsInRow];
-                    slot.SetHeight(hauteurCase);
-                    float largeurMinCase = slot.GetMinWidth();
-                    float largeurMaxCase = slot.GetMaxWidth();
-                    if (minWidth + largeurMinCase + (nbPanelsInRow >= 1 ? this.horizontalPanelSpacing : 0) > rowWidth)
+                    slot.SetHeight(panelHeight);
+                    float minPanelWidth = slot.GetMinWidth();
+                    float maxPanelWidth = slot.GetMaxWidth();
+                    if (minWidth + minPanelWidth + (nbPanelsInRow >= 1 ? this.horizontalPanelSpacing : 0) > rowWidth)
                         break;
-                    minWidth += largeurMinCase + (nbPanelsInRow >= 1 ? this.horizontalPanelSpacing : 0);
-                    maxWidth += largeurMaxCase + (nbPanelsInRow >= 1 ? this.horizontalPanelSpacing : 0);
+                    minWidth += minPanelWidth + (nbPanelsInRow >= 1 ? this.horizontalPanelSpacing : 0);
+                    maxWidth += maxPanelWidth + (nbPanelsInRow >= 1 ? this.horizontalPanelSpacing : 0);
                 }
 
                 // =============================
 
-                float decoupage = 0;
-                float decoupageTotal = rowWidth - minWidth;
-                float decoupageAlloueParCase = decoupageTotal / nbPanelsInRow;
+                float cropping = 0;
+                float totalCropping = rowWidth - minWidth;
+                float allowedCroppingPerPanel = totalCropping / nbPanelsInRow;
 
-                List<Slot> espacesSurLaRangee = new List<Slot>();
+                List<Slot> slotsOnCurrentRow = new List<Slot>();
                 for (int j = 0; j < nbPanelsInRow; ++j)
-                    espacesSurLaRangee.Add((Slot) this.children[i + j]);
+                    slotsOnCurrentRow.Add((Slot) this.children[i + j]);
 
-                // On essaie d'égaliser les côtés de chaque bord des images
-                foreach (Slot espace in espacesSurLaRangee)
+                // We try to equalize the sides of each image border
+                foreach (Slot slot in slotsOnCurrentRow)
                 {
-                    float decoupageGauche, decoupageDroite;
-                    float decoupagePossibleGauche = espace.GetWidth() * espace.paddingMaxGauchePct / 100;
-                    float decoupagePossibleDroite = espace.GetWidth() * espace.paddingMaxDroitePct / 100;
+                    float leftCropping, rightCropping;
+                    float possibleLeftCropping = slot.GetWidth() * slot.maxLeftPaddingPct / 100;
+                    float possibleRightCropping = slot.GetWidth() * slot.maxRightPaddingPct / 100;
 
-                    if (decoupagePossibleGauche + decoupagePossibleDroite <= decoupageAlloueParCase)
+                    if (possibleLeftCropping + possibleRightCropping <= allowedCroppingPerPanel)
                     {
-                        float decoupageEquilibre = Math.Min(decoupagePossibleGauche, decoupagePossibleDroite);
-                        decoupageGauche = Math.Min(decoupageEquilibre, decoupageAlloueParCase / 2);
-                        decoupageDroite = Math.Min(decoupageEquilibre, decoupageAlloueParCase / 2);
-                        espace.paddingGauche = decoupageGauche;
-                        espace.paddingDroite = decoupageDroite;
+                        float balancedCropping = Math.Min(possibleLeftCropping, possibleRightCropping);
+                        leftCropping = Math.Min(balancedCropping, allowedCroppingPerPanel / 2);
+                        rightCropping = Math.Min(balancedCropping, allowedCroppingPerPanel / 2);
+                        slot.leftPadding = leftCropping;
+                        slot.rightPadding = rightCropping;
 
-                        decoupage += decoupageGauche;
-                        decoupage += decoupageDroite;
+                        cropping += leftCropping;
+                        cropping += rightCropping;
                     }
                 }
 
-                // On ajoute le padding qu'il faut pour remplir la rangée le plus équitablement possible
-                List<Slot> espacesSurLaRangeeTries = espacesSurLaRangee.OrderBy(e => e.paddingMaxGauchePct + e.paddingMaxDroitePct).ToList();
-                while (decoupage < Math.Min(decoupageTotal, espacesSurLaRangee.Sum(e => (e.paddingMaxGauchePct + e.paddingMaxDroitePct) * e.GetWidth() / 100)))
+                // We add the padding to fill the row as evenly as possible
+                List<Slot> sortedSlotsOnCurrentRow = slotsOnCurrentRow.OrderBy(e => e.maxLeftPaddingPct + e.maxRightPaddingPct).ToList();
+                while (cropping < Math.Min(totalCropping, slotsOnCurrentRow.Sum(e => (e.maxLeftPaddingPct + e.maxRightPaddingPct) * e.GetWidth() / 100)))
                 {
-                    foreach (Slot espace in espacesSurLaRangeeTries)
+                    foreach (Slot slot in sortedSlotsOnCurrentRow)
                     {
-                        if (decoupage < decoupageTotal && espace.paddingGauche < (espace.paddingMaxGauchePct * espace.GetWidth() / 100))
+                        if (cropping < totalCropping && slot.leftPadding < (slot.maxLeftPaddingPct * slot.GetWidth() / 100))
                         {
-                            espace.paddingGauche++;
-                            decoupage++;
+                            slot.leftPadding++;
+                            cropping++;
                         }
 
-                        if (decoupage < decoupageTotal && espace.paddingDroite < (espace.paddingMaxDroitePct * espace.GetWidth() / 100))
+                        if (cropping < totalCropping && slot.rightPadding < (slot.maxRightPaddingPct * slot.GetWidth() / 100))
                         {
-                            espace.paddingDroite++;
-                            decoupage++;
+                            slot.rightPadding++;
+                            cropping++;
                         }
                     }
                 }
 
-                // On procède au découpage et positionnement de l'image
-                foreach (Slot espace in espacesSurLaRangee)
+                // We proceed to the cropping and positioning of the image
+                foreach (Slot slot in slotsOnCurrentRow)
                 {
-                    espace.Crop(doc);
-                    espace.SetPosition(doc, page, this.leftMargin + x, pageSize.GetHeight() - this.topMargin - y);
-                    espace.Render(doc);
+                    slot.Crop(doc);
+                    slot.SetPosition(doc, page, this.leftMargin + x, pageSize.GetHeight() - this.topMargin - y);
+                    slot.Render(doc);
 
-                    x += espace.GetWidth() + this.horizontalPanelSpacing;
+                    x += slot.GetWidth() + this.horizontalPanelSpacing;
                 }
                 x = 0;
                 i += nbPanelsInRow;
-                ++noRangee;
+                ++rowNo;
 
-                if (noRangee % this.rowsPerPage == 0)
+                if (rowNo % this.rowsPerPage == 0)
                 {
                     doc.GetPdfDocument().AddNewPage();
                     page++;
@@ -172,7 +180,7 @@ namespace Panels
                 }
                 else
                 {
-                    y += hauteurCase + this.verticalPanelSpacing;
+                    y += panelHeight + this.verticalPanelSpacing;
                 }
             }
         }
