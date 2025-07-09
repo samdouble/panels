@@ -22,7 +22,8 @@ jobs:
       - name: Audit
         run: |
           dotnet restore
-          dotnet list package --vulnerable --include-transitive
+          dotnet list package --vulnerable --include-transitive | tee vulnerable.out
+          test `grep -cm 1 'has the following vulnerable packages' vulnerable.out` = 0
       - name: Test
         run: |
           dotnet test
