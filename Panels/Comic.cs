@@ -29,13 +29,13 @@ namespace Panels
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.Load(@"" + configFile);
             XmlNode xmlComic = xmlDocument.DocumentElement;
-            this.leftMargin = float.Parse(xmlComic.Attributes["leftMargin"].InnerText);
-            this.rightMargin = float.Parse(xmlComic.Attributes["rightMargin"].InnerText);
-            this.topMargin = float.Parse(xmlComic.Attributes["topMargin"].InnerText);
-            this.bottomMargin = float.Parse(xmlComic.Attributes["bottomMargin"].InnerText);
-            this.horizontalPanelSpacing = float.Parse(xmlComic.Attributes["horizontalPanelSpacing"].InnerText);
-            this.verticalPanelSpacing = float.Parse(xmlComic.Attributes["verticalPanelSpacing"].InnerText);
-            this.rowsPerPage = float.Parse(xmlComic.Attributes["rowsPerPage"].InnerText);
+            this.leftMargin = float.Parse(xmlComic?.Attributes["leftMargin"].InnerText);
+            this.rightMargin = float.Parse(xmlComic?.Attributes["rightMargin"].InnerText);
+            this.topMargin = float.Parse(xmlComic?.Attributes["topMargin"].InnerText);
+            this.bottomMargin = float.Parse(xmlComic?.Attributes["bottomMargin"].InnerText);
+            this.horizontalPanelSpacing = float.Parse(xmlComic?.Attributes["horizontalPanelSpacing"].InnerText);
+            this.verticalPanelSpacing = float.Parse(xmlComic?.Attributes["verticalPanelSpacing"].InnerText);
+            this.rowsPerPage = float.Parse(xmlComic?.Attributes["rowsPerPage"].InnerText);
 
             List<XmlNode> xmlNodes = new List<XmlNode>(xmlComic.ChildNodes.Cast<XmlNode>());
             foreach (XmlNode xmlNode in xmlNodes) {

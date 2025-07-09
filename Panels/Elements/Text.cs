@@ -26,9 +26,9 @@ namespace Panels.Elements
             this.parent = parent;
             this.text = element.Attributes["text"]?.InnerText;
             // Optional
-            this.left = element.Attributes["left"] != null ? float.Parse(element.Attributes["left"].InnerText) : 0.0f;
-            this.top = element.Attributes["top"] != null ? float.Parse(element.Attributes["top"].InnerText) : 0.0f;
-            this.width = element.Attributes["width"] != null ? float.Parse(element.Attributes["width"].InnerText) : (float?)null;
+            this.left = element?.Attributes["left"] != null ? float.Parse(element.Attributes["left"].InnerText) : 0.0f;
+            this.top = element?.Attributes["top"] != null ? float.Parse(element.Attributes["top"].InnerText) : 0.0f;
+            this.width = element?.Attributes["width"] != null ? float.Parse(element.Attributes["width"].InnerText) : (float?)null;
             // Load Font
             this.font = PdfFontFactory.CreateFont(Properties.Resources.Comicsam_Bold, PdfEncodings.CP1252);
         }
@@ -54,6 +54,7 @@ namespace Panels.Elements
             phrase.SetVerticalAlignment(iText.Layout.Properties.VerticalAlignment.TOP);
             phrase.SetHeight(top - bottom);
             phrase.SetFont(this.font);
+            phrase.SetFontSize(FONT_SIZE);
             phrase.SetFixedPosition(this.noPage, left, bottom, phraseWidth);
             phrase.SetFontColor(this.color);
             doc.Add(phrase);
