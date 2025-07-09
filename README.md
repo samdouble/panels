@@ -1,14 +1,12 @@
 # Panels
 
-This is a small application to export a comic book in PDF format from an XML configuration and a set of images.
+Panels is a small application to export a comic book in PDF format from an XML configuration and a set of images.
 
-## Technologies & Languages
+## How to Use
 
-- C# 11
-- .NET 8
-- iText 8
-- GitHub Actions
-- GitHub Releases
+### Command-line arguments
+
+TODO
 
 ## Development
 
@@ -28,8 +26,12 @@ dotnet test
 
 1. Change the version number in the *csproj* file.
 2. Merge to the `master` branch.
-3. dotnet-releaser on CircleCI will create a new GitHub Release.
+3. `dotnet-releaser` on CircleCI will create a new GitHub Release.
 
-## How to Use
+## Technologies & Languages
 
-### Command-line arguments
+- C# 11
+- .NET 8
+- iText 8
+- GitHub Actions
+- GitHub Releases
