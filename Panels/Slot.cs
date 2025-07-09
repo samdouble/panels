@@ -5,25 +5,34 @@ using System.Xml;
 
 namespace Panels
 {
+    public struct SlotOptions
+    {
+        public int FontSize { get; init; }
+    }
+
     class Slot : IRenderable
     {
         private Comic parent;
         private List<Panel> panels = new List<Panel>();
-        public float paddingMaxGauchePct { get; set; }
-        public float paddingMaxDroitePct { get; set; }
-        public float paddingGauche { get; set; }
-        public float paddingDroite { get; set; }
+        public float maxLeftPaddingPct { get; set; }
+        public float maxRightPaddingPct { get; set; }
+        public float leftPadding { get; set; }
+        public float rightPadding { get; set; }
         public float height { get; set; }
 
-        public Slot(Comic parent, XmlNode xmlSlot)
+        public Slot(Comic parent, XmlNode xmlSlot, SlotOptions slotOptions = new SlotOptions())
         {
             this.parent = parent;
+            this.maxLeftPaddingPct = xmlSlot?.Attributes["maxCropLeft"] != null ? float.Parse(xmlSlot.Attributes["maxCropLeft"].InnerText) : 0f;
+            this.maxRightPaddingPct = xmlSlot?.Attributes["maxCropRight"] != null ? float.Parse(xmlSlot.Attributes["maxCropRight"].InnerText) : 0f;
+            this.leftPadding = 0f;
+            this.rightPadding = 0f;
+            
+            PanelOptions panelOptions = new PanelOptions {
+                FontSize = slotOptions.FontSize
+            };
             List<XmlNode> xmlPanels = new List<XmlNode>(xmlSlot.ChildNodes.Cast<XmlNode>());
-            this.panels.AddRange(xmlPanels.Select(xmlPanel => new Panel(parent, xmlPanel)));
-            this.paddingMaxGauchePct = xmlSlot?.Attributes["maxCropLeft"] != null ? float.Parse(xmlSlot.Attributes["maxCropLeft"].InnerText) : 0f;
-            this.paddingMaxDroitePct = xmlSlot?.Attributes["maxCropRight"] != null ? float.Parse(xmlSlot.Attributes["maxCropRight"].InnerText) : 0f;
-            this.paddingGauche = 0f;
-            this.paddingDroite = 0f;
+            this.panels.AddRange(xmlPanels.Select(xmlPanel => new Panel(parent, xmlPanel, panelOptions)));
         }
 
         public void SetHeight(float height)
@@ -41,7 +50,7 @@ namespace Panels
 
         public float GetMinWidth()
         {
-            float minPctAvailable = 1 - ((this.paddingMaxGauchePct + this.paddingMaxDroitePct) / 100);
+            float minPctAvailable = 1 - ((this.maxLeftPaddingPct + this.maxRightPaddingPct) / 100);
             return minPctAvailable * this.GetWidth();
         }
 
@@ -58,13 +67,13 @@ namespace Panels
         public void Crop(Document doc)
         {
             int nbPanelsInSlot = this.panels.Count;
-            float decoupageGauche = (this.paddingMaxGauchePct * this.GetWidth() / 100) - this.paddingGauche;
-            float decoupageDroite = (this.paddingMaxDroitePct * this.GetWidth() / 100) - this.paddingDroite;
-            float horizontalOffset = decoupageGauche + decoupageDroite;
+            float leftCropping = (this.maxLeftPaddingPct * this.GetWidth() / 100) - this.leftPadding;
+            float rightCropping = (this.maxRightPaddingPct * this.GetWidth() / 100) - this.rightPadding;
+            float horizontalOffset = leftCropping + rightCropping;
             for (int i = 0; i < nbPanelsInSlot; i++)
             {
                 Panel panel = this.panels[i];
-                panel.Crop(doc, decoupageGauche, horizontalOffset);
+                panel.Crop(doc, leftCropping, horizontalOffset);
             }
         }
 
