@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<comic
+	topMargin="64"
+	bottomMargin="64"
+	leftMargin="25"
+	rightMargin="25"
+	horizontalPanelSpacing="10"
+	verticalPanelSpacing="10"
+	rowsPerPage="3"
+>
+	<slot>
+		<panel image="images/0000.png">
+			<description text="Hi, I'm the first panel of this comic." />
+		</panel>
+	</slot>
+</comic>

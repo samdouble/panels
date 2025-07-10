@@ -3,6 +3,7 @@ using iText.Kernel.Colors;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf.Xobject;
 using iText.Layout;
+using Panels.Utils;
 using System;
 
 namespace Panels
@@ -60,7 +61,7 @@ namespace Panels
         }
 
         // IRenderable
-        public void Render(Document doc)
+        public void Render(Document doc, LogWriter logWriter)
         {
             doc.Add(this.image);
 
@@ -70,15 +71,7 @@ namespace Panels
             canvas.SetLineWidth(2f);
             canvas.Rectangle(this.x, this.y - image.GetImageScaledHeight(), image.GetImageScaledWidth(), image.GetImageScaledHeight());
             canvas.Stroke();
-        }
-
-        public static bool IsPrime(int candidate)
-        {
-            if (candidate == 1)
-            {
-                return false;
-            }
-            throw new NotImplementedException("Not fully implemented.");
+            logWriter.Log("IMAGE - " + this.image.GetImageScaledWidth() + "x" + this.image.GetImageScaledHeight() + " at " + this.x + ", " + this.y);
         }
     }
 }

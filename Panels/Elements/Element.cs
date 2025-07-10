@@ -1,7 +1,8 @@
 ﻿using iText.Layout;
+using Panels.Utils;
 using System.Xml;
 
-namespace Panels
+namespace Panels.Elements
 {
     public abstract class Element : IPositionable, IRenderable
     {
@@ -28,6 +29,6 @@ namespace Panels
         }
 
         // IRenderable
-        public abstract void Render(Document doc);
+        public abstract void Render(Document doc, LogWriter logWriter);
     }
 }

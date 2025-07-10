@@ -1,5 +1,6 @@
 ﻿using iText.Kernel.Geom;
 using iText.Layout;
+using Panels.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Panels
     {
         private List<object> children = new List<object>();
         protected const int DEFAULT_FONT_SIZE = 12;
+        protected const int DEFAULT_ROWS_PER_PAGE = 3;
         private int fontSize;
         private float leftMargin;
         private float rightMargin;
@@ -40,7 +42,9 @@ namespace Panels
             this.bottomMargin = float.Parse(xmlComic?.Attributes["bottomMargin"].InnerText);
             this.horizontalPanelSpacing = float.Parse(xmlComic?.Attributes["horizontalPanelSpacing"].InnerText);
             this.verticalPanelSpacing = float.Parse(xmlComic?.Attributes["verticalPanelSpacing"].InnerText);
-            this.rowsPerPage = float.Parse(xmlComic?.Attributes["rowsPerPage"].InnerText);
+            this.rowsPerPage = xmlComic?.Attributes["rowsPerPage"] != null
+                ? float.Parse(xmlComic.Attributes["rowsPerPage"].InnerText)
+                : DEFAULT_ROWS_PER_PAGE;
 
             List<XmlNode> xmlNodes = new List<XmlNode>(xmlComic.ChildNodes.Cast<XmlNode>());
             SlotOptions slotOptions = new SlotOptions {
@@ -67,7 +71,7 @@ namespace Panels
         }
 
         // IRenderable
-        public void Render(Document doc)
+        public void Render(Document doc, LogWriter logWriter)
         {
             PageSize pageSize = doc.GetPdfDocument().GetDefaultPageSize();
             float panelHeight = (pageSize.GetHeight() - this.topMargin - this.bottomMargin - (this.rowsPerPage - 1) * this.verticalPanelSpacing) / this.rowsPerPage;
@@ -82,6 +86,7 @@ namespace Panels
                 if (this.children[i].GetType() == typeof(NewPage)) {
                     if (x != 0 || y != 0) {
                         doc.GetPdfDocument().AddNewPage();
+                        logWriter.Log("NEW PAGE");
                         page++;
                         rowNo = page * this.rowsPerPage;
                         x = 0;
@@ -164,7 +169,7 @@ namespace Panels
                 {
                     slot.Crop(doc);
                     slot.SetPosition(doc, page, this.leftMargin + x, pageSize.GetHeight() - this.topMargin - y);
-                    slot.Render(doc);
+                    slot.Render(doc, logWriter);
 
                     x += slot.GetWidth() + this.horizontalPanelSpacing;
                 }

@@ -1,5 +1,6 @@
 ﻿using iText.Layout;
 using Panels.Elements;
+using Panels.Utils;
 using SixLabors.ImageSharp;
 using System;
 using System.Collections.Generic;
@@ -95,10 +96,10 @@ namespace Panels
         }
 
         // IRenderable
-        public void Render(Document doc)
+        public void Render(Document doc, LogWriter logWriter)
         {
-            this.image.Render(doc);
-            this.elements.ForEach(element => element.Render(doc));
+            this.image.Render(doc, logWriter);
+            this.elements.ForEach(element => element.Render(doc, logWriter));
         }
     }
 }
