@@ -1,9 +1,10 @@
 ﻿using iText.Kernel.Colors;
 using iText.Layout;
 using Panels.Elements;
+using Panels.Utils;
 using System.Xml;
 
-namespace Panels
+namespace Panels.Elements
 {
     class Description : Text
     {
@@ -17,11 +18,11 @@ namespace Panels
                 : true;
         }
 
-        public override void Render(Document doc)
+        public override void Render(Document doc, LogWriter logWriter)
         {
             if (this.visible)
             {
-                base.Render(doc);
+                base.Render(doc, logWriter);
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using iText.Layout;
+using Panels.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
@@ -15,7 +16,7 @@ namespace Panels
         }
 
         // IRenderable
-        public void Render(Document doc)
+        public void Render(Document doc, LogWriter logWriter)
         {
             // this.panels.ForEach(panel => panel.Render(doc));
         }

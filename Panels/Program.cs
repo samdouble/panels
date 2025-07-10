@@ -2,8 +2,10 @@
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Layout;
+using Panels.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Panels
@@ -26,22 +28,30 @@ namespace Panels
         static void Main(string[] args)
         {
             Parser.Default.ParseArguments<Options>(args)
-                .WithParsed(RunOptions)
+                .WithParsed(RunWithOptions)
                 .WithNotParsed(HandleParseError);
         }
 
-        public static void RunOptions(Options opts)
+        public static string GeneratePdf(Options opts)
         {
-            Console.WriteLine("Starting PDF generation...");
+            LogWriter logWriter = new LogWriter();
+            logWriter.Log("Starting PDF generation...");
             PdfWriter writer = new PdfWriter(@"" + opts.Output);
             PdfDocument pdfDocument = new PdfDocument(writer);
             pdfDocument.SetDefaultPageSize(PageSize.A4);
             Document document = new Document(pdfDocument);
             Comic comic = new Comic(opts.Config, opts.Images);
-            comic.Render(document);
+            comic.Render(document, logWriter);
             document.Close();
             pdfDocument.Close();
-            Console.WriteLine("Generated " + opts.Output);
+            logWriter.Log("Generated " + opts.Output);
+            return logWriter.Contents;
+        }
+
+        public static void RunWithOptions(Options opts)
+        {
+            string contents = GeneratePdf(opts);
+            File.WriteAllText(@"./debug-output.txt", contents);
         }
 
         static void HandleParseError(IEnumerable<Error> errs)

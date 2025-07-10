@@ -3,6 +3,7 @@ using iText.Kernel.Colors;
 using iText.Kernel.Font;
 using iText.Layout;
 using iText.Layout.Element;
+using Panels.Utils;
 using System;
 using System.Xml;
 
@@ -39,7 +40,7 @@ namespace Panels.Elements
             this.font = PdfFontFactory.CreateFont(Properties.Resources.Comicsam_Bold, PdfEncodings.CP1252);
         }
 
-        public override void Render(Document doc)
+        public override void Render(Document doc, LogWriter logWriter)
         {
             float left = this.parent.getPosition().X + this.left + MARGIN;
             float right;
@@ -63,6 +64,7 @@ namespace Panels.Elements
             phrase.SetFontSize(this.fontSize);
             phrase.SetFixedPosition(this.noPage, left, bottom, phraseWidth);
             phrase.SetFontColor(this.color);
+            logWriter.Log("TEXT - " + this.text + " at " + left + ", " + bottom + " with width " + phraseWidth);
             doc.Add(phrase);
         }
     }
