@@ -31,7 +31,7 @@ namespace Panels
             string imagesFolderPath = parent.GetImagesFolderPath();
             string fullImagePath = Path.Combine(imagesFolderPath, imageSrc);
 
-            Console.WriteLine("Getting image at " + fullImagePath);
+            Console.WriteLine($"Getting image at {fullImagePath}");
             this.image = File.Exists(fullImagePath)
                 ? new Image(fullImagePath)
                 : new Image(Properties.Resources.temp);

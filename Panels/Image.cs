@@ -71,7 +71,7 @@ namespace Panels
             canvas.SetLineWidth(2f);
             canvas.Rectangle(this.x, this.y - image.GetImageScaledHeight(), image.GetImageScaledWidth(), image.GetImageScaledHeight());
             canvas.Stroke();
-            logWriter.Log("IMAGE - " + this.image.GetImageScaledWidth() + "x" + this.image.GetImageScaledHeight() + " at " + this.x + ", " + this.y);
+            logWriter.Log($"IMAGE - {this.image.GetImageScaledWidth()}x{this.image.GetImageScaledHeight()} at {this.x}, {this.y}");
         }
     }
 }

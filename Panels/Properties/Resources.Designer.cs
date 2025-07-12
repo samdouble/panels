@@ -90,15 +90,5 @@ namespace Panels.Properties {
                 return ((byte[])(obj));
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] xsdSchema {
-            get {
-                object obj = ResourceManager.GetObject("xsdSchema", resourceCulture);
-                return (byte[])obj;
-            }
-        }
     }
 }

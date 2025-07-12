@@ -1,0 +1,15 @@
+{
+  "last-release-sha": "663091d1073eb7652191313d3b7cc1750e119f3d",
+  "packages": {
+    ".": {
+      "release-type": "simple",
+      "extra-files": [
+        {
+          "type": "xml",
+          "path": "Panels/Panels.csproj",
+          "jsonpath": "$.Project.PropertyGroup.Version"
+        }
+      ]
+    }
+  }
+}

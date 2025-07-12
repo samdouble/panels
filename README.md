@@ -108,22 +108,22 @@ Forces a page break. Can be placed between slots.
 dotnet run --project Panels -- -c ~/Desktop/github/proj/bd1/BD0/bd.xml -i ~/Desktop/github/proj/bd1/BD0/images
 ```
 
+or:
+
+```
+dotnet build && ./Panels/bin/Debug/net8.0/Panels -c ~/Desktop/github_perso/bd1/BD0/bd.xml -i ~/Desktop/github_perso/bd1/BD0/images
+```
+
 ### Testing
 
 ```
 dotnet test
 ```
 
-### Releasing a New Version
-
-1. Change the version number in the *csproj* file.
-2. Merge into the `master` branch.
-3. `dotnet-releaser` on CircleCI will create a new GitHub Release.
-
 ## Technologies & Languages
 
 - C# 11
-- .NET 8
-- iText 8
+- .NET 7
+- iText 9
 - GitHub Actions
 - GitHub Releases
