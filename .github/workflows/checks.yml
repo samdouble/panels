@@ -28,3 +28,39 @@ jobs:
       - name: Build
         run: |
           dotnet build
+
+  publish:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0'
+      - name: Audit
+        run: |
+          dotnet restore
+          dotnet list package --vulnerable --include-transitive
+      - name: Test
+        run: |
+          dotnet test
+      - name: Build
+        run: |
+          dotnet build
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          export PATH="$PATH:/root/.dotnet/tools"
+          dotnet tool install --global dotnet-releaser --version 0.11.0
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            dotnet-releaser build dotnet-releaser.unix.toml
+            dotnet-releaser publish --force --github-token $GITHUB_TOKEN dotnet-releaser.unix.toml
+          elif [ "$RUNNER_OS" == "Windows" ]; then
+            dotnet-releaser build dotnet-releaser.windows.toml
+            dotnet-releaser publish --force --github-token $GITHUB_TOKEN dotnet-releaser.windows.toml
+          fi
