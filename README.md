@@ -123,7 +123,7 @@ dotnet test
 ## Technologies & Languages
 
 - C# 11
-- .NET 8
-- iText 8
+- .NET 7
+- iText 9
 - GitHub Actions
 - GitHub Releases
