@@ -28,11 +28,17 @@ jobs:
       - name: Build
         run: |
           dotnet build
+      - name: Test Release
+        run: |
+          dotnet tool install --global dotnet-releaser --version 0.11.0
+          dotnet-releaser build --force dotnet-releaser.unix.toml
+          dotnet-releaser build --force dotnet-releaser.windows.toml
+
 
   publish:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
@@ -56,7 +62,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           export PATH="$PATH:/root/.dotnet/tools"
-          dotnet tool install --global dotnet-releaser --version 0.10.0
+          dotnet tool install --global dotnet-releaser --version 0.11.0
           if [ "$RUNNER_OS" == "Linux" ]; then
             dotnet-releaser build dotnet-releaser.unix.toml
             dotnet-releaser publish --force --github-token $GITHUB_TOKEN dotnet-releaser.unix.toml
