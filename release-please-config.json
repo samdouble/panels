@@ -4,7 +4,12 @@
     ".": {
       "release-type": "simple",
       "extra-files": [
-        "Panels/Panels.csproj"
+        {
+          "type": "xml",
+          "path": "Panels/Panels.csproj",
+          "search": "<Version>(.*?)</Version>",
+          "replace": "<Version>${version}</Version>"
+        }
       ]
     }
   }
