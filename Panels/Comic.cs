@@ -29,10 +29,8 @@ namespace Panels
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
             Console.WriteLine("Reading config file at " + @"" + configFile);
+            XmlNode xmlComic = XmlParser.Read(configFile);
             this.imagesFolderPath = imagesFolderPath;
-            XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.Load(@"" + configFile);
-            XmlNode xmlComic = xmlDocument.DocumentElement;
             this.fontSize = xmlComic?.Attributes["fontSize"] != null
                 ? int.Parse(xmlComic.Attributes["fontSize"].InnerText)
                 : DEFAULT_FONT_SIZE;
@@ -65,7 +63,7 @@ namespace Panels
             return this.imagesFolderPath;
         }
 
-        public float getVerticalPanelSpacing()
+        public float GetVerticalPanelSpacing()
         {
             return this.verticalPanelSpacing;
         }
