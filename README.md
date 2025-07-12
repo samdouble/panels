@@ -114,12 +114,6 @@ dotnet run --project Panels -- -c ~/Desktop/github/proj/bd1/BD0/bd.xml -i ~/Desk
 dotnet test
 ```
 
-### Releasing a New Version
-
-1. Change the version number in the *csproj* file.
-2. Merge into the `master` branch.
-3. `dotnet-releaser` on CircleCI will create a new GitHub Release.
-
 ## Technologies & Languages
 
 - C# 11
