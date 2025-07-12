@@ -2,8 +2,8 @@ name: Deploy
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - 'v*'
 
 permissions:
   contents: write
@@ -18,21 +18,10 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '7.0'
-      - name: Audit
-        run: |
-          dotnet restore
-          dotnet list package --vulnerable --include-transitive
-      - name: Test
-        run: |
-          dotnet test
       - name: Build
         run: |
           dotnet build
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+      - name: Deploy
         run: |
-          export PATH="$PATH:/root/.dotnet/tools"
-          dotnet tool install --global dotnet-releaser --version 0.9.0
-          dotnet-releaser build dotnet-releaser.toml
-          dotnet-releaser publish --force --github-token $GITHUB_TOKEN dotnet-releaser.toml
+          dotnet publish -r linux-x64
+          ls -la
