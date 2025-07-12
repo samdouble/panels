@@ -61,7 +61,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
-          export PATH="$PATH:/root/.dotnet/tools"
           dotnet tool install --global dotnet-releaser --version 0.11.0
           if [ "$RUNNER_OS" == "Linux" ]; then
             dotnet-releaser build dotnet-releaser.unix.toml
