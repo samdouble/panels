@@ -62,10 +62,5 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           dotnet tool install --global dotnet-releaser --version 0.11.0
-          if [ "$RUNNER_OS" == "Linux" ]; then
-            dotnet-releaser build dotnet-releaser.unix.toml
-            dotnet-releaser publish --force --github-token $GITHUB_TOKEN dotnet-releaser.unix.toml
-          elif [ "$RUNNER_OS" == "Windows" ]; then
-            dotnet-releaser build dotnet-releaser.windows.toml
-            dotnet-releaser publish --force --github-token $GITHUB_TOKEN dotnet-releaser.windows.toml
-          fi
+          dotnet-releaser build dotnet-releaser.windows.toml
+          dotnet-releaser publish --force --github-token $GITHUB_TOKEN dotnet-releaser.windows.toml
