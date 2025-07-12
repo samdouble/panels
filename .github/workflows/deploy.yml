@@ -10,17 +10,14 @@ permissions:
 
 jobs:
   publish:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Set up .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0'
+          dotnet-version: '7.0'
       - name: Audit
         run: |
           dotnet restore
@@ -36,11 +33,6 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           export PATH="$PATH:/root/.dotnet/tools"
-          dotnet tool install --global dotnet-releaser --version 0.11.0
-          if [ "$RUNNER_OS" == "Linux" ]; then
-            dotnet-releaser build dotnet-releaser.unix.toml
-            dotnet-releaser publish --force --github-token $GITHUB_TOKEN dotnet-releaser.unix.toml
-          elif [ "$RUNNER_OS" == "Windows" ]; then
-            dotnet-releaser build dotnet-releaser.windows.toml
-            dotnet-releaser publish --force --github-token $GITHUB_TOKEN dotnet-releaser.windows.toml
-          fi
+          dotnet tool install --global dotnet-releaser --version 0.9.0
+          dotnet-releaser build dotnet-releaser.toml
+          dotnet-releaser publish --force --github-token $GITHUB_TOKEN dotnet-releaser.toml
