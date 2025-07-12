@@ -29,16 +29,12 @@ namespace Panels
 
             string imageSrc = xmlPanel.Attributes["image"].InnerText;
             string imagesFolderPath = parent.GetImagesFolderPath();
+            string fullImagePath = Path.Combine(imagesFolderPath, imageSrc);
 
-            Console.WriteLine("Getting image at " + (@"" + imagesFolderPath + '/' + imageSrc));
-            if (File.Exists(@"" + imagesFolderPath + '/' + imageSrc))
-            {
-                this.image = new Image(@"" + imagesFolderPath + '/' + imageSrc);
-            }
-            else
-            {
-                this.image = new Image(Properties.Resources.temp);
-            }
+            Console.WriteLine("Getting image at " + fullImagePath);
+            this.image = File.Exists(fullImagePath)
+                ? new Image(fullImagePath)
+                : new Image(Properties.Resources.temp);
 
             foreach (XmlNode xmlElement in xmlPanel.ChildNodes)
             {
