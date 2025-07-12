@@ -40,7 +40,7 @@ namespace Panels
         {
             this.height = height;
             int nbPanelsInSlot = this.panels.Count;
-            float panelHeight = (height - (nbPanelsInSlot - 1) * parent.getVerticalPanelSpacing()) / nbPanelsInSlot;
+            float panelHeight = (height - (nbPanelsInSlot - 1) * parent.GetVerticalPanelSpacing()) / nbPanelsInSlot;
             this.panels.ForEach(panel => panel.SetHeight(panelHeight));
         }
 
@@ -83,12 +83,12 @@ namespace Panels
         {
             int nbPanelsInSlot = this.panels.Count;
             float panelHeight =
-                (this.height - (nbPanelsInSlot - 1) * parent.getVerticalPanelSpacing()) / nbPanelsInSlot;
+                (this.height - (nbPanelsInSlot - 1) * parent.GetVerticalPanelSpacing()) / nbPanelsInSlot;
             for (int i = 0; i < nbPanelsInSlot; i++)
             {
                 Panel panel = this.panels[i];
                 panel.Crop(doc, 0, 0, 0, 0);
-                panel.SetPosition(noPage, x, y - i * panelHeight - (i - 1) * parent.getVerticalPanelSpacing());
+                panel.SetPosition(noPage, x, y - i * panelHeight - (i - 1) * parent.GetVerticalPanelSpacing());
             }
         }
 

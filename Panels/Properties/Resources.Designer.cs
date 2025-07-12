@@ -10,6 +10,7 @@
 
 namespace Panels.Properties {
     using System;
+    using System.Text;
     
     
     /// <summary>
@@ -87,6 +88,16 @@ namespace Panels.Properties {
             get {
                 object obj = ResourceManager.GetObject("temp", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] xsdSchema {
+            get {
+                object obj = ResourceManager.GetObject("xsdSchema", resourceCulture);
+                return (byte[])obj;
             }
         }
     }
