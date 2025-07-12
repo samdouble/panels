@@ -6,6 +6,11 @@ user = "samdouble"
 repo = "panels"
 branches = ["master"]
 
+[[pack]]
+rid = ["win-x64", "win-arm", "win-arm64"]
+kinds = ["zip"]
+publish = false
+
 [brew]
 publish = false
 
