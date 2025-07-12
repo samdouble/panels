@@ -1,5 +1,8 @@
 # Panels
 
+[![CI](https://github.com/samdouble/panels/actions/workflows/checks.yml/badge.svg)](https://github.com/samdouble/panels/actions/workflows/checks.yml)
+[![Coverage Status](https://coveralls.io/repos/samdouble/panels/badge.svg?branch=master&service=github)](https://coveralls.io/github/samdouble/panels?branch=master)
+
 Panels is a CLI tool that allows you to export a comic book in PDF format from an XML configuration and a set of images.
 
 ## How to Use

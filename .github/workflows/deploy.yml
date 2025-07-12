@@ -10,7 +10,10 @@ permissions:
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Commitlint
         uses: wagoid/commitlint-github-action@v6
@@ -36,5 +39,10 @@ jobs:
         run: |
           export PATH="$PATH:/root/.dotnet/tools"
           dotnet tool install --global dotnet-releaser --version 0.11.0
-          dotnet-releaser build dotnet-releaser.toml
-          dotnet-releaser publish --force --github-token $GITHUB_TOKEN dotnet-releaser.toml
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            dotnet-releaser build dotnet-releaser.unix.toml
+            dotnet-releaser publish --force --github-token $GITHUB_TOKEN dotnet-releaser.unix.toml
+          elif [ "$RUNNER_OS" == "Windows" ]; then
+            dotnet-releaser build dotnet-releaser.windows.toml
+            dotnet-releaser publish --force --github-token $GITHUB_TOKEN dotnet-releaser.windows.toml
+          fi
