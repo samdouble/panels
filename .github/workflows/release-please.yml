@@ -31,5 +31,6 @@ jobs:
           sed -i -e 's/<Version>.*<\/Version>/<Version>${VERSION}<\/Version>/g' Panels/Panels.csproj
       - uses: stefanzweifel/git-auto-commit-action@v6
         with:
+          branch: release-please--branches--master
           commit_message: "chore(master): update version in CSProj"
           commit_options: '--no-verify --signoff'
