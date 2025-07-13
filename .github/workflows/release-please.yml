@@ -27,5 +27,4 @@ jobs:
           VERSION: ${{ steps.release.outputs['version'] }}
         run: |
           dotnet tool install --global Versionize
-          versionize --release-as ${{ steps.release.outputs['version'] }}
-          git diff
+          versionize
