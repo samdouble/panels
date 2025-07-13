@@ -22,16 +22,4 @@ jobs:
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
           target-branch: master
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Update version in CSProj
-        env:
-          VERSION: ${{ steps.release.outputs['version'] }}
-        run: |
-          sed -i -e 's/<Version>.*<\/Version>/<Version>${VERSION}<\/Version>/g' Panels/Panels.csproj
-      - uses: stefanzweifel/git-auto-commit-action@v6
-        with:
-          branch: release-please--branches--master
-          commit_message: "chore(master): update version in CSProj"
-          commit_options: '--no-verify --signoff'
-          skip_dirty_check: true
+      - uses: lekman/release-please-dotnet@v1
