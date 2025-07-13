@@ -28,3 +28,8 @@ jobs:
       - name: Build
         run: |
           dotnet Build
+      - name: Release
+        run: |
+          dotnet tool install --global dotnet-releaser --version 0.9.0
+          dotnet-releaser build dotnet-releaser.toml
+          dotnet-releaser publish --force --github-token $GITHUB_TOKEN dotnet-releaser.toml
