@@ -1,0 +1,13 @@
+[msbuild]
+project = "Panels.sln"
+
+[github]
+user = "samdouble"
+repo = "panels"
+branches = ["master"]
+
+[brew]
+publish = false
+
+[nuget]
+publish = false
