@@ -29,6 +29,8 @@ jobs:
         run: |
           dotnet Build
       - name: Release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           dotnet tool install --global dotnet-releaser --version 0.9.0
           dotnet-releaser build dotnet-releaser.toml
