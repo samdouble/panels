@@ -25,9 +25,10 @@ jobs:
           manifest-file: .release-please-manifest.json
           target-branch: master
       - name: Update version in CSProj
+        env:
+          VERSION: ${{ steps.release.outputs['version'] }}
         run: |
-          VERSION="${{ steps.release.outputs['version'] }}"
-          sed -i '' "s|<Version>.*</Version>|<Version>${VERSION}</Version>|" Panels/Panels.csproj
+          sed -i -e 's/<Version>.*<\/Version>/<Version>${VERSION}<\/Version>/g' Panels/Panels.csproj
       - uses: stefanzweifel/git-auto-commit-action@v6
         with:
           commit_message: "chore(master): update version in CSProj"
