@@ -27,7 +27,7 @@ jobs:
           dotnet test
       - name: Build
         run: |
-          dotnet Build
+          dotnet build
       - name: Release
         env:
           GITHUB_TOKEN: ${{ github.token }}
