@@ -13,10 +13,22 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
-      - uses: googleapis/release-please-action@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+      - id: release
+        name: Release Please
+        uses: googleapis/release-please-action@v4
         with:
           token: ${{ secrets.PAT }}
           release-type: simple
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
           target-branch: master
+      - name: Update version in CSProj
+        run: |
+          VERSION="${{ steps.release.outputs['version'] }}"
+          sed -i '' "s|<Version>.*</Version>|<Version>${VERSION}</Version>|" Panels/Panels.csproj
+      - uses: stefanzweifel/git-auto-commit-action@v6
+        with:
+          commit_message: "chore(master): update version in CSProj"
+          commit_options: '--no-verify --signoff'
