@@ -28,16 +28,3 @@ jobs:
       - name: Build
         run: |
           dotnet Build
-
-      - name: Publish for linux-x64
-        run: dotnet publish -c Release -r linux-x64 --self-contained false -o publish
-      - name: Install fpm
-        run: sudo gem install --no-document fpm
-      - name: Package .deb
-        run: |
-          fpm -s dir -t deb -n panels -v 1.0.0 -C publish .
-      - name: Upload .deb
-        uses: actions/upload-artifact@v4
-        with:
-          name: panels-deb
-          path: "*.deb"
