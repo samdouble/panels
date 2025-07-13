@@ -34,3 +34,4 @@ jobs:
           branch: release-please--branches--master
           commit_message: "chore(master): update version in CSProj"
           commit_options: '--no-verify --signoff'
+          skip_dirty_check: true
