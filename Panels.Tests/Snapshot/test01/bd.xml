@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <comic
     version="1.0"
-	topMargin="64"
-	bottomMargin="64"
-	leftMargin="25"
-	rightMargin="25"
+	marginTop="64"
+	marginBottom="64"
+	marginLeft="25"
+	marginRight="25"
 	horizontalPanelSpacing="10"
 	verticalPanelSpacing="10"
 	rowsPerPage="3"
