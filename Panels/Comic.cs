@@ -28,7 +28,7 @@ namespace Panels
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-            Console.WriteLine("Reading config file at " + @"" + configFile);
+            Console.WriteLine($"Reading config file at {configFile}");
             XmlNode xmlComic = XmlParser.Read(configFile);
             this.imagesFolderPath = imagesFolderPath;
             this.fontSize = xmlComic?.Attributes["fontSize"] != null

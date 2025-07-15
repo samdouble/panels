@@ -36,7 +36,7 @@ namespace Panels
         {
             LogWriter logWriter = new LogWriter();
             logWriter.Log("Starting PDF generation...");
-            PdfWriter writer = new PdfWriter(@"" + opts.Output);
+            PdfWriter writer = new PdfWriter(@$"{opts.Output}");
             PdfDocument pdfDocument = new PdfDocument(writer);
             pdfDocument.SetDefaultPageSize(PageSize.A4);
             Document document = new Document(pdfDocument);
