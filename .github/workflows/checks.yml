@@ -2,21 +2,23 @@ name: Checks
 on: [pull_request]
 
 permissions:
-  contents: read
-  pull-requests: read
+  contents: write
+  pull-requests: write
 
 jobs:
   checks:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: ['ubuntu-latest', 'windows-latest']
+        dotnet-version: ['7.0']
+    runs-on: ${{ matrix.os }}
     steps:
-      - name: Commitlint
-        uses: wagoid/commitlint-github-action@v6
       - name: Checkout
         uses: actions/checkout@v4
       - name: Set up .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '7.0'
+          dotnet-version: ${{ matrix.dotnet-version }}
       - name: Audit
         run: |
           dotnet restore
@@ -28,3 +30,19 @@ jobs:
       - name: Build
         run: |
           dotnet build
+
+  release-please-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: googleapis/release-please-action@main
+        id: release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: simple
+          #skip-github-pull-request: true
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Tag major and minor versions
+        run: |
+          echo "${{ steps.release.outputs.version }}"
+          echo "v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}"
