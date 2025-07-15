@@ -19,7 +19,7 @@ namespace Panels.Elements
         protected Panel parent;
         protected string text;
         protected Color color = ColorConstants.BLACK;
-        protected const int LINE_HEIGHT = 12;
+        protected const int LINE_HEIGHT = 11;
         protected const int MARGIN = 5;
         protected PdfFont font;
         protected int fontSize;

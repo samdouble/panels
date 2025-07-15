@@ -30,10 +30,10 @@ The XML configuration file defines the structure and content of your comic. Here
 <?xml version="1.0" encoding="UTF-8"?>
 <comic
   version="1.0"
-	topMargin="64"
-	bottomMargin="64"
-	leftMargin="25"
-	rightMargin="25"
+	marginTop="64"
+	marginBottom="64"
+	marginLeft="25"
+	marginRight="25"
 	horizontalPanelSpacing="10"
 	verticalPanelSpacing="10"
 	rowsPerPage="3"
@@ -58,7 +58,7 @@ The XML configuration file defines the structure and content of your comic. Here
 The root element. Attributes:
 
 - `version` (required): Version of the schema (e.g. "1.0").
-- `topMargin`, `bottomMargin`, `leftMargin`, `rightMargin` (optional): Margins in pixels.
+- `marginTop`, `marginBottom`, `marginLeft`, `marginRight` (optional): Margins in pixels.
 - `horizontalPanelSpacing`, `verticalPanelSpacing` (optional): Spacing between panels in pixels.
 - `fontSize` (optional, default: 12): Font size for text.
 - `rowsPerPage` (optional, default: 3): Number of rows per page.
@@ -87,6 +87,7 @@ Adds a text bubble or caption to a panel. Attributes:
 
 - `text` (required): The text content.
 - `left`, `top` (optional): Positioning of the text within the panel.
+- `width` (optional): Width of the text bubble in pixels.
 
 #### `<description>`
 
@@ -95,6 +96,7 @@ Adds a description or narration to a panel. Attributes:
 - `text` (required): The description content.
 - `left`, `top` (optional): Positioning of the description.
 - `visible` (optional): Controls visibility (e.g. "true" or "false").
+- `width` (optional): Width of the description bubble in pixels.
 
 #### `<newpage />`
 

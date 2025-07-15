@@ -40,10 +40,10 @@
         </xs:choice>
       </xs:sequence>
       <xs:attribute name="version" type="xs:string" use="required"/>
-      <xs:attribute name="bottomMargin" type="xs:string" use="optional" />
-      <xs:attribute name="leftMargin" type="xs:string" use="optional" />
-      <xs:attribute name="rightMargin" type="xs:string" use="optional" />
-      <xs:attribute name="topMargin" type="xs:string" use="optional" />
+      <xs:attribute name="marginBottom" type="xs:string" use="optional" />
+      <xs:attribute name="marginLeft" type="xs:string" use="optional" />
+      <xs:attribute name="marginRight" type="xs:string" use="optional" />
+      <xs:attribute name="marginTop" type="xs:string" use="optional" />
       <xs:attribute name="horizontalPanelSpacing" type="xs:string" use="optional" />
       <xs:attribute name="verticalPanelSpacing" type="xs:string" use="optional" />
       <xs:attribute name="fontSize" type="xs:string" use="optional" default="12"/>

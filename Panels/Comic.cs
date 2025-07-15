@@ -15,10 +15,10 @@ namespace Panels
         protected const int DEFAULT_FONT_SIZE = 12;
         protected const int DEFAULT_ROWS_PER_PAGE = 3;
         private int fontSize;
-        private float leftMargin;
-        private float rightMargin;
-        private float topMargin;
-        private float bottomMargin;
+        private float marginLeft;
+        private float marginRight;
+        private float marginTop;
+        private float marginBottom;
         private float horizontalPanelSpacing;
         private float verticalPanelSpacing;
         private float rowsPerPage;
@@ -34,10 +34,10 @@ namespace Panels
             this.fontSize = xmlComic?.Attributes["fontSize"] != null
                 ? int.Parse(xmlComic.Attributes["fontSize"].InnerText)
                 : DEFAULT_FONT_SIZE;
-            this.leftMargin = float.Parse(xmlComic?.Attributes["leftMargin"].InnerText);
-            this.rightMargin = float.Parse(xmlComic?.Attributes["rightMargin"].InnerText);
-            this.topMargin = float.Parse(xmlComic?.Attributes["topMargin"].InnerText);
-            this.bottomMargin = float.Parse(xmlComic?.Attributes["bottomMargin"].InnerText);
+            this.marginLeft = float.Parse(xmlComic?.Attributes["marginLeft"].InnerText);
+            this.marginRight = float.Parse(xmlComic?.Attributes["marginRight"].InnerText);
+            this.marginTop = float.Parse(xmlComic?.Attributes["marginTop"].InnerText);
+            this.marginBottom = float.Parse(xmlComic?.Attributes["marginBottom"].InnerText);
             this.horizontalPanelSpacing = float.Parse(xmlComic?.Attributes["horizontalPanelSpacing"].InnerText);
             this.verticalPanelSpacing = float.Parse(xmlComic?.Attributes["verticalPanelSpacing"].InnerText);
             this.rowsPerPage = xmlComic?.Attributes["rowsPerPage"] != null
@@ -72,8 +72,8 @@ namespace Panels
         public void Render(Document doc, LogWriter logWriter)
         {
             PageSize pageSize = doc.GetPdfDocument().GetDefaultPageSize();
-            float panelHeight = (pageSize.GetHeight() - this.topMargin - this.bottomMargin - (this.rowsPerPage - 1) * this.verticalPanelSpacing) / this.rowsPerPage;
-            float rowWidth = pageSize.GetWidth() - this.rightMargin - this.leftMargin;
+            float panelHeight = (pageSize.GetHeight() - this.marginTop - this.marginBottom - (this.rowsPerPage - 1) * this.verticalPanelSpacing) / this.rowsPerPage;
+            float rowWidth = pageSize.GetWidth() - this.marginRight - this.marginLeft;
             int page = 1;
             float x = 0;
             float y = panelHeight + this.verticalPanelSpacing;
@@ -166,7 +166,7 @@ namespace Panels
                 foreach (Slot slot in slotsOnCurrentRow)
                 {
                     slot.Crop(doc);
-                    slot.SetPosition(doc, page, this.leftMargin + x, pageSize.GetHeight() - this.topMargin - y);
+                    slot.SetPosition(doc, page, this.marginLeft + x, pageSize.GetHeight() - this.marginTop - y);
                     slot.Render(doc, logWriter);
 
                     x += slot.GetWidth() + this.horizontalPanelSpacing;
