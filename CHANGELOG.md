@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.10](https://github.com/samdouble/panels/compare/1.1.9...v1.1.10) (2025-07-15)
+
+
+### Bug Fixes
+
+* fix CI ([dabb21a](https://github.com/samdouble/panels/commit/dabb21ac0759e4664a21047a04560f8f3df542d0))
+
 ## [1.1.8](https://github.com/samdouble/panels/compare/v1.1.7...v1.1.8) (2025-07-13)
 
 
