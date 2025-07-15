@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Reflection;
 using System.Xml;
 using System.Xml.Schema;
 
@@ -10,15 +11,14 @@ namespace Panels.Utils
         public static XmlNode Read(string xmlPath)
         {
             string xsdPath = Path.Combine(
-                Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName,
-                "Panels/Resources/schema.xsd"
+                AppDomain.CurrentDomain.BaseDirectory,
+                "Assets/schema.xsd"
             );
-
             XmlReaderSettings settings = new XmlReaderSettings();
             settings.Schemas.Add(null, xsdPath);
             settings.ValidationType = ValidationType.Schema;
 
-            XmlReader reader = XmlReader.Create(@"" + xmlPath, settings);
+            XmlReader reader = XmlReader.Create(@$"{xmlPath}", settings);
             XmlDocument document = new XmlDocument();
             document.Load(reader);
             ValidationEventHandler eventHandler = new ValidationEventHandler(ComicsValidationEventHandler);

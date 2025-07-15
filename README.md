@@ -108,6 +108,12 @@ Forces a page break. Can be placed between slots.
 dotnet run --project Panels -- -c ~/Desktop/github/proj/bd1/BD0/bd.xml -i ~/Desktop/github/proj/bd1/BD0/images
 ```
 
+or:
+
+```
+dotnet build && ./Panels/bin/Debug/net8.0/Panels -c ~/Desktop/github_perso/bd1/BD0/bd.xml -i ~/Desktop/github_perso/bd1/BD0/images
+```
+
 ### Testing
 
 ```
