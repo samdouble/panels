@@ -30,25 +30,3 @@ jobs:
       - name: Build
         run: |
           dotnet build
-
-  release-please-release:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: googleapis/release-please-action@main
-        id: release
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          release-type: simple
-          skip-github-pull-request: true
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Get next version number
-        id: semantic-release
-        uses: cycjimmy/semantic-release-action@v4
-        with:
-          dry_run: true
-      - name: Tag major and minor versions
-        run: |
-          echo "NEXT_TAG_VERSION=${{ steps.semantic-release.outputs.new_release_version }}"
-          echo "${{ steps.release.outputs.version }}"
-          echo "v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}"
