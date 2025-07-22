@@ -43,12 +43,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Get next version number
-        run: |
-          npm install -g semantic-release@24.2.7
-          npx semantic-release --dry-run
-          export NEXT_TAG_VERSION=$(npx semantic-release --dry-run | grep 'The next release version is' | sed -E 's/.* ([[:digit:].]+)$/\1/')
-          echo "NEXT_TAG_VERSION=${NEXT_TAG_VERSION}"
+        id: semantic-release
+        uses: cycjimmy/semantic-release-action@v4
+        with:
+          dry_run: true
       - name: Tag major and minor versions
         run: |
+          echo "NEXT_TAG_VERSION=${{ steps.semantic-release.outputs.new_release_version }}"
           echo "${{ steps.release.outputs.version }}"
           echo "v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}"
