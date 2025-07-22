@@ -10,32 +10,44 @@ permissions:
   pull-requests: write
 
 jobs:
-  # build:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #     - name: Set up .NET
-  #       uses: actions/setup-dotnet@v4
-  #       with:
-  #         dotnet-version: '7.0'
-  #     - name: Create PR with dist folder
-  #       uses: googleapis/code-suggester@v4
-  #       env:
-  #         ACCESS_TOKEN: ${{ secrets.PAT }}
-  #       with:
-  #         command: pr
-  #         upstream_repo: panels
-  #         upstream_owner: samdouble
-  #         description: Update csproj
-  #         title: "chore: update csproj"
-  #         message: "chore: update csproj"
-  #         labels: automated pr
-  #         branch: update-csproj
-  #         primary: master
-  #         force: true
-  #         git_dir: .
-  #         fork: false
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Get release version
+        uses: wemogy/get-release-version-action@v4.3.2
+        id: get-release-version
+        with:
+          create-tag: false
+          git-username: github-actions[bot]
+          git-email: 41898282+github-actions[bot]@users.noreply.github.com
+          mode: semantic
+      - name: Set project version
+        uses: vers-one/dotnet-project-version-updater@v1.7
+        with:
+          file: |
+            "**/*.csproj", "**/*.nuspec", "**/AssemblyInfo.cs"
+          version: ${{ steps.get-release-version.outputs.version }}
+      - name: Create PR with version updated
+        uses: googleapis/code-suggester@v4
+        env:
+          ACCESS_TOKEN: ${{ secrets.PAT }}
+        with:
+          command: pr
+          upstream_repo: panels
+          upstream_owner: samdouble
+          description: Update csproj
+          title: "chore: update csproj"
+          message: "chore: update csproj"
+          labels: automated pr
+          branch: update-csproj
+          primary: master
+          force: true
+          git_dir: .
+          fork: false
 
   release-please-release:
     runs-on: ubuntu-latest
@@ -49,42 +61,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Tag major and minor versions
+        if: ${{ steps.release.outputs.release_created }}
         run: |
-          echo "${{ steps.release.outputs.version }}"
-          echo "v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}"
-
-  # release-please-release:
-  #   runs-on: ubuntu-latest
-  #   needs:
-  #     - build
-  #   steps:
-  #     - uses: googleapis/release-please-action@main
-  #       id: release
-  #       with:
-  #         token: ${{ secrets.GITHUB_TOKEN }}
-  #         release-type: simple
-  #         skip-github-pull-request: true
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #     - name: Tag major and minor versions
-  #       #if: ${{ steps.release.outputs.release_created }}
-  #       run: |
-  #         git config user.name github-actions[bot]
-  #         git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-  #         git remote add gh-token "https://${{ secrets.GITHUB_TOKEN }}@github.com/samdouble/panels.git"
-  #         git tag -d v${{ steps.release.outputs.major }} || true
-  #         git tag -d v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} || true
-  #         git push origin :v${{ steps.release.outputs.major }} || true
-  #         git push origin :v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} || true
-  #         git tag -a v${{ steps.release.outputs.major }} -m "Release v${{ steps.release.outputs.major }}"
-  #         git tag -a v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} -m "Release v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}"
-  #         git push origin v${{ steps.release.outputs.major }}
-  #         git push origin v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git remote add gh-token "https://${{ secrets.GITHUB_TOKEN }}@github.com/samdouble/package-reputation-action.git"
+          git tag -d v${{ steps.release.outputs.major }} || true
+          git tag -d v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} || true
+          git push origin :v${{ steps.release.outputs.major }} || true
+          git push origin :v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} || true
+          git tag -a v${{ steps.release.outputs.major }} -m "Release v${{ steps.release.outputs.major }}"
+          git tag -a v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} -m "Release v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}"
+          git push origin v${{ steps.release.outputs.major }}
+          git push origin v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}
 
   release-please:
     runs-on: ubuntu-latest
     needs:
-      # - build
+      - build
       - release-please-release
     steps:
       - name: Release Please
