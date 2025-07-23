@@ -32,3 +32,7 @@ jobs:
       - name: Build
         run: |
           dotnet build
+      - name: Test Release dry run
+        run: |
+          dotnet tool install --global dotnet-releaser --version 0.9.0
+          dotnet-releaser build --force dotnet-releaser.toml
