@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.0](https://github.com/samdouble/panels/compare/1.1.5...v1.2.0) (2025-07-23)
+
+
+### Features
+
+* add XSD validation ([96f4e27](https://github.com/samdouble/panels/commit/96f4e278c18c66302b9dfba25ac5effde404cece))
+* be able to control font size through XML configuration ([fdedd51](https://github.com/samdouble/panels/commit/fdedd51699e4b2b8ff4e58f46b9d185b4e57cf44))
+* rename margin attributes ([841c603](https://github.com/samdouble/panels/commit/841c6035ded98c2ac6826165ebf23e02b1165230))
+
 ## [1.1.11](https://github.com/samdouble/panels/compare/v1.1.10...v1.1.11) (2025-07-15)
 
 
