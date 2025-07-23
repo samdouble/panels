@@ -30,13 +30,13 @@ The XML configuration file defines the structure and content of your comic. Here
 <?xml version="1.0" encoding="UTF-8"?>
 <comic
   version="1.0"
-	marginTop="64"
-	marginBottom="64"
-	marginLeft="25"
-	marginRight="25"
-	horizontalPanelSpacing="10"
-	verticalPanelSpacing="10"
-	rowsPerPage="3"
+  marginTop="64"
+  marginBottom="64"
+  marginLeft="25"
+  marginRight="25"
+  horizontalPanelSpacing="10"
+  verticalPanelSpacing="10"
+  rowsPerPage="3"
 >
   <slot>
     <panel image="0000.png">
