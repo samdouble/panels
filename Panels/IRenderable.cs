@@ -5,6 +5,6 @@ namespace Panels
 {
     interface IRenderable
     {
-        void Render(Document doc, LogWriter logWriter);
+        void Render(LogWriter logWriter);
     }
 }

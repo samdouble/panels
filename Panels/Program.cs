@@ -40,8 +40,8 @@ namespace Panels
             PdfDocument pdfDocument = new PdfDocument(writer);
             pdfDocument.SetDefaultPageSize(PageSize.A4);
             Document document = new Document(pdfDocument);
-            Comic comic = new Comic(opts.Config, opts.Images);
-            comic.Render(document, logWriter);
+            Comic comic = new Comic(document, opts.Config, opts.Images);
+            comic.Render(logWriter);
             document.Close();
             pdfDocument.Close();
             logWriter.Log("Generated " + opts.Output);

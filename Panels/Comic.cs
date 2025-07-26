@@ -11,7 +11,8 @@ namespace Panels
 {
     class Comic : IRenderable
     {
-        private List<object> children = new List<object>();
+        private Document document;
+        private List<IRenderable> children = new List<IRenderable>();
         protected const int DEFAULT_FONT_SIZE = 12;
         protected const int DEFAULT_ROWS_PER_PAGE = 3;
         private int fontSize;
@@ -19,18 +20,23 @@ namespace Panels
         private float marginRight;
         private float marginTop;
         private float marginBottom;
+        public int RowsPerPage { get; private set; }
         private float horizontalPanelSpacing;
-        private float verticalPanelSpacing;
-        private float rowsPerPage;
-        private string imagesFolderPath;
+        public float VerticalPanelSpacing { get; private set; }
+        public string ImagesFolderPath { get; private set; }
+        public int CurrentPage { get; set; } = 1;
+        public int CurrentRow { get; set; } = 1;
+        public float CurrentX { get; set; } = 0;
+        public float CurrentY { get; set; } = 0;
 
-        public Comic(string configFile, string imagesFolderPath)
+        public Comic(Document document, string configFile, string imagesFolderPath)
         {
+            this.document = document;
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
             Console.WriteLine($"Reading config file at {configFile}");
             XmlNode xmlComic = XmlParser.Read(configFile);
-            this.imagesFolderPath = imagesFolderPath;
+            this.ImagesFolderPath = imagesFolderPath;
             this.fontSize = xmlComic?.Attributes["fontSize"] != null
                 ? int.Parse(xmlComic.Attributes["fontSize"].InnerText)
                 : DEFAULT_FONT_SIZE;
@@ -46,15 +52,15 @@ namespace Panels
             this.marginBottom = xmlComic?.Attributes["marginBottom"] != null
                 ? float.Parse(xmlComic.Attributes["marginBottom"].InnerText)
                 : 0;
+            this.RowsPerPage = xmlComic?.Attributes["rowsPerPage"] != null
+                ? int.Parse(xmlComic.Attributes["rowsPerPage"].InnerText)
+                : DEFAULT_ROWS_PER_PAGE;
             this.horizontalPanelSpacing = xmlComic?.Attributes["horizontalPanelSpacing"] != null
                 ? float.Parse(xmlComic.Attributes["horizontalPanelSpacing"].InnerText)
                 : 0;
-            this.verticalPanelSpacing = xmlComic?.Attributes["verticalPanelSpacing"] != null
+            this.VerticalPanelSpacing = xmlComic?.Attributes["verticalPanelSpacing"] != null
                 ? float.Parse(xmlComic.Attributes["verticalPanelSpacing"].InnerText)
                 : 0;
-            this.rowsPerPage = xmlComic?.Attributes["rowsPerPage"] != null
-                ? float.Parse(xmlComic.Attributes["rowsPerPage"].InnerText)
-                : DEFAULT_ROWS_PER_PAGE;
 
             List<XmlNode> xmlNodes = new List<XmlNode>(xmlComic.ChildNodes.Cast<XmlNode>());
             SlotOptions slotOptions = new SlotOptions {
@@ -62,46 +68,26 @@ namespace Panels
             };
             foreach (XmlNode xmlNode in xmlNodes) {
                 if (xmlNode.Name == "newpage") {
-                    this.children.Add(new NewPage(this, xmlNode));
+                    this.children.Add(new NewPage(document, this, xmlNode));
                 }
                 if (xmlNode.Name == "slot") {
-                    this.children.Add(new Slot(this, xmlNode, slotOptions));
+                    this.children.Add(new Slot(document, this, xmlNode, slotOptions));
                 }
             }
         }
 
-        public string GetImagesFolderPath()
-        {
-            return this.imagesFolderPath;
-        }
-
-        public float GetVerticalPanelSpacing()
-        {
-            return this.verticalPanelSpacing;
-        }
-
         // IRenderable
-        public void Render(Document doc, LogWriter logWriter)
+        public void Render(LogWriter logWriter)
         {
-            PageSize pageSize = doc.GetPdfDocument().GetDefaultPageSize();
-            float panelHeight = (pageSize.GetHeight() - this.marginTop - this.marginBottom - (this.rowsPerPage - 1) * this.verticalPanelSpacing) / this.rowsPerPage;
+            PageSize pageSize = this.document.GetPdfDocument().GetDefaultPageSize();
+            float panelHeight = (pageSize.GetHeight() - this.marginTop - this.marginBottom - (this.RowsPerPage - 1) * this.VerticalPanelSpacing) / this.RowsPerPage;
             float rowWidth = pageSize.GetWidth() - this.marginRight - this.marginLeft;
-            int page = 1;
-            float x = 0;
-            float y = panelHeight + this.verticalPanelSpacing;
-            float rowNo = 1;
+            this.CurrentY = panelHeight + this.VerticalPanelSpacing;
             for (int i = 0; i < this.children.Count;)
             {
                 // Handle newpage elements
                 if (this.children[i].GetType() == typeof(NewPage)) {
-                    if (x != 0 || y != 0) {
-                        doc.GetPdfDocument().AddNewPage();
-                        logWriter.Log("NEW PAGE");
-                        page++;
-                        rowNo = page * this.rowsPerPage;
-                        x = 0;
-                        y = 0;
-                    }
+                    this.children[i].Render(logWriter);
                     i++;
                     continue;
                 }
@@ -177,25 +163,29 @@ namespace Panels
                 // We proceed to the cropping and positioning of the image
                 foreach (Slot slot in slotsOnCurrentRow)
                 {
-                    slot.Crop(doc);
-                    slot.SetPosition(doc, page, this.marginLeft + x, pageSize.GetHeight() - this.marginTop - y);
-                    slot.Render(doc, logWriter);
+                    slot.Crop();
+                    slot.SetPosition(
+                        this.CurrentPage,
+                        this.marginLeft + this.CurrentX,
+                        pageSize.GetHeight() - this.marginTop - this.CurrentY
+                    );
+                    slot.Render(logWriter);
 
-                    x += slot.Width + this.horizontalPanelSpacing;
+                    this.CurrentX += slot.Width + this.horizontalPanelSpacing;
                 }
-                x = 0;
+                this.CurrentX = 0;
                 i += nbPanelsInRow;
-                ++rowNo;
+                ++this.CurrentRow;
 
-                if (rowNo % this.rowsPerPage == 0)
+                if (this.CurrentRow % this.RowsPerPage == 0)
                 {
-                    doc.GetPdfDocument().AddNewPage();
-                    page++;
-                    y = 0;
+                    this.document.GetPdfDocument().AddNewPage();
+                    ++this.CurrentPage;
+                    this.CurrentY = 0;
                 }
                 else
                 {
-                    y += panelHeight + this.verticalPanelSpacing;
+                    this.CurrentY += panelHeight + this.VerticalPanelSpacing;
                 }
             }
         }

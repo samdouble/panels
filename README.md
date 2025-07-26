@@ -58,9 +58,13 @@ The XML configuration file defines the structure and content of your comic. Here
 The root element. Attributes:
 
 - `version` (required): Version of the schema (e.g. "1.0").
-- `marginTop`, `marginBottom`, `marginLeft`, `marginRight` (optional): Margins in pixels.
-- `horizontalPanelSpacing`, `verticalPanelSpacing` (optional): Spacing between panels in pixels.
 - `fontSize` (optional, default: 12): Font size for text.
+- `marginTop` (optional): Margins in pixels.
+- `marginBottom` (optional): Margins in pixels.
+- `marginLeft` (optional): Margins in pixels.
+- `marginRight` (optional): Margins in pixels.
+- `horizontalPanelSpacing` (optional): Horizontal spacing between panels in pixels.
+- `verticalPanelSpacing` (optional): Vertical spacing between panels in pixels.
 - `rowsPerPage` (optional, default: 3): Number of rows per page.
 
 A `<comic>` can contain multiple `<slot>` and `<newpage />` elements.
@@ -69,7 +73,8 @@ A `<comic>` can contain multiple `<slot>` and `<newpage />` elements.
 
 Defines a column of panels. Attributes:
 
-- `maxCropLeft`, `maxCropRight` (optional, default: 0): Maximum cropping for panels in this slot.
+- `maxCropLeft` (optional, default: 0): Maximum cropping for panels in this slot.
+- `maxCropRight` (optional, default: 0): Maximum cropping for panels in this slot.
 
 A `<slot>` can contain up to 2 `<panel>` elements.
 
@@ -78,6 +83,8 @@ A `<slot>` can contain up to 2 `<panel>` elements.
 Represents a single panel in a slot. Attributes:
 
 - `image` (required): Filename of the image for this panel.
+- `cropBottom` (optional, default: 0): Cropping from the bottom of the panel's image, in % of the image's height
+- `cropTop` (optional, default: 0): Cropping from the top of the panel's image, in % of the image's height
 
 A `<panel>` can contain multiple `<text>` and `<description>` elements.
 
@@ -86,17 +93,19 @@ A `<panel>` can contain multiple `<text>` and `<description>` elements.
 Adds a text bubble or caption to a panel. Attributes:
 
 - `text` (required): The text content.
-- `left`, `top` (optional): Positioning of the text within the panel.
-- `width` (optional): Width of the text bubble in pixels.
+- `left` (optional, default: 0): Positioning of the text within the panel.
+- `top` (optional, default: 0): Positioning of the text within the panel.
+- `width` (optional, default: auto): Width of the text bubble in pixels.
 
 #### `<description>`
 
 Adds a description or narration to a panel. Attributes:
 
 - `text` (required): The description content.
-- `left`, `top` (optional): Positioning of the description.
-- `visible` (optional): Controls visibility (e.g. "true" or "false").
-- `width` (optional): Width of the description bubble in pixels.
+- `left` (optional, default: 0): Positioning of the description.
+- `top` (optional, default: 0): Positioning of the description.
+- `visible` (optional, default: True): Controls visibility (e.g. "True" or "False").
+- `width` (optional, default: auto): Width of the description bubble in pixels.
 
 #### `<newpage />`
 
