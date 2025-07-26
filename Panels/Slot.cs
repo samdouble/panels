@@ -15,19 +15,24 @@ namespace Panels
     {
         private Comic parent;
         private List<Panel> panels = new List<Panel>();
-        public float maxLeftPaddingPct { get; set; }
-        public float maxRightPaddingPct { get; set; }
-        public float leftPadding { get; set; }
-        public float rightPadding { get; set; }
-        public float height { get; set; }
+        public float MaxLeftPaddingPct { get; set; }
+        public float MaxRightPaddingPct { get; set; }
+        public float PaddingLeft { get; set; }
+        public float PaddingRight { get; set; }
+        public float Height { get; set; }
+        public float Width {
+            get {
+                return panels[0].Width;
+            }
+        }
 
         public Slot(Comic parent, XmlNode xmlSlot, SlotOptions slotOptions = new SlotOptions())
         {
             this.parent = parent;
-            this.maxLeftPaddingPct = xmlSlot?.Attributes["maxCropLeft"] != null ? float.Parse(xmlSlot.Attributes["maxCropLeft"].InnerText) : 0f;
-            this.maxRightPaddingPct = xmlSlot?.Attributes["maxCropRight"] != null ? float.Parse(xmlSlot.Attributes["maxCropRight"].InnerText) : 0f;
-            this.leftPadding = 0f;
-            this.rightPadding = 0f;
+            this.MaxLeftPaddingPct = xmlSlot?.Attributes["maxCropLeft"] != null ? float.Parse(xmlSlot.Attributes["maxCropLeft"].InnerText) : 0f;
+            this.MaxRightPaddingPct = xmlSlot?.Attributes["maxCropRight"] != null ? float.Parse(xmlSlot.Attributes["maxCropRight"].InnerText) : 0f;
+            this.PaddingLeft = 0f;
+            this.PaddingRight = 0f;
             
             PanelOptions panelOptions = new PanelOptions {
                 FontSize = slotOptions.FontSize
@@ -38,38 +43,30 @@ namespace Panels
 
         public void SetHeight(float height)
         {
-            this.height = height;
+            this.Height = height;
             int nbPanelsInSlot = this.panels.Count;
             float panelHeight = (height - (nbPanelsInSlot - 1) * parent.GetVerticalPanelSpacing()) / nbPanelsInSlot;
-            this.panels.ForEach(panel => panel.SetHeight(panelHeight));
-        }
-
-        public float GetWidth()
-        {
-            return panels[0].GetWidth();
+            this.panels.ForEach(panel => {
+                panel.Height = panelHeight;
+            });
         }
 
         public float GetMinWidth()
         {
-            float minPctAvailable = 1 - ((this.maxLeftPaddingPct + this.maxRightPaddingPct) / 100);
-            return minPctAvailable * this.GetWidth();
+            float minPctAvailable = 1 - ((this.MaxLeftPaddingPct + this.MaxRightPaddingPct) / 100);
+            return minPctAvailable * this.Width;
         }
 
         public float GetMaxWidth()
         {
-            return panels[0].GetWidth();
-        }
-
-        public float GetHeight()
-        {
-            return this.height;
+            return panels[0].Width;
         }
 
         public void Crop(Document doc)
         {
             int nbPanelsInSlot = this.panels.Count;
-            float leftCropping = (this.maxLeftPaddingPct * this.GetWidth() / 100) - this.leftPadding;
-            float rightCropping = (this.maxRightPaddingPct * this.GetWidth() / 100) - this.rightPadding;
+            float leftCropping = (this.MaxLeftPaddingPct * this.Width / 100) - this.PaddingLeft;
+            float rightCropping = (this.MaxRightPaddingPct * this.Width / 100) - this.PaddingRight;
             float horizontalOffset = leftCropping + rightCropping;
             for (int i = 0; i < nbPanelsInSlot; i++)
             {
@@ -83,7 +80,7 @@ namespace Panels
         {
             int nbPanelsInSlot = this.panels.Count;
             float panelHeight =
-                (this.height - (nbPanelsInSlot - 1) * parent.GetVerticalPanelSpacing()) / nbPanelsInSlot;
+                (this.Height - (nbPanelsInSlot - 1) * parent.GetVerticalPanelSpacing()) / nbPanelsInSlot;
             for (int i = 0; i < nbPanelsInSlot; i++)
             {
                 Panel panel = this.panels[i];

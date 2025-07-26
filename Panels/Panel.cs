@@ -17,9 +17,22 @@ namespace Panels
     class Panel : IPositionable, IRenderable
     {
         private Comic parent;
-        Image image;
-        List<Element> elements = new List<Element>();
-        PointF position;
+        private Image image;
+        private List<Element> elements = new List<Element>();
+        public PointF Position { get; private set; }
+        public float Height {
+            get {
+                return this.image.Height;
+            }
+            set {
+                this.image.Height = value;
+            }
+        }
+        public float Width {
+            get {
+                return this.image.Width;
+            }
+        }
 
         public Panel(Comic parent, XmlNode xmlPanel, PanelOptions panelOptions = new PanelOptions())
         {
@@ -56,26 +69,6 @@ namespace Panels
             }
         }
 
-        public void SetHeight(float height)
-        {
-            this.image.SetHeight(height);
-        }
-
-        public float GetWidth()
-        {
-            return this.image.GetWidth();
-        }
-
-        public float GetHeight()
-        {
-            return this.image.GetHeight();
-        }
-
-        public PointF getPosition()
-        {
-            return this.position;
-        }
-
         public void Crop(Document doc, float leftCropping, float horizontalOffset, float decoupageHaut = 0, float verticalOffset = 0)
         {
             this.image.Crop(doc, leftCropping, horizontalOffset, decoupageHaut, verticalOffset);
@@ -86,7 +79,7 @@ namespace Panels
         // IPositionable
         public void SetPosition(int noPage, float x, float y)
         {
-            this.position = new PointF(x, y);
+            this.Position = new PointF(x, y);
             this.image.SetPosition(noPage, x, y);
             this.elements.ForEach(element => element.SetPosition(noPage, x, y));
         }

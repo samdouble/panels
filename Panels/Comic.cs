@@ -34,12 +34,24 @@ namespace Panels
             this.fontSize = xmlComic?.Attributes["fontSize"] != null
                 ? int.Parse(xmlComic.Attributes["fontSize"].InnerText)
                 : DEFAULT_FONT_SIZE;
-            this.marginLeft = float.Parse(xmlComic?.Attributes["marginLeft"].InnerText);
-            this.marginRight = float.Parse(xmlComic?.Attributes["marginRight"].InnerText);
-            this.marginTop = float.Parse(xmlComic?.Attributes["marginTop"].InnerText);
-            this.marginBottom = float.Parse(xmlComic?.Attributes["marginBottom"].InnerText);
-            this.horizontalPanelSpacing = float.Parse(xmlComic?.Attributes["horizontalPanelSpacing"].InnerText);
-            this.verticalPanelSpacing = float.Parse(xmlComic?.Attributes["verticalPanelSpacing"].InnerText);
+            this.marginLeft = xmlComic?.Attributes["marginLeft"] != null
+                ? float.Parse(xmlComic.Attributes["marginLeft"].InnerText)
+                : 0;
+            this.marginRight = xmlComic?.Attributes["marginRight"] != null
+                ? float.Parse(xmlComic.Attributes["marginRight"].InnerText)
+                : 0;
+            this.marginTop = xmlComic?.Attributes["marginTop"] != null
+                ? float.Parse(xmlComic.Attributes["marginTop"].InnerText)
+                : 0;
+            this.marginBottom = xmlComic?.Attributes["marginBottom"] != null
+                ? float.Parse(xmlComic.Attributes["marginBottom"].InnerText)
+                : 0;
+            this.horizontalPanelSpacing = xmlComic?.Attributes["horizontalPanelSpacing"] != null
+                ? float.Parse(xmlComic.Attributes["horizontalPanelSpacing"].InnerText)
+                : 0;
+            this.verticalPanelSpacing = xmlComic?.Attributes["verticalPanelSpacing"] != null
+                ? float.Parse(xmlComic.Attributes["verticalPanelSpacing"].InnerText)
+                : 0;
             this.rowsPerPage = xmlComic?.Attributes["rowsPerPage"] != null
                 ? float.Parse(xmlComic.Attributes["rowsPerPage"].InnerText)
                 : DEFAULT_ROWS_PER_PAGE;
@@ -126,16 +138,16 @@ namespace Panels
                 foreach (Slot slot in slotsOnCurrentRow)
                 {
                     float leftCropping, rightCropping;
-                    float possibleLeftCropping = slot.GetWidth() * slot.maxLeftPaddingPct / 100;
-                    float possibleRightCropping = slot.GetWidth() * slot.maxRightPaddingPct / 100;
+                    float possibleLeftCropping = slot.Width * slot.MaxLeftPaddingPct / 100;
+                    float possibleRightCropping = slot.Width * slot.MaxRightPaddingPct / 100;
 
                     if (possibleLeftCropping + possibleRightCropping <= allowedCroppingPerPanel)
                     {
                         float balancedCropping = Math.Min(possibleLeftCropping, possibleRightCropping);
                         leftCropping = Math.Min(balancedCropping, allowedCroppingPerPanel / 2);
                         rightCropping = Math.Min(balancedCropping, allowedCroppingPerPanel / 2);
-                        slot.leftPadding = leftCropping;
-                        slot.rightPadding = rightCropping;
+                        slot.PaddingLeft = leftCropping;
+                        slot.PaddingRight = rightCropping;
 
                         cropping += leftCropping;
                         cropping += rightCropping;
@@ -143,20 +155,20 @@ namespace Panels
                 }
 
                 // We add the padding to fill the row as evenly as possible
-                List<Slot> sortedSlotsOnCurrentRow = slotsOnCurrentRow.OrderBy(e => e.maxLeftPaddingPct + e.maxRightPaddingPct).ToList();
-                while (cropping < Math.Min(totalCropping, slotsOnCurrentRow.Sum(e => (e.maxLeftPaddingPct + e.maxRightPaddingPct) * e.GetWidth() / 100)))
+                List<Slot> sortedSlotsOnCurrentRow = slotsOnCurrentRow.OrderBy(e => e.MaxLeftPaddingPct + e.MaxRightPaddingPct).ToList();
+                while (cropping < Math.Min(totalCropping, slotsOnCurrentRow.Sum(e => (e.MaxLeftPaddingPct + e.MaxRightPaddingPct) * e.Width / 100)))
                 {
                     foreach (Slot slot in sortedSlotsOnCurrentRow)
                     {
-                        if (cropping < totalCropping && slot.leftPadding < (slot.maxLeftPaddingPct * slot.GetWidth() / 100))
+                        if (cropping < totalCropping && slot.PaddingLeft < (slot.MaxLeftPaddingPct * slot.Width / 100))
                         {
-                            slot.leftPadding++;
+                            slot.PaddingLeft++;
                             cropping++;
                         }
 
-                        if (cropping < totalCropping && slot.rightPadding < (slot.maxRightPaddingPct * slot.GetWidth() / 100))
+                        if (cropping < totalCropping && slot.PaddingRight < (slot.MaxRightPaddingPct * slot.Width / 100))
                         {
-                            slot.rightPadding++;
+                            slot.PaddingRight++;
                             cropping++;
                         }
                     }
@@ -169,7 +181,7 @@ namespace Panels
                     slot.SetPosition(doc, page, this.marginLeft + x, pageSize.GetHeight() - this.marginTop - y);
                     slot.Render(doc, logWriter);
 
-                    x += slot.GetWidth() + this.horizontalPanelSpacing;
+                    x += slot.Width + this.horizontalPanelSpacing;
                 }
                 x = 0;
                 i += nbPanelsInRow;

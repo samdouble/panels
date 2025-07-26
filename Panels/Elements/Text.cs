@@ -42,19 +42,19 @@ namespace Panels.Elements
 
         public override void Render(Document doc, LogWriter logWriter)
         {
-            float left = this.parent.getPosition().X + this.left + MARGIN;
+            float left = this.parent.Position.X + this.left + MARGIN;
             float right;
             if (this.width is float width)
             {
-                right = this.parent.getPosition().X + this.left + Math.Min(width, this.parent.GetWidth() - this.left) - MARGIN;
+                right = this.parent.Position.X + this.left + Math.Min(width, this.parent.Width - this.left) - MARGIN;
             }
             else
             {
-                right = this.parent.getPosition().X + this.parent.GetWidth() - MARGIN;
+                right = this.parent.Position.X + this.parent.Width - MARGIN;
             }
 
-            float top = this.parent.getPosition().Y - this.top - 3;
-            float bottom = this.parent.getPosition().Y - this.parent.GetHeight() + MARGIN;
+            float top = this.parent.Position.Y - this.top - 3;
+            float bottom = this.parent.Position.Y - this.parent.Height + MARGIN;
             float phraseWidth = right - left;
             Paragraph phrase = new Paragraph(this.text);
             phrase.SetFixedLeading(LINE_HEIGHT);

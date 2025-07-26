@@ -14,6 +14,20 @@ namespace Panels
         protected int noPage;
         protected float x;
         protected float y;
+        public float Height {
+            get {
+                return this.image.GetImageScaledHeight();
+            }
+            set {
+                float pctScaling = value / this.image.GetImageHeight();
+                this.image.Scale(pctScaling, pctScaling);
+            }
+        }
+        public float Width {
+            get {
+                return this.image.GetImageScaledWidth();
+            }
+        }
 
         public Image(string src)
         {
@@ -23,22 +37,6 @@ namespace Panels
         public Image(byte[] bytes)
         {
             this.image = new iText.Layout.Element.Image(ImageDataFactory.Create(bytes));
-        }
-
-        public void SetHeight(float height)
-        {
-            float pctScaling = height / this.image.GetImageHeight();
-            this.image.Scale(pctScaling, pctScaling);
-        }
-
-        public float GetHeight()
-        {
-            return this.image.GetImageScaledHeight();
-        }
-
-        public float GetWidth()
-        {
-            return this.image.GetImageScaledWidth();
         }
 
         public void Crop(Document doc, float leftCropping, float horizontalOffset, float decoupageHaut = 0, float verticalOffset = 0)

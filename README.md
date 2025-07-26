@@ -113,7 +113,7 @@ dotnet run --project Panels -- -c ~/Desktop/github/proj/bd1/BD0/bd.xml -i ~/Desk
 or:
 
 ```
-dotnet build && ./Panels/bin/Debug/net8.0/Panels -c ~/Desktop/github_perso/bd1/BD0/bd.xml -i ~/Desktop/github_perso/bd1/BD0/images
+dotnet build && ./Panels/bin/Debug/net7.0/Panels -c ~/Desktop/github_perso/bd1/BD0/bd.xml -i ~/Desktop/github_perso/bd1/BD0/images
 ```
 
 ### Testing
