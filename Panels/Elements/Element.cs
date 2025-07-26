@@ -15,11 +15,6 @@ namespace Panels.Elements
 
         }
 
-        public virtual void Crop(Document doc, float leftCropping, float offset)
-        {
-
-        }
-
         // IPositionable
         public void SetPosition(int noPage, float x, float y)
         {
@@ -29,6 +24,6 @@ namespace Panels.Elements
         }
 
         // IRenderable
-        public abstract void Render(Document doc, LogWriter logWriter);
+        public abstract void Render(LogWriter logWriter);
     }
 }

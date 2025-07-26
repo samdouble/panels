@@ -31,6 +31,8 @@
                       </xs:element>
                     </xs:sequence>
                     <xs:attribute name="image" type="xs:string" use="required" />
+                    <xs:attribute name="cropBottom" type="xs:string" use="optional" default="0" />
+                    <xs:attribute name="cropTop" type="xs:string" use="optional" default="0" />
                   </xs:complexType>
                 </xs:element>
               </xs:sequence>

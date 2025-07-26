@@ -16,6 +16,7 @@ namespace Panels.Elements
 
     class Text : Element
     {
+        private Document document;
         protected Panel parent;
         protected string text;
         protected Color color = ColorConstants.BLACK;
@@ -27,8 +28,9 @@ namespace Panels.Elements
         protected float top = 0;
         protected float? width;
 
-        public Text(XmlNode element, Panel parent, TextOptions textOptions = new TextOptions()) : base(element)
+        public Text(Document document, XmlNode element, Panel parent, TextOptions textOptions = new TextOptions()) : base(element)
         {
+            this.document = document;
             this.parent = parent;
             this.text = element.Attributes["text"]?.InnerText;
             this.fontSize = textOptions.FontSize;
@@ -40,7 +42,7 @@ namespace Panels.Elements
             this.font = PdfFontFactory.CreateFont(Properties.Resources.Comicsam_Bold, PdfEncodings.CP1252);
         }
 
-        public override void Render(Document doc, LogWriter logWriter)
+        public override void Render(LogWriter logWriter)
         {
             float left = this.parent.Position.X + this.left + MARGIN;
             float right;
@@ -65,7 +67,7 @@ namespace Panels.Elements
             phrase.SetFixedPosition(this.noPage, left, bottom, phraseWidth);
             phrase.SetFontColor(this.color);
             logWriter.Log("TEXT - " + this.text + " at " + left + ", " + bottom + " with width " + phraseWidth);
-            doc.Add(phrase);
+            this.document.Add(phrase);
         }
     }
 }

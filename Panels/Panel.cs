@@ -16,10 +16,13 @@ namespace Panels
 
     class Panel : IPositionable, IRenderable
     {
+        private Document document;
         private Comic parent;
         private Image image;
         private List<Element> elements = new List<Element>();
         public PointF Position { get; private set; }
+        public float CropBottom { get; private set; }
+        public float CropTop { get; private set; }
         public float Height {
             get {
                 return this.image.Height;
@@ -34,46 +37,57 @@ namespace Panels
             }
         }
 
-        public Panel(Comic parent, XmlNode xmlPanel, PanelOptions panelOptions = new PanelOptions())
+        public Panel(Document document, Comic parent, XmlNode xmlPanel, PanelOptions panelOptions = new PanelOptions())
         {
+            this.document = document;
             this.parent = parent;
-            if (xmlPanel.Attributes["image"] == null)
-                throw new Exception("A panel must have an image attribute");
+
+            float cropBottom = xmlPanel.Attributes["cropBottom"] != null
+                ? float.Parse(xmlPanel.Attributes["cropBottom"].InnerText)
+                : 0;
+            float cropTop = xmlPanel.Attributes["cropTop"] != null
+                ? float.Parse(xmlPanel.Attributes["cropTop"].InnerText)
+                : 0;
 
             string imageSrc = xmlPanel.Attributes["image"].InnerText;
-            string imagesFolderPath = parent.GetImagesFolderPath();
-            string fullImagePath = Path.Combine(imagesFolderPath, imageSrc);
+            string fullImagePath = Path.Combine(parent.ImagesFolderPath, imageSrc);
 
             Console.WriteLine($"Getting image at {fullImagePath}");
             this.image = File.Exists(fullImagePath)
-                ? new Image(fullImagePath)
-                : new Image(Properties.Resources.temp);
+                ? new Image(document, fullImagePath)
+                : new Image(document, Properties.Resources.temp);
+            this.image.CropBottom = cropBottom;
+            this.image.CropTop = cropTop;
 
             foreach (XmlNode xmlElement in xmlPanel.ChildNodes)
             {
                 Element element = null;
                 if (xmlElement.Name == "description") {
-                    element = new Description(xmlElement, this);
+                    element = new Description(this.document, xmlElement, this);
                 }
                 else if (xmlElement.Name == "text") {
                     TextOptions textOptions = new TextOptions {
                         FontSize = panelOptions.FontSize
                     };
-                    element = new Text(xmlElement, this, textOptions);
+                    element = new Text(this.document, xmlElement, this, textOptions);
                 }
-
-                if (element != null)
-                {
-                    this.elements.Add(element);
-                }
+                this.elements.Add(element);
             }
         }
 
-        public void Crop(Document doc, float leftCropping, float horizontalOffset, float decoupageHaut = 0, float verticalOffset = 0)
+        public void Crop(
+            float topCropping = 0,
+            float rightCropping = 0,
+            float bottomCropping = 0,
+            float leftCropping = 0
+        )
         {
-            this.image.Crop(doc, leftCropping, horizontalOffset, decoupageHaut, verticalOffset);
-            foreach (Element element in elements)
-                element.Crop(doc, leftCropping, horizontalOffset);
+            this.image.Crop(
+                topCropping,
+                rightCropping,
+                bottomCropping,
+                leftCropping
+            );
         }
 
         // IPositionable
@@ -85,10 +99,10 @@ namespace Panels
         }
 
         // IRenderable
-        public void Render(Document doc, LogWriter logWriter)
+        public void Render(LogWriter logWriter)
         {
-            this.image.Render(doc, logWriter);
-            this.elements.ForEach(element => element.Render(doc, logWriter));
+            this.image.Render(logWriter);
+            this.elements.ForEach(element => element.Render(logWriter));
         }
     }
 }

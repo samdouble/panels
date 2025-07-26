@@ -8,17 +8,26 @@ namespace Panels
 {
     class NewPage : IRenderable
     {
+        private Document document;
         private Comic parent;
 
-        public NewPage(Comic parent, XmlNode xmlSlot)
+        public NewPage(Document document, Comic parent, XmlNode xmlSlot)
         {
+            this.document = document;
             this.parent = parent;
         }
 
         // IRenderable
-        public void Render(Document doc, LogWriter logWriter)
+        public void Render(LogWriter logWriter)
         {
-            // this.panels.ForEach(panel => panel.Render(doc));
+            if (this.parent.CurrentX != 0 || this.parent.CurrentY != 0) {
+                this.document.GetPdfDocument().AddNewPage();
+                this.parent.CurrentPage++;
+                this.parent.CurrentRow = this.parent.CurrentPage * this.parent.RowsPerPage;
+                this.parent.CurrentX = 0;
+                this.parent.CurrentY = 0;
+            }
+            logWriter.Log("NEW PAGE");
         }
     }
 }
