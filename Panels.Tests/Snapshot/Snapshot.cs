@@ -18,7 +18,8 @@ namespace Panels.Tests.Snapshot
         [InlineData("Snapshot/test01/bd.xml", "Snapshot/test01/images")]
         public Task Verify_test01(string xmlPath, string imagesPath)
         {
-            string parentDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+            string parentDirectory = Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.FullName
+                ?? throw new Exception("Parent directory not found");
             string fullXmlPath = Path.Combine(parentDirectory, xmlPath);
             string fullImagesPath = Path.Combine(parentDirectory, imagesPath);
 
