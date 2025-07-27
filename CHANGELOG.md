@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.0](https://github.com/samdouble/panels/compare/1.2.2...v1.3.0) (2025-07-27)
+
+
+### Features
+
+* add cropBottom and CropTop option on panels ([492a821](https://github.com/samdouble/panels/commit/492a8211debbf80de4a381162924c26bc6485bdb))
+* split command-line parser into generate and validate commands ([cc68b4e](https://github.com/samdouble/panels/commit/cc68b4e96066a44b770016bd96186dc9c996c78b))
+
+
+### Bug Fixes
+
+* add width property to XSD for text element ([bc56dae](https://github.com/samdouble/panels/commit/bc56daeec745125a751098181a9c2aa97d452017))
+
 ## [1.2.2](https://github.com/samdouble/panels/compare/v1.2.1...v1.2.2) (2025-07-23)
 
 
