@@ -22,12 +22,7 @@ namespace Panels.Tests.Snapshot
                 ?? throw new Exception("Parent directory not found");
             string fullXmlPath = Path.Combine(parentDirectory, xmlPath);
             string fullImagesPath = Path.Combine(parentDirectory, imagesPath);
-
-            Program.Options options = new Program.Options();
-            options.Config = fullXmlPath;
-            options.Images = fullImagesPath;
-            options.Output = @"./output.pdf";
-            string result = Program.GeneratePdf(options);
+            string result = Program.GeneratePdf(fullXmlPath, fullImagesPath, @"./output.pdf");
             return Verify(result, Settings);
         }
     }

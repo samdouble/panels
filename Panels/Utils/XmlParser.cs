@@ -10,6 +10,7 @@ namespace Panels.Utils
     {
         public static XmlNode Read(string xmlPath)
         {
+            Console.WriteLine($"Reading config file at {xmlPath}");
             string xsdPath = Path.Combine(
                 AppDomain.CurrentDomain.BaseDirectory,
                 "Assets/schema.xsd"

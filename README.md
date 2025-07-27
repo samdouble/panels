@@ -7,19 +7,32 @@ Panels is a CLI tool that allows you to export a comic book in PDF format from a
 
 ## How to Use
 
-### Command-line arguments
+### Command-line Commands & Arguments
 
-Panels accepts the following command-line arguments:
+- `--version`: Show version information.
+
+#### `generate`
+This command will use the raw images and the config file to generate the final PDF file.
 
 - `-c`, `--config` **(required)**: Path to the XML configuration file describing the comic structure.
 - `-i`, `--images` **(required)**: Path to the directory containing the images used in the comic.
 - `-o`, `--output` *(optional)*: Path to the output PDF file. If not specified, the output will be named `output.pdf` in the current directory.
-- `--help`: Show help information.
-- `--version`: Show version information.
+- `-?`, `-h`, `--help`: Show help information.
 
 **Example:**
 ```
-dotnet run --project Panels -- -c path/to/config.xml -i path/to/images -o my_comic.pdf
+dotnet run --project Panels -- generate -c path/to/config.xml -i path/to/images -o my_comic.pdf
+```
+
+#### `validate`
+This command will validate the config file.
+
+- `-c`, `--config` **(required)**: Path to the XML configuration file describing the comic structure.
+- `-?`, `-h`, `--help`: Show help information.
+
+**Example:**
+```
+dotnet run --project Panels -- validate -c path/to/config.xml
 ```
 
 ### XML Configuration Reference
@@ -116,13 +129,13 @@ Forces a page break. Can be placed between slots.
 ### Running Locally
 
 ```
-dotnet run --project Panels -- -c ~/Desktop/github/proj/bd1/BD0/bd.xml -i ~/Desktop/github/proj/bd1/BD0/images
+dotnet run --project Panels -- generate -c ~/Desktop/github_perso/bd1/BD0/bd.xml -i ~/Desktop/github_perso/bd1/BD0/images
 ```
 
 or:
 
 ```
-dotnet build && ./Panels/bin/Debug/net7.0/Panels -c ~/Desktop/github_perso/bd1/BD0/bd.xml -i ~/Desktop/github_perso/bd1/BD0/images
+dotnet build && ./Panels/bin/Debug/net7.0/Panels generate -c ~/Desktop/github_perso/bd1/BD0/bd.xml -i ~/Desktop/github_perso/bd1/BD0/images
 ```
 
 ### Testing
