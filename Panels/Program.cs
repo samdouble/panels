@@ -1,9 +1,10 @@
-﻿using CommandLine;
-using iText.Kernel.Geom;
+﻿using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using Panels.Utils;
 using System;
+using System.CommandLine;
+using System.CommandLine.Parsing;
 using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics.CodeAnalysis;
@@ -12,54 +13,66 @@ namespace Panels
 {
     public class Program
     {
-        public class Options
+        static int Main(string[] args)
         {
-            [Option('c', "config", Required = true, HelpText = "Path to the XML file")]
-            public string Config { get; set; } = string.Empty;
+            Option<string> configOption = new("--config", "-c") {
+                Description = "Path to the XML file",
+                DefaultValueFactory = parseResult => string.Empty
+            };
+            RootCommand rootCommand = new("Panels: an app to create comics in PDF format from images and XML");
 
-            [Option('i', "images", Required = true, HelpText = "Path to the folder containing the images")]
-            public string Images { get; set; } = string.Empty;
+            // Generate
+            Option<string> imagesOption = new("--images", "-i") {
+                Description = "Path to the folder containing the images",
+                DefaultValueFactory = parseResult => string.Empty
+            };
+            Option<string> outputOption = new("--output", "-o") {
+                Description = "Name of the generated PDF",
+                DefaultValueFactory = parseResult => "Images.pdf"
+            };
+            Command generateCommand = new("generate", "Generate the PDF file.");
+            generateCommand.Add(configOption);
+            generateCommand.Add(imagesOption);
+            generateCommand.Add(outputOption);
+            generateCommand.SetAction(parseResult => {
+                string contents = GeneratePdf(
+                    parseResult.GetValue(configOption),
+                    parseResult.GetValue(imagesOption),
+                    parseResult.GetValue(outputOption)
+                );
+                File.WriteAllText(@"./debug-output.txt", contents);
+                return 0;
+            });
+            rootCommand.Subcommands.Add(generateCommand);
 
-            [Option('o', "output", Default = "Images.pdf", HelpText = "Name of the generated PDF")]
-            public string Output { get; set; } = string.Empty;
+            // Validate
+            Command validateCommand = new("validate", "Validate the config file.");
+            validateCommand.Add(configOption);
+            validateCommand.SetAction(parseResult => {
+                XmlParser.Read(parseResult.GetValue(configOption));
+                Console.WriteLine("Config file is valid");
+                return 0;
+            });
+            rootCommand.Subcommands.Add(validateCommand);
+
+            ParseResult parseResult = rootCommand.Parse(args);
+            return parseResult.Invoke();
         }
 
-        [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(Options))]
-        static void Main(string[] args)
-        {
-            Parser.Default.ParseArguments<Options>(args)
-                .WithParsed(RunWithOptions)
-                .WithNotParsed(HandleParseError);
-        }
-
-        public static string GeneratePdf(Options opts)
+        public static string GeneratePdf(string configFile, string imagesFolderPath, string outputFile)
         {
             LogWriter logWriter = new LogWriter();
             logWriter.Log("Starting PDF generation...");
-            PdfWriter writer = new PdfWriter(@$"{opts.Output}");
+            PdfWriter writer = new PdfWriter(@$"{outputFile}");
             PdfDocument pdfDocument = new PdfDocument(writer);
             pdfDocument.SetDefaultPageSize(PageSize.A4);
             Document document = new Document(pdfDocument);
-            Comic comic = new Comic(document, opts.Config, opts.Images);
+            Comic comic = new Comic(document, configFile, imagesFolderPath);
             comic.Render(logWriter);
             document.Close();
             pdfDocument.Close();
-            logWriter.Log("Generated " + opts.Output);
+            logWriter.Log("Generated " + outputFile);
             return logWriter.Contents;
-        }
-
-        public static void RunWithOptions(Options opts)
-        {
-            string contents = GeneratePdf(opts);
-            File.WriteAllText(@"./debug-output.txt", contents);
-        }
-
-        static void HandleParseError(IEnumerable<Error> errs)
-        {
-            foreach (Error err in errs)
-            {
-                Console.WriteLine("Error", err.ToString());
-            }
         }
     }
 }

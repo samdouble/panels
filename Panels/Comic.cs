@@ -34,7 +34,6 @@ namespace Panels
             this.document = document;
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-            Console.WriteLine($"Reading config file at {configFile}");
             XmlNode xmlComic = XmlParser.Read(configFile);
             this.ImagesFolderPath = imagesFolderPath;
             this.fontSize = xmlComic?.Attributes["fontSize"] != null
