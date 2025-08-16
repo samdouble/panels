@@ -11,7 +11,12 @@ namespace Panels.Elements
         private Document document;
         protected bool visible = true;
 
-        public Description(Document document, XmlNode element, Panel parent) : base(document, element, parent)
+        public Description(
+            Document document,
+            XmlNode element,
+            Panel parent,
+            TextOptions textOptions = new TextOptions()
+        ) : base(document, element, parent, textOptions)
         {
             this.document = document;
             this.color = ColorConstants.RED;

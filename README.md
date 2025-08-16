@@ -5,6 +5,17 @@
 
 Panels is a CLI tool that allows you to export a comic book in PDF format from an XML configuration and a set of images.
 
+## Installation
+
+### Linux
+
+```
+curl -sL -o Panels.VERSION.linux-x64.deb https://github.com/samdouble/panels/releases/download/VERSION/Panels.VERSION.linux-x64.deb
+sudo apt install ./Panels.VERSION.linux-x64.deb
+export PATH=$PATH:/usr/share/Panels
+Panels --help
+```
+
 ## How to Use
 
 ### Command-line Commands & Arguments
