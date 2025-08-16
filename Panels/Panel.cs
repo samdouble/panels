@@ -62,13 +62,13 @@ namespace Panels
             foreach (XmlNode xmlElement in xmlPanel.ChildNodes)
             {
                 Element element = null;
+                TextOptions textOptions = new TextOptions {
+                    FontSize = panelOptions.FontSize
+                };
                 if (xmlElement.Name == "description") {
-                    element = new Description(this.document, xmlElement, this);
+                    element = new Description(this.document, xmlElement, this, textOptions);
                 }
                 else if (xmlElement.Name == "text") {
-                    TextOptions textOptions = new TextOptions {
-                        FontSize = panelOptions.FontSize
-                    };
                     element = new Text(this.document, xmlElement, this, textOptions);
                 }
                 this.elements.Add(element);

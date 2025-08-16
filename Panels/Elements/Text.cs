@@ -28,7 +28,12 @@ namespace Panels.Elements
         protected float top = 0;
         protected float? width;
 
-        public Text(Document document, XmlNode element, Panel parent, TextOptions textOptions = new TextOptions()) : base(element)
+        public Text(
+            Document document,
+            XmlNode element,
+            Panel parent,
+            TextOptions textOptions = new TextOptions()
+        ) : base(element)
         {
             this.document = document;
             this.parent = parent;
