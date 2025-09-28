@@ -146,7 +146,7 @@ dotnet run --project Panels -- generate -c ~/Desktop/github_perso/bd1/BD0/bd.xml
 or:
 
 ```
-dotnet build && ./Panels/bin/Debug/net7.0/Panels generate -c ~/Desktop/github_perso/bd1/BD0/bd.xml -i ~/Desktop/github_perso/bd1/BD0/images
+dotnet build && ./Panels/bin/Debug/net9.0/Panels generate -c ~/Desktop/github_perso/bd1/BD0/bd.xml -i ~/Desktop/github_perso/bd1/BD0/images
 ```
 
 ### Testing
@@ -158,7 +158,7 @@ dotnet test
 ## Technologies & Languages
 
 - C# 11
-- .NET 7
+- .NET 9
 - iText 9
 - GitHub Actions
 - GitHub Releases

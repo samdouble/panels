@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         os: ['ubuntu-latest', 'windows-latest']
-        dotnet-version: ['7.0']
+        dotnet-version: ['8.0', '9.0']
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
@@ -34,5 +34,5 @@ jobs:
           dotnet build
       - name: Test Release dry run
         run: |
-          dotnet tool install --global dotnet-releaser --version 0.9.0
+          dotnet tool install --global dotnet-releaser --version 0.13.1
           dotnet-releaser build --force dotnet-releaser.toml
