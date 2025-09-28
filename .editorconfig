@@ -11,6 +11,7 @@ charset = utf-8-bom
 [*.{c,c++,cc,cp,cpp,cs,cu,cuh,cxx,h,hh,hpp,hxx,inc,inl,ino,ipp,mpp,proto,tpp}]
 indent_style=tab
 indent_size=tab
+max_line_length=120
 tab_width=4
 
 [*.{asax,ascx,aspx,cshtml,css,htm,html,js,jsx,master,razor,skin,ts,tsx,vb,xaml,xamlx,xoml}]
@@ -21,8 +22,8 @@ tab_width=4
 [*.{appxmanifest,axml,build,config,csproj,dbml,discomap,dtd,json,jsproj,lsproj,njsproj,nuspec,proj,props,resjson,resw,resx,StyleCop,targets,tasks,vbproj,xml,xsd}]
 indent_style=space
 indent_size=2
+max_line_length=120
 tab_width=2
-max_line_length=200
 
 [*.md]
 insert_final_newline = true
@@ -36,6 +37,7 @@ indent_size = 2
 [*.{cs,csx,vb,vbx}]
 indent_size = 4
 insert_final_newline = false
+max_line_length=120
 
 [*.Designer.cs]
 generated_code = true

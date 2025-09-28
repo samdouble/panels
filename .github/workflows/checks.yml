@@ -25,7 +25,8 @@ jobs:
         run: |
           dotnet restore
           dotnet list package --vulnerable --include-transitive | tee vulnerable.out
-        # test `grep -cm 1 'has the following vulnerable packages' vulnerable.out` = 0
+          grep -q "has the following vulnerable packages" vulnerable.out && (echo "Vulnerable packages found!" && cat vulnerable.out && exit 1) || echo "No vulnerable packages found."
+        shell: bash
       - name: Lint
         run: |
           dotnet format -v detailed
