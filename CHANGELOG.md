@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/samdouble/panels/compare/1.3.0...v1.3.1) (2025-09-28)
+
+
+### Bug Fixes
+
+* fix issue with description texts not showing ([eac1269](https://github.com/samdouble/panels/commit/eac12698857b948f098791f8234376fe44eef039))
+
 ## [1.3.0](https://github.com/samdouble/panels/compare/1.2.2...v1.3.0) (2025-07-27)
 
 
