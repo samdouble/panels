@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 using System.Xml;
@@ -6,40 +6,40 @@ using System.Xml.Schema;
 
 namespace Panels.Utils
 {
-    public sealed class XmlParser
-    {
-        public static XmlNode Read(string xmlPath)
-        {
-            Console.WriteLine($"Reading config file at {xmlPath}");
-            string xsdPath = Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                "Assets/schema.xsd"
-            );
-            XmlReaderSettings settings = new XmlReaderSettings();
-            settings.Schemas.Add(null, xsdPath);
-            settings.ValidationType = ValidationType.Schema;
+	public sealed class XmlParser
+	{
+		public static XmlNode Read(string xmlPath)
+		{
+			Console.WriteLine($"Reading config file at {xmlPath}");
+			var xsdPath = Path.Combine(
+				AppDomain.CurrentDomain.BaseDirectory,
+				"Assets/schema.xsd"
+			);
+			XmlReaderSettings settings = new XmlReaderSettings();
+			settings.Schemas.Add(null, xsdPath);
+			settings.ValidationType = ValidationType.Schema;
 
-            XmlReader reader = XmlReader.Create(@$"{xmlPath}", settings);
-            XmlDocument document = new XmlDocument();
-            document.Load(reader);
-            ValidationEventHandler eventHandler = new ValidationEventHandler(ComicsValidationEventHandler);
-            document.Validate(eventHandler);
+			XmlReader reader = XmlReader.Create(@$"{xmlPath}", settings);
+			XmlDocument document = new XmlDocument();
+			document.Load(reader);
+			ValidationEventHandler eventHandler = new ValidationEventHandler(ComicsValidationEventHandler);
+			document.Validate(eventHandler);
 
-            return document.DocumentElement;
-        }
+			return document.DocumentElement;
+		}
 
-        static void ComicsValidationEventHandler(object sender, ValidationEventArgs e)
-        {
-            if (e.Severity == XmlSeverityType.Warning)
-            {
-                Console.Write("WARNING: ");
-                Console.WriteLine(e.Message);
-            }
-            else if (e.Severity == XmlSeverityType.Error)
-            {
-                Console.Write("ERROR: ");
-                Console.WriteLine(e.Message);
-            }
-        }
-    }
+		static void ComicsValidationEventHandler(object sender, ValidationEventArgs e)
+		{
+			if (e.Severity == XmlSeverityType.Warning)
+			{
+				Console.Write("WARNING: ");
+				Console.WriteLine(e.Message);
+			}
+			else if (e.Severity == XmlSeverityType.Error)
+			{
+				Console.Write("ERROR: ");
+				Console.WriteLine(e.Message);
+			}
+		}
+	}
 }
