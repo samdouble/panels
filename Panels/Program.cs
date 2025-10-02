@@ -1,6 +1,7 @@
 ﻿using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Layout;
+using Panels.Configuration;
 using Panels.Utils;
 using System;
 using System.Collections.Generic;
@@ -72,7 +73,8 @@ namespace Panels
 			PdfDocument pdfDocument = new PdfDocument(writer);
 			pdfDocument.SetDefaultPageSize(PageSize.A4);
 			Document document = new Document(pdfDocument);
-			Comic comic = new Comic(document, configFile, imagesFolderPath);
+			Comic comic = ConfigurationParser.Read(configFile);
+			comic.Initialize(document, imagesFolderPath);
 			comic.Render(logWriter);
 			document.Close();
 			pdfDocument.Close();

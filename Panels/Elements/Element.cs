@@ -1,6 +1,5 @@
 ﻿using iText.Layout;
 using Panels.Utils;
-using System.Xml;
 
 namespace Panels.Elements
 {
@@ -10,9 +9,8 @@ namespace Panels.Elements
 		private float x;
 		private float y;
 
-		public Element(XmlNode element)
+		public Element()
 		{
-
 		}
 
 		// IPositionable

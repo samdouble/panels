@@ -3,14 +3,16 @@ using System.IO;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Schema;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
 
-namespace Panels.Utils
+namespace Panels.Configuration
 {
 	public sealed class XmlParser
 	{
-		public static XmlNode Read(string xmlPath)
+		public static Comic Read(string xmlPath)
 		{
-			Console.WriteLine($"Reading config file at {xmlPath}");
+			// XSD Validation
 			var xsdPath = Path.Combine(
 				AppDomain.CurrentDomain.BaseDirectory,
 				"Assets/schema.xsd"
@@ -25,7 +27,12 @@ namespace Panels.Utils
 			ValidationEventHandler eventHandler = new ValidationEventHandler(ComicsValidationEventHandler);
 			document.Validate(eventHandler);
 
-			return document.DocumentElement;
+			// Deserialization
+			XmlSerializer serializer = new XmlSerializer(typeof(Comic));
+			using (StringReader stringReader = new StringReader(document.OuterXml))
+			{
+				return (Comic)serializer.Deserialize(stringReader);
+			}
 		}
 
 		static void ComicsValidationEventHandler(object sender, ValidationEventArgs e)

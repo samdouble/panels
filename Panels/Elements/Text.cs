@@ -6,45 +6,63 @@ using iText.Layout.Element;
 using Panels.Utils;
 using System;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace Panels.Elements
 {
-	public struct TextOptions
+	[XmlType("text")]
+	public class Text : Element
 	{
-		public int FontSize { get; init; }
-	}
-
-	class Text : Element
-	{
-		private readonly Document document;
-		private readonly Panel parent;
-		private readonly string text;
+		private Document document;
+		private Panel parent;
+		public string text;
 		protected Color color { get; set; } = ColorConstants.BLACK;
 		private const int LINE_HEIGHT = 11;
 		private const int MARGIN = 5;
-		private readonly PdfFont font;
-		private readonly int fontSize;
-		private readonly float left = 0;
-		private readonly float top = 0;
-		private readonly float? width;
+		private PdfFont font = PdfFontFactory.CreateFont(Properties.Resources.Comicsam_Bold, PdfEncodings.CP1252);
+		private int fontSize;
+		private float left = 0;
+		private float top = 0;
+		private float? width;
 
-		public Text(
-			Document document,
-			XmlNode element,
-			Panel parent,
-			TextOptions textOptions = new TextOptions()
-		) : base(element)
+		[XmlAttribute("text")]
+		public string TextContent
+		{
+			get { return text; }
+			set { text = value; }
+		}
+
+		[XmlAttribute("left")]
+		public float Left
+		{
+			get { return left; }
+			set { left = value; }
+		}
+
+		[XmlAttribute("top")]
+		public float Top
+		{
+			get { return top; }
+			set { top = value; }
+		}
+
+		[XmlIgnore]
+		public float? Width
+		{
+			get { return width; }
+			set { width = value; }
+		}
+
+		public Text()
+		{
+			this.font = PdfFontFactory.CreateFont(Properties.Resources.Comicsam_Bold, PdfEncodings.CP1252);
+			this.fontSize = 12;
+		}
+
+		public void Initialize(Document document, Panel parent)
 		{
 			this.document = document;
 			this.parent = parent;
-			this.text = element.Attributes["text"]?.InnerText;
-			this.fontSize = textOptions.FontSize;
-			// Optional
-			this.left = element?.Attributes["left"] != null ? float.Parse(element.Attributes["left"].InnerText) : 0.0f;
-			this.top = element?.Attributes["top"] != null ? float.Parse(element.Attributes["top"].InnerText) : 0.0f;
-			this.width = element?.Attributes["width"] != null ? float.Parse(element.Attributes["width"].InnerText) : (float?) null;
-			// Load Font
-			this.font = PdfFontFactory.CreateFont(Properties.Resources.Comicsam_Bold, PdfEncodings.CP1252);
 		}
 
 		public override void Render(LogWriter logWriter)
