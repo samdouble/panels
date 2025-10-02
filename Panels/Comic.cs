@@ -1,80 +1,76 @@
 ﻿using iText.Kernel.Geom;
 using iText.Layout;
+using Panels.Configuration;
 using Panels.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace Panels
 {
-	class Comic : IRenderable
+	[XmlRoot("comic")]
+	public class Comic : IRenderable
 	{
-		private readonly Document document;
-		private readonly List<IRenderable> children = new List<IRenderable>();
+		private Document document;
 		protected const int DEFAULT_FONT_SIZE = 12;
 		protected const int DEFAULT_ROWS_PER_PAGE = 3;
-		private readonly int fontSize;
-		private readonly float marginLeft;
-		private readonly float marginRight;
-		private readonly float marginTop;
-		private readonly float marginBottom;
-		public int RowsPerPage { get; private set; }
-		private readonly float horizontalPanelSpacing;
-		public float VerticalPanelSpacing { get; private set; }
+
+		[XmlAttribute("fontSize")]
+		public int fontSize = DEFAULT_FONT_SIZE;
+
+		[XmlAttribute("marginLeft")]
+		public float marginLeft = 0;
+
+		[XmlAttribute("marginRight")]
+		public float marginRight = 0;
+
+		[XmlAttribute("marginTop")]
+		public float marginTop = 0;
+
+		[XmlAttribute("marginBottom")]
+		public float marginBottom = 0;
+
+		[XmlAttribute("rowsPerPage")]
+		public int rowsPerPage { get; set; } = DEFAULT_ROWS_PER_PAGE;
+
+		[XmlAttribute("horizontalPanelSpacing")]
+		public float horizontalPanelSpacing = 0;
+
+		[XmlAttribute("verticalPanelSpacing")]
+		public float VerticalPanelSpacing { get; set; } = 0;
+
+		[XmlElement("newpage", Type = typeof(NewPage))]
+		[XmlElement("slot", Type = typeof(Slot))]
+		public List<object> children { get; set; } = new List<object>();
+
+		[XmlIgnore]
 		public string ImagesFolderPath { get; private set; }
 		public int CurrentPage { get; set; } = 1;
 		public int CurrentRow { get; set; } = 1;
 		public float CurrentX { get; set; } = 0;
 		public float CurrentY { get; set; } = 0;
 
-		public Comic(Document document, string configFile, string imagesFolderPath)
+		public Comic()
+		{
+			Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+		}
+
+		public void Initialize(Document document, string imagesFolderPath)
 		{
 			this.document = document;
-			Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
-			XmlNode xmlComic = XmlParser.Read(configFile);
 			this.ImagesFolderPath = imagesFolderPath;
-			this.fontSize = xmlComic?.Attributes["fontSize"] != null
-				? int.Parse(xmlComic.Attributes["fontSize"].InnerText)
-				: DEFAULT_FONT_SIZE;
-			this.marginLeft = xmlComic?.Attributes["marginLeft"] != null
-				? float.Parse(xmlComic.Attributes["marginLeft"].InnerText)
-				: 0;
-			this.marginRight = xmlComic?.Attributes["marginRight"] != null
-				? float.Parse(xmlComic.Attributes["marginRight"].InnerText)
-				: 0;
-			this.marginTop = xmlComic?.Attributes["marginTop"] != null
-				? float.Parse(xmlComic.Attributes["marginTop"].InnerText)
-				: 0;
-			this.marginBottom = xmlComic?.Attributes["marginBottom"] != null
-				? float.Parse(xmlComic.Attributes["marginBottom"].InnerText)
-				: 0;
-			this.RowsPerPage = xmlComic?.Attributes["rowsPerPage"] != null
-				? int.Parse(xmlComic.Attributes["rowsPerPage"].InnerText)
-				: DEFAULT_ROWS_PER_PAGE;
-			this.horizontalPanelSpacing = xmlComic?.Attributes["horizontalPanelSpacing"] != null
-				? float.Parse(xmlComic.Attributes["horizontalPanelSpacing"].InnerText)
-				: 0;
-			this.VerticalPanelSpacing = xmlComic?.Attributes["verticalPanelSpacing"] != null
-				? float.Parse(xmlComic.Attributes["verticalPanelSpacing"].InnerText)
-				: 0;
-
-			List<XmlNode> xmlNodes = new List<XmlNode>(xmlComic.ChildNodes.Cast<XmlNode>());
-			SlotOptions slotOptions = new SlotOptions
+			foreach (var child in this.children)
 			{
-				FontSize = this.fontSize
-			};
-			foreach (XmlNode xmlNode in xmlNodes)
-			{
-				if (xmlNode.Name == "newpage")
+				if (child is Slot slot)
 				{
-					this.children.Add(new NewPage(document, this, xmlNode));
+					slot.Initialize(this.document, this);
 				}
-				if (xmlNode.Name == "slot")
+				else if (child is NewPage newPage)
 				{
-					this.children.Add(new Slot(document, this, xmlNode, slotOptions));
+					newPage.Initialize(this.document, this);
 				}
 			}
 		}
@@ -83,15 +79,15 @@ namespace Panels
 		public void Render(LogWriter logWriter)
 		{
 			PageSize pageSize = this.document.GetPdfDocument().GetDefaultPageSize();
-			var panelHeight = (pageSize.GetHeight() - this.marginTop - this.marginBottom - (this.RowsPerPage - 1) * this.VerticalPanelSpacing) / this.RowsPerPage;
+			var panelHeight = (pageSize.GetHeight() - this.marginTop - this.marginBottom - (this.rowsPerPage - 1) * this.VerticalPanelSpacing) / this.rowsPerPage;
 			var rowWidth = pageSize.GetWidth() - this.marginRight - this.marginLeft;
 			this.CurrentY = panelHeight + this.VerticalPanelSpacing;
 			for (var i = 0; i < this.children.Count;)
 			{
 				// Handle newpage elements
-				if (this.children[i].GetType() == typeof(NewPage))
+				if (this.children[i] is NewPage newPage)
 				{
-					this.children[i].Render(logWriter);
+					newPage.Render(logWriter);
 					i++;
 					continue;
 				}
@@ -102,7 +98,7 @@ namespace Panels
 				float maxWidth = 0;
 				for (; i + nbPanelsInRow < this.children.Count && minWidth < rowWidth; ++nbPanelsInRow)
 				{
-					if (this.children[i + nbPanelsInRow].GetType() != typeof(Slot))
+					if (!(this.children[i + nbPanelsInRow] is Slot))
 						break;
 					Slot slot = (Slot) this.children[i + nbPanelsInRow];
 					slot.SetHeight(panelHeight);
@@ -181,7 +177,7 @@ namespace Panels
 				i += nbPanelsInRow;
 				++this.CurrentRow;
 
-				if (this.CurrentRow % this.RowsPerPage == 0)
+				if (this.CurrentRow % this.rowsPerPage == 0)
 				{
 					this.document.GetPdfDocument().AddNewPage();
 					++this.CurrentPage;

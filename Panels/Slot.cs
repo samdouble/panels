@@ -1,49 +1,60 @@
 ﻿using iText.Layout;
 using Panels.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace Panels
 {
-	public struct SlotOptions
+	[XmlType("slot")]
+	public class Slot : IRenderable
 	{
-		public int FontSize { get; init; }
-	}
+		[XmlIgnore]
+		private Document document;
+		[XmlIgnore]
+		private Comic parent;
 
-	class Slot : IRenderable
-	{
-		private readonly Document document;
-		private readonly Comic parent;
-		private readonly List<Panel> panels = new List<Panel>();
+		[XmlElement("panel", Type = typeof(Panel))]
+		public List<Panel> panels = new List<Panel>();
+		
+		[XmlAttribute("maxCropLeft")]
 		public float MaxLeftPaddingPct { get; set; }
+		
+		[XmlAttribute("maxCropRight")]
 		public float MaxRightPaddingPct { get; set; }
+		
+		[XmlIgnore]
 		public float PaddingLeft { get; set; }
+		
+		[XmlIgnore]
 		public float PaddingRight { get; set; }
+		
+		[XmlIgnore]
 		public float Height { get; set; }
 		public float Width
 		{
 			get
 			{
-				return panels.Select(panel => panel.Width).Max();
+				return panels.Count > 0 ? panels.Select(panel => panel.Width).Max() : 0f;
 			}
 		}
 
-		public Slot(Document document, Comic parent, XmlNode xmlSlot, SlotOptions slotOptions = new SlotOptions())
+		public Slot()
+		{
+			this.PaddingLeft = 0f;
+			this.PaddingRight = 0f;
+		}
+
+		public void Initialize(Document document, Comic parent)
 		{
 			this.document = document;
 			this.parent = parent;
-			this.MaxLeftPaddingPct = xmlSlot?.Attributes["maxCropLeft"] != null ? float.Parse(xmlSlot.Attributes["maxCropLeft"].InnerText) : 0f;
-			this.MaxRightPaddingPct = xmlSlot?.Attributes["maxCropRight"] != null ? float.Parse(xmlSlot.Attributes["maxCropRight"].InnerText) : 0f;
-			this.PaddingLeft = 0f;
-			this.PaddingRight = 0f;
-
-			PanelOptions panelOptions = new PanelOptions
+			foreach (var panel in this.panels)
 			{
-				FontSize = slotOptions.FontSize
-			};
-			List<XmlNode> xmlPanels = new List<XmlNode>(xmlSlot.ChildNodes.Cast<XmlNode>());
-			this.panels.AddRange(xmlPanels.Select(xmlPanel => new Panel(document, parent, xmlPanel, panelOptions)));
+				panel.Initialize(document, parent);
+			}
 		}
 
 		public void SetHeight(float height)
@@ -65,7 +76,7 @@ namespace Panels
 
 		public float GetMaxWidth()
 		{
-			return panels.Select(panel => panel.Width).Max();
+			return panels.Count > 0 ? panels.Select(panel => panel.Width).Max() : 0f;
 		}
 
 		public void Crop()

@@ -3,26 +3,43 @@ using iText.Layout;
 using Panels.Elements;
 using Panels.Utils;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace Panels.Elements
 {
-	class Description : Text
+	[XmlType("description")]
+	public class Description : Text
 	{
-		private readonly Document document;
-		private readonly bool visible = true;
+		[XmlIgnore]
+		private Document document;
 
-		public Description(
-			Document document,
-			XmlNode element,
-			Panel parent,
-			TextOptions textOptions = new TextOptions()
-		) : base(document, element, parent, textOptions)
+		[XmlIgnore]
+		private Color color = ColorConstants.RED;
+		private bool visible = true;
+
+		public Description()
+		{
+			this.color = ColorConstants.RED;
+		}
+
+		[XmlAttribute("visible")]
+		public bool Visible
+		{
+			get { return visible; }
+			set { visible = value; }
+		}
+
+		[XmlAttribute("text")]
+		public string TextContent
+		{
+			get { return base.text; }
+			set { base.text = value; }
+		}
+
+		public void Initialize(Document document, Panel parent)
 		{
 			this.document = document;
-			this.color = ColorConstants.RED;
-			this.visible = element.Attributes["visible"] != null
-				? bool.Parse(element.Attributes["visible"].InnerText)
-				: true;
+			base.Initialize(document, parent);
 		}
 
 		public override void Render(LogWriter logWriter)

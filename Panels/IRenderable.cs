@@ -3,7 +3,7 @@ using Panels.Utils;
 
 namespace Panels
 {
-	interface IRenderable
+	public interface IRenderable
 	{
 		void Render(LogWriter logWriter);
 	}

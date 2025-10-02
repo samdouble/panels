@@ -6,23 +6,37 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace Panels
 {
-	public struct PanelOptions
+	[XmlType("panel")]
+	public class Panel : IPositionable, IRenderable
 	{
-		public int FontSize { get; init; }
-	}
+		[XmlIgnore]
+		private Document document;
 
-	class Panel : IPositionable, IRenderable
-	{
-		private readonly Document document;
-		private readonly Comic parent;
-		private readonly Image image;
-		private readonly List<Element> elements = new List<Element>();
+		[XmlIgnore]
+		private Comic parent;
+
+		[XmlIgnore]
+		private Image image;
+
+		[XmlAttribute("image")]
+		public string ImagePath { get; set; }
+
+		[XmlElement("description", Type = typeof(Description))]
+		[XmlElement("text", Type = typeof(Text))]
+		public List<Element> elements = new List<Element>();
+		
+		[XmlIgnore]
 		public PointF Position { get; private set; }
-		public float CropBottom { get; private set; }
-		public float CropTop { get; private set; }
+		
+		[XmlAttribute("cropBottom")]
+		public float CropBottom { get; set; }
+		
+		[XmlAttribute("cropTop")]
+		public float CropTop { get; set; }
 		public float Height
 		{
 			get
@@ -42,44 +56,41 @@ namespace Panels
 			}
 		}
 
-		public Panel(Document document, Comic parent, XmlNode xmlPanel, PanelOptions panelOptions = new PanelOptions())
+		public Panel()
+		{
+			this.CropBottom = 0;
+			this.CropTop = 0;
+		}
+
+		public void Initialize(Document document, Comic parent)
 		{
 			this.document = document;
 			this.parent = parent;
-
-			var cropBottom = xmlPanel.Attributes["cropBottom"] != null
-				? float.Parse(xmlPanel.Attributes["cropBottom"].InnerText)
-				: 0;
-			var cropTop = xmlPanel.Attributes["cropTop"] != null
-				? float.Parse(xmlPanel.Attributes["cropTop"].InnerText)
-				: 0;
-
-			var imageSrc = xmlPanel.Attributes["image"].InnerText;
-			var fullImagePath = Path.Combine(parent.ImagesFolderPath, imageSrc);
-
-			Console.WriteLine($"Getting image at {fullImagePath}");
-			this.image = File.Exists(fullImagePath)
-				? new Image(document, fullImagePath)
-				: new Image(document, Properties.Resources.temp);
-			this.image.CropBottom = cropBottom;
-			this.image.CropTop = cropTop;
-
-			foreach (XmlNode xmlElement in xmlPanel.ChildNodes)
+			if (!string.IsNullOrEmpty(this.ImagePath))
 			{
-				Element element = null;
-				TextOptions textOptions = new TextOptions
+				var fullImagePath = Path.Combine(parent.ImagesFolderPath, this.ImagePath);
+				Console.WriteLine($"Getting image at {fullImagePath}");
+				this.image = File.Exists(fullImagePath)
+					? new Image(document, fullImagePath)
+					: new Image(document, Properties.Resources.temp);
+			}
+			else
+			{
+				this.image = new Image(document, Properties.Resources.temp);
+			}
+			this.image.CropBottom = this.CropBottom;
+			this.image.CropTop = this.CropTop;
+
+			foreach (var element in this.elements)
+			{
+				if (element is Description description)
 				{
-					FontSize = panelOptions.FontSize
-				};
-				if (xmlElement.Name == "description")
-				{
-					element = new Description(this.document, xmlElement, this, textOptions);
+					description.Initialize(document, this);
 				}
-				else if (xmlElement.Name == "text")
+				else if (element is Text text)
 				{
-					element = new Text(this.document, xmlElement, this, textOptions);
+					text.Initialize(document, this);
 				}
-				this.elements.Add(element);
 			}
 		}
 

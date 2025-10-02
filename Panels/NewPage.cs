@@ -3,15 +3,23 @@ using Panels.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace Panels
 {
-	class NewPage : IRenderable
+	[XmlType("newpage")]
+	public class NewPage : IRenderable
 	{
-		private readonly Document document;
-		private readonly Comic parent;
+		[XmlIgnore]
+		private Document document;
+		[XmlIgnore]
+		private Comic parent;
 
-		public NewPage(Document document, Comic parent, XmlNode xmlSlot)
+		public NewPage()
+		{
+		}
+
+		public void Initialize(Document document, Comic parent)
 		{
 			this.document = document;
 			this.parent = parent;
@@ -24,7 +32,7 @@ namespace Panels
 			{
 				this.document.GetPdfDocument().AddNewPage();
 				this.parent.CurrentPage++;
-				this.parent.CurrentRow = this.parent.CurrentPage * this.parent.RowsPerPage;
+				this.parent.CurrentRow = this.parent.CurrentPage * this.parent.rowsPerPage;
 				this.parent.CurrentX = 0;
 				this.parent.CurrentY = 0;
 			}
