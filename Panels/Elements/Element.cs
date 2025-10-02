@@ -1,8 +1,10 @@
 ﻿using iText.Layout;
 using Panels.Utils;
+using Newtonsoft.Json;
 
 namespace Panels.Elements
 {
+	[JsonObject]
 	public abstract class Element : IPositionable, IRenderable
 	{
 		protected int noPage { get; private set; }

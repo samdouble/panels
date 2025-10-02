@@ -7,15 +7,17 @@ using Panels.Utils;
 using System;
 using System.Xml;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace Panels.Elements
 {
 	[XmlType("text")]
+	[JsonObject]
 	public class Text : Element
 	{
 		private Document document;
 		private Panel parent;
-		public string text;
+		private string text;
 		protected Color color { get; set; } = ColorConstants.BLACK;
 		private const int LINE_HEIGHT = 11;
 		private const int MARGIN = 5;
@@ -26,6 +28,7 @@ namespace Panels.Elements
 		private float? width;
 
 		[XmlAttribute("text")]
+		[JsonProperty("text")]
 		public string TextContent
 		{
 			get { return text; }
@@ -33,6 +36,7 @@ namespace Panels.Elements
 		}
 
 		[XmlAttribute("left")]
+		[JsonProperty("left")]
 		public float Left
 		{
 			get { return left; }
@@ -40,6 +44,7 @@ namespace Panels.Elements
 		}
 
 		[XmlAttribute("top")]
+		[JsonProperty("top")]
 		public float Top
 		{
 			get { return top; }
@@ -47,6 +52,7 @@ namespace Panels.Elements
 		}
 
 		[XmlIgnore]
+		[JsonIgnore]
 		public float? Width
 		{
 			get { return width; }

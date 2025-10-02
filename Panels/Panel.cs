@@ -7,36 +7,49 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace Panels
 {
 	[XmlType("panel")]
+	[JsonObject]
 	public class Panel : IPositionable, IRenderable
 	{
 		[XmlIgnore]
+		[JsonIgnore]
 		private Document document;
 
 		[XmlIgnore]
+		[JsonIgnore]
 		private Comic parent;
 
 		[XmlIgnore]
+		[JsonIgnore]
 		private Image image;
 
 		[XmlAttribute("image")]
+		[JsonProperty("image")]
 		public string ImagePath { get; set; }
 
 		[XmlElement("description", Type = typeof(Description))]
 		[XmlElement("text", Type = typeof(Text))]
+		[JsonProperty("elements")]
 		public List<Element> elements = new List<Element>();
 		
 		[XmlIgnore]
+		[JsonIgnore]
 		public PointF Position { get; private set; }
 		
 		[XmlAttribute("cropBottom")]
+		[JsonProperty("cropBottom")]
 		public float CropBottom { get; set; }
 		
 		[XmlAttribute("cropTop")]
+		[JsonProperty("cropTop")]
 		public float CropTop { get; set; }
+		
+		[XmlIgnore]
+		[JsonIgnore]
 		public float Height
 		{
 			get
@@ -48,6 +61,9 @@ namespace Panels
 				this.image.Height = value;
 			}
 		}
+		
+		[XmlIgnore]
+		[JsonIgnore]
 		public float Width
 		{
 			get

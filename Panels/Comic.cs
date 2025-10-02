@@ -8,10 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace Panels
 {
 	[XmlRoot("comic")]
+	[JsonObject]
 	public class Comic : IRenderable
 	{
 		private Document document;
@@ -19,31 +21,40 @@ namespace Panels
 		protected const int DEFAULT_ROWS_PER_PAGE = 3;
 
 		[XmlAttribute("fontSize")]
+		[JsonProperty("fontSize")]
 		public int fontSize = DEFAULT_FONT_SIZE;
 
 		[XmlAttribute("marginLeft")]
+		[JsonProperty("marginLeft")]
 		public float marginLeft = 0;
 
 		[XmlAttribute("marginRight")]
+		[JsonProperty("marginRight")]
 		public float marginRight = 0;
 
 		[XmlAttribute("marginTop")]
+		[JsonProperty("marginTop")]
 		public float marginTop = 0;
 
 		[XmlAttribute("marginBottom")]
+		[JsonProperty("marginBottom")]
 		public float marginBottom = 0;
 
 		[XmlAttribute("rowsPerPage")]
+		[JsonProperty("rowsPerPage")]
 		public int rowsPerPage { get; set; } = DEFAULT_ROWS_PER_PAGE;
 
 		[XmlAttribute("horizontalPanelSpacing")]
+		[JsonProperty("horizontalPanelSpacing")]
 		public float horizontalPanelSpacing = 0;
 
 		[XmlAttribute("verticalPanelSpacing")]
+		[JsonProperty("verticalPanelSpacing")]
 		public float VerticalPanelSpacing { get; set; } = 0;
 
 		[XmlElement("newpage", Type = typeof(NewPage))]
 		[XmlElement("slot", Type = typeof(Slot))]
+		[JsonProperty("children")]
 		public List<object> children { get; set; } = new List<object>();
 
 		[XmlIgnore]

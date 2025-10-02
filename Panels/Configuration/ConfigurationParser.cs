@@ -13,10 +13,10 @@ namespace Panels.Configuration
 			var extension = Path.GetExtension(configurationPath);
 			switch (extension)
 			{
-				case ".xml":
-					return XmlParser.Read(configurationPath);
 				case ".json":
 					return JsonParser.Read(configurationPath);
+				case ".xml":
+					return XmlParser.Read(configurationPath);
 				default:
 					throw new Exception($"Unsupported file extension: {extension}");
 			}
