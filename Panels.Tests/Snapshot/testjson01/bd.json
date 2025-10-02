@@ -1,0 +1,70 @@
+{
+  "fontSize": 10,
+  "marginLeft": 25.0,
+  "marginRight": 25.0,
+  "marginTop": 64.0,
+  "marginBottom": 64.0,
+  "horizontalPanelSpacing": 10.0,
+  "rowsPerPage": 3,
+  "verticalPanelSpacing": 10.0,
+  "children": [
+    {
+      "$type": "slot",
+      "panels": [
+        {
+          "elements": [
+            {
+              "$type": "text",
+              "text": "Hello !",
+              "left": 0.0,
+              "top": 0.0
+            },
+            {
+              "$type": "description",
+              "visible": false,
+              "text": "Hello !",
+              "left": 0.0,
+              "top": 60.0
+            }
+          ],
+          "image": "0000.png",
+          "cropBottom": 0.0,
+          "cropTop": 0.0
+        }
+      ],
+      "maxCropLeft": 10.0,
+      "maxCropRight": 15.0,
+      "PaddingLeft": 0.0,
+      "PaddingRight": 0.0
+    },
+    {
+      "$type": "slot",
+      "panels": [
+        {
+          "elements": [
+            {
+              "$type": "text",
+              "text": "Bonjour !",
+              "left": 0.0,
+              "top": 0.0
+            },
+            {
+              "$type": "description",
+              "visible": false,
+              "text": "Hello !",
+              "left": 0.0,
+              "top": 120.0
+            }
+          ],
+          "image": "0100.png",
+          "cropBottom": 0.0,
+          "cropTop": 0.0
+        }
+      ],
+      "maxCropLeft": 20.0,
+      "maxCropRight": 10.0,
+      "PaddingLeft": 0.0,
+      "PaddingRight": 0.0
+    }
+  ]
+}

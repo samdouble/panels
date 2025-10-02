@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace Panels
 {
 	[XmlType("slot")]
+	[JsonObject]
 	public class Slot : IRenderable
 	{
 		[XmlIgnore]
@@ -17,22 +19,31 @@ namespace Panels
 		private Comic parent;
 
 		[XmlElement("panel", Type = typeof(Panel))]
+		[JsonProperty("panels")]
 		public List<Panel> panels = new List<Panel>();
 		
 		[XmlAttribute("maxCropLeft")]
+		[JsonProperty("maxCropLeft")]
 		public float MaxLeftPaddingPct { get; set; }
 		
 		[XmlAttribute("maxCropRight")]
+		[JsonProperty("maxCropRight")]
 		public float MaxRightPaddingPct { get; set; }
 		
 		[XmlIgnore]
+		[JsonIgnore]
 		public float PaddingLeft { get; set; }
 		
 		[XmlIgnore]
+		[JsonIgnore]
 		public float PaddingRight { get; set; }
 		
 		[XmlIgnore]
+		[JsonIgnore]
 		public float Height { get; set; }
+		
+		[XmlIgnore]
+		[JsonIgnore]
 		public float Width
 		{
 			get

@@ -4,16 +4,20 @@ using Panels.Elements;
 using Panels.Utils;
 using System.Xml;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace Panels.Elements
 {
 	[XmlType("description")]
+	[JsonObject]
 	public class Description : Text
 	{
 		[XmlIgnore]
+		[JsonIgnore]
 		private Document document;
 
 		[XmlIgnore]
+		[JsonIgnore]
 		private Color color = ColorConstants.RED;
 		private bool visible = true;
 
@@ -23,6 +27,7 @@ namespace Panels.Elements
 		}
 
 		[XmlAttribute("visible")]
+		[JsonProperty("visible")]
 		public bool Visible
 		{
 			get { return visible; }
@@ -30,10 +35,11 @@ namespace Panels.Elements
 		}
 
 		[XmlAttribute("text")]
-		public string TextContent
+		[JsonProperty("text")]
+		public new string TextContent
 		{
-			get { return base.text; }
-			set { base.text = value; }
+			get { return base.TextContent; }
+			set { base.TextContent = value; }
 		}
 
 		public void Initialize(Document document, Panel parent)
