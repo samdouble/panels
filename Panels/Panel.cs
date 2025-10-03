@@ -40,13 +40,13 @@ namespace Panels
 		[JsonIgnore]
 		public PointF Position { get; private set; }
 		
-		[XmlAttribute("cropBottom")]
-		[JsonProperty("cropBottom")]
-		public float CropBottom { get; set; }
+		[XmlAttribute("paddingBottom")]
+		[JsonProperty("paddingBottom")]
+		public float PaddingBottom { get; set; }
 		
-		[XmlAttribute("cropTop")]
-		[JsonProperty("cropTop")]
-		public float CropTop { get; set; }
+		[XmlAttribute("paddingTop")]
+		[JsonProperty("paddingTop")]
+		public float PaddingTop { get; set; }
 
 		[XmlAttribute("fontSize")]
 		[JsonProperty("fontSize")]
@@ -87,8 +87,8 @@ namespace Panels
 
 		public Panel()
 		{
-			this.CropBottom = 0;
-			this.CropTop = 0;
+			this.PaddingBottom = 0;
+			this.PaddingTop = 0;
 		}
 
 		public void Initialize(Document document, Slot parent)
@@ -107,8 +107,8 @@ namespace Panels
 			{
 				this.image = new Image(document, Properties.Resources.temp);
 			}
-			this.image.CropBottom = this.CropBottom;
-			this.image.CropTop = this.CropTop;
+			this.image.PaddingBottom = this.PaddingBottom;
+			this.image.PaddingTop = this.PaddingTop;
 
 			foreach (var element in this.elements)
 			{

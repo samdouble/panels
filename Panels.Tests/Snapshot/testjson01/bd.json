@@ -28,14 +28,12 @@
             }
           ],
           "image": "0000.png",
-          "cropBottom": 0.0,
-          "cropTop": 0.0
+          "paddingBottom": 0.0,
+          "paddingTop": 0.0
         }
       ],
-      "maxCropLeft": 10.0,
-      "maxCropRight": 15.0,
-      "PaddingLeft": 0.0,
-      "PaddingRight": 0.0
+      "maxPaddingLeft": 10.0,
+      "maxPaddingRight": 15.0
     },
     {
       "$type": "slot",
@@ -57,14 +55,12 @@
             }
           ],
           "image": "0100.png",
-          "cropBottom": 0.0,
-          "cropTop": 0.0
+          "paddingBottom": 0.0,
+          "paddingTop": 0.0
         }
       ],
-      "maxCropLeft": 20.0,
-      "maxCropRight": 10.0,
-      "PaddingLeft": 0.0,
-      "PaddingRight": 0.0
+      "maxPaddingLeft": 20.0,
+      "maxPaddingRight": 10.0
     }
   ]
 }

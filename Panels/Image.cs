@@ -18,7 +18,7 @@ namespace Panels
 		private readonly float originalHeight;
 		private readonly float originalWidth;
 
-		public float CropBottom
+		public float PaddingBottom
 		{
 			get
 			{
@@ -29,7 +29,7 @@ namespace Panels
 				this.Crop(0, 0, value * this.originalHeight / 100, 0);
 			}
 		}
-		public float CropTop
+		public float PaddingTop
 		{
 			get
 			{

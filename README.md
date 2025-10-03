@@ -97,8 +97,9 @@ A `<comic>` can contain multiple `<slot>` and `<newpage />` elements.
 
 Defines a column of panels. Attributes:
 
-- `maxCropLeft` (optional, default: 0): Maximum cropping for panels in this slot.
-- `maxCropRight` (optional, default: 0): Maximum cropping for panels in this slot.
+- `fontSize` (optional): Font size for the text in the slot.
+- `maxPaddingLeft` (optional, default: 0): Maximum padding for panels in this slot.
+- `maxPaddingRight` (optional, default: 0): Maximum padding for panels in this slot.
 
 A `<slot>` can contain up to 2 `<panel>` elements.
 
@@ -107,8 +108,9 @@ A `<slot>` can contain up to 2 `<panel>` elements.
 Represents a single panel in a slot. Attributes:
 
 - `image` (required): Filename of the image for this panel.
-- `cropBottom` (optional, default: 0): Cropping from the bottom of the panel's image, in % of the image's height
-- `cropTop` (optional, default: 0): Cropping from the top of the panel's image, in % of the image's height
+- `paddingBottom` (optional, default: 0): Padding from the bottom of the panel's image, in % of the image's height
+- `paddingTop` (optional, default: 0): Padding from the top of the panel's image, in % of the image's height
+- `fontSize` (optional): Font size for the text in the panel.
 
 A `<panel>` can contain multiple `<text>` and `<description>` elements.
 
@@ -117,6 +119,7 @@ A `<panel>` can contain multiple `<text>` and `<description>` elements.
 Adds a text bubble or caption to a panel. Attributes:
 
 - `text` (required): The text content.
+- `fontSize` (optional): Font size for the text in the panel.
 - `left` (optional, default: 0): Positioning of the text within the panel.
 - `top` (optional, default: 0): Positioning of the text within the panel.
 - `width` (optional, default: auto): Width of the text bubble in pixels.
@@ -126,6 +129,7 @@ Adds a text bubble or caption to a panel. Attributes:
 Adds a description or narration to a panel. Attributes:
 
 - `text` (required): The description content.
+- `fontSize` (optional): Font size for the text in the panel.
 - `left` (optional, default: 0): Positioning of the description.
 - `top` (optional, default: 0): Positioning of the description.
 - `visible` (optional, default: True): Controls visibility (e.g. "True" or "False").
