@@ -81,7 +81,7 @@ namespace Panels
 				throw new ArgumentException("Images folder path cannot be null or empty", nameof(imagesFolderPath));
 			if (string.IsNullOrEmpty(outputFile))
 				throw new ArgumentException("Output file cannot be null or empty", nameof(outputFile));
-				
+
 			LogWriter logWriter = new LogWriter();
 			logWriter.Log("Starting PDF generation...");
 			PdfWriter writer = new PdfWriter(@$"{outputFile}");

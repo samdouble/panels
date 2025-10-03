@@ -1,6 +1,9 @@
 [msbuild]
 project = "Panels.sln"
 
+[msbuild.properties]
+PublishTrimmed = false
+
 [github]
 user = "samdouble"
 repo = "panels"

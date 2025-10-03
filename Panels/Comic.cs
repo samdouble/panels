@@ -1,5 +1,6 @@
 ﻿using iText.Kernel.Geom;
 using iText.Layout;
+using Newtonsoft.Json;
 using Panels.Configuration;
 using Panels.Utils;
 using System;
@@ -8,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using Newtonsoft.Json;
 
 namespace Panels
 {
@@ -66,7 +66,6 @@ namespace Panels
 
 		public Comic()
 		{
-			Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 		}
 
 		public void Initialize(Document document, string imagesFolderPath)

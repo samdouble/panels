@@ -1,5 +1,53 @@
 # Changelog
 
+## [1.4.5](https://github.com/samdouble/panels/compare/1.4.4...v1.4.5) (2025-10-16)
+
+
+### Bug Fixes
+
+* make Comic a parameterless constructor ([1f8b6f9](https://github.com/samdouble/panels/commit/1f8b6f9bb9bb821b259c38aeb5307a2a812f4451))
+
+## [1.4.4](https://github.com/samdouble/panels/compare/1.4.3...v1.4.4) (2025-10-16)
+
+
+### Bug Fixes
+
+* make Comic a parameterless constructor ([1a6a83f](https://github.com/samdouble/panels/commit/1a6a83fe8c235b7e5f94a29a96e7be8788cd35d0))
+
+## [1.4.3](https://github.com/samdouble/panels/compare/1.4.2...v1.4.3) (2025-10-14)
+
+
+### Bug Fixes
+
+* ci ([a43fdf2](https://github.com/samdouble/panels/commit/a43fdf2580ec3bcbaf9d955183497fbdff44027f))
+
+## [1.4.2](https://github.com/samdouble/panels/compare/1.4.1...v1.4.2) (2025-10-13)
+
+
+### Bug Fixes
+
+* get correct XSD filepath ([1136820](https://github.com/samdouble/panels/commit/1136820b4dd4a3a8778ab0d57db7929bf92b30a3))
+
+## [1.4.1](https://github.com/samdouble/panels/compare/v1.4.0...v1.4.1) (2025-10-03)
+
+
+### Bug Fixes
+
+* ci ([6cfcafb](https://github.com/samdouble/panels/commit/6cfcafb389d620ed59d9eb9ee794c793490cf6bd))
+
+## [1.4.0](https://github.com/samdouble/panels/compare/v1.3.1...v1.4.0) (2025-10-03)
+
+
+### Features
+
+* rename crop by padding ([99100cf](https://github.com/samdouble/panels/commit/99100cfb5bad03179e820702ed529fae4cffb8ef))
+* support JSON configurations ([765a365](https://github.com/samdouble/panels/commit/765a36517384363e75c309efcdf22e59fba4f73a))
+
+
+### Bug Fixes
+
+* fix issue with fontSize propagation to children ([4dfea10](https://github.com/samdouble/panels/commit/4dfea108622ebf1706acfd6fbaa0f5fa8da06a10))
+
 ## [1.3.1](https://github.com/samdouble/panels/compare/1.3.0...v1.3.1) (2025-09-28)
 
 

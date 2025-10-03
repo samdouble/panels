@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Panels;
+using System;
 using System.IO;
 using System.Reflection;
-using Panels;
 
 namespace Panels.Configuration
 {

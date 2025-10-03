@@ -1,4 +1,5 @@
 ﻿using iText.Layout;
+using Newtonsoft.Json;
 using Panels.Elements;
 using Panels.Utils;
 using SixLabors.ImageSharp;
@@ -7,7 +8,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
-using Newtonsoft.Json;
 
 namespace Panels
 {
@@ -35,15 +35,15 @@ namespace Panels
 		[XmlElement("text", Type = typeof(Text))]
 		[JsonProperty("elements")]
 		public List<Element> elements = new List<Element>();
-		
+
 		[XmlIgnore]
 		[JsonIgnore]
 		public PointF Position { get; private set; }
-		
+
 		[XmlAttribute("paddingBottom")]
 		[JsonProperty("paddingBottom")]
 		public float PaddingBottom { get; set; }
-		
+
 		[XmlAttribute("paddingTop")]
 		[JsonProperty("paddingTop")]
 		public float PaddingTop { get; set; }
@@ -59,7 +59,7 @@ namespace Panels
 		[XmlAttribute("image")]
 		[JsonProperty("image")]
 		public string? ImagePath { get; set; }
-		
+
 		[XmlIgnore]
 		[JsonIgnore]
 		public float Height
@@ -74,7 +74,7 @@ namespace Panels
 					this.image.Height = value;
 			}
 		}
-		
+
 		[XmlIgnore]
 		[JsonIgnore]
 		public float Width
