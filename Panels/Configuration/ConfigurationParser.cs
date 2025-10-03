@@ -7,8 +7,11 @@ namespace Panels.Configuration
 {
 	public sealed class ConfigurationParser
 	{
-		public static Comic Read(string configurationPath)
+		public static Comic Read(string? configurationPath)
 		{
+			if (string.IsNullOrEmpty(configurationPath))
+				throw new ArgumentException("Configuration path cannot be null or empty", nameof(configurationPath));
+
 			Console.WriteLine($"Reading config file at {configurationPath}");
 			var extension = Path.GetExtension(configurationPath);
 			switch (extension)

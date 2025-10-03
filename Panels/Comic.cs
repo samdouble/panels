@@ -16,7 +16,7 @@ namespace Panels
 	[JsonObject]
 	public class Comic : IRenderable
 	{
-		private Document document;
+		private Document? document;
 		protected const int DEFAULT_FONT_SIZE = 12;
 		protected const int DEFAULT_ROWS_PER_PAGE = 3;
 
@@ -58,7 +58,7 @@ namespace Panels
 		public List<object> children { get; set; } = new List<object>();
 
 		[XmlIgnore]
-		public string ImagesFolderPath { get; private set; }
+		public string? ImagesFolderPath { get; private set; }
 		public int CurrentPage { get; set; } = 1;
 		public int CurrentRow { get; set; } = 1;
 		public float CurrentX { get; set; } = 0;
@@ -89,7 +89,7 @@ namespace Panels
 		// IRenderable
 		public void Render(LogWriter logWriter)
 		{
-			PageSize pageSize = this.document.GetPdfDocument().GetDefaultPageSize();
+			PageSize pageSize = this.document?.GetPdfDocument().GetDefaultPageSize() ?? PageSize.A4;
 			var panelHeight = (pageSize.GetHeight() - this.marginTop - this.marginBottom - (this.rowsPerPage - 1) * this.VerticalPanelSpacing) / this.rowsPerPage;
 			var rowWidth = pageSize.GetWidth() - this.marginRight - this.marginLeft;
 			this.CurrentY = panelHeight + this.VerticalPanelSpacing;
@@ -190,7 +190,7 @@ namespace Panels
 
 				if (this.CurrentRow % this.rowsPerPage == 0)
 				{
-					this.document.GetPdfDocument().AddNewPage();
+					this.document?.GetPdfDocument().AddNewPage();
 					++this.CurrentPage;
 					this.CurrentY = 0;
 				}

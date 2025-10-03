@@ -55,8 +55,16 @@ namespace Panels
 			validateCommand.Add(configOption);
 			validateCommand.SetAction(parseResult =>
 			{
-				XmlParser.Read(parseResult.GetValue(configOption));
-				Console.WriteLine("Config file is valid");
+				var configPath = parseResult.GetValue(configOption);
+				if (!string.IsNullOrEmpty(configPath))
+				{
+					XmlParser.Read(configPath);
+					Console.WriteLine("Config file is valid");
+				}
+				else
+				{
+					Console.WriteLine("No config file specified");
+				}
 				return 0;
 			});
 			rootCommand.Subcommands.Add(validateCommand);
@@ -65,8 +73,15 @@ namespace Panels
 			return parseResult.Invoke();
 		}
 
-		public static string GeneratePdf(string configFile, string imagesFolderPath, string outputFile)
+		public static string GeneratePdf(string? configFile, string? imagesFolderPath, string? outputFile)
 		{
+			if (string.IsNullOrEmpty(configFile))
+				throw new ArgumentException("Config file cannot be null or empty", nameof(configFile));
+			if (string.IsNullOrEmpty(imagesFolderPath))
+				throw new ArgumentException("Images folder path cannot be null or empty", nameof(imagesFolderPath));
+			if (string.IsNullOrEmpty(outputFile))
+				throw new ArgumentException("Output file cannot be null or empty", nameof(outputFile));
+				
 			LogWriter logWriter = new LogWriter();
 			logWriter.Log("Starting PDF generation...");
 			PdfWriter writer = new PdfWriter(@$"{outputFile}");

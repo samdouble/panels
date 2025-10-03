@@ -15,9 +15,9 @@ namespace Panels.Elements
 	[JsonObject]
 	public class Text : Element
 	{
-		private Document document;
-		private Panel parent;
-		private string text;
+		private Document? document;
+		private Panel? parent;
+		private string? text;
 		protected Color color { get; set; } = ColorConstants.BLACK;
 		private const int LINE_HEIGHT = 11;
 		private const int MARGIN = 5;
@@ -29,7 +29,7 @@ namespace Panels.Elements
 
 		[XmlAttribute("text")]
 		[JsonProperty("text")]
-		public string TextContent
+		public string? TextContent
 		{
 			get { return text; }
 			set { text = value; }
@@ -73,6 +73,8 @@ namespace Panels.Elements
 
 		public override void Render(LogWriter logWriter)
 		{
+			if (this.parent == null || this.document == null || this.text == null) return;
+
 			var left = this.parent.Position.X + this.left + MARGIN;
 			float right;
 			if (this.width is float width)

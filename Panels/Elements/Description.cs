@@ -14,11 +14,11 @@ namespace Panels.Elements
 	{
 		[XmlIgnore]
 		[JsonIgnore]
-		private Document document;
+		private Document? document;
 
 		[XmlIgnore]
 		[JsonIgnore]
-		private Color color = ColorConstants.RED;
+		private new Color color = ColorConstants.RED;
 		private bool visible = true;
 
 		public Description()
@@ -36,13 +36,13 @@ namespace Panels.Elements
 
 		[XmlAttribute("text")]
 		[JsonProperty("text")]
-		public new string TextContent
+		public new string? TextContent
 		{
 			get { return base.TextContent; }
 			set { base.TextContent = value; }
 		}
 
-		public void Initialize(Document document, Panel parent)
+		public new void Initialize(Document document, Panel parent)
 		{
 			this.document = document;
 			base.Initialize(document, parent);
