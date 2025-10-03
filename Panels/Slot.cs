@@ -36,12 +36,12 @@ namespace Panels
 			get { return parent?.ImagesFolderPath; }
 		}
 
-		[XmlAttribute("maxCropLeft")]
-		[JsonProperty("maxCropLeft")]
+		[XmlAttribute("maxPaddingLeft")]
+		[JsonProperty("maxPaddingLeft")]
 		public float MaxLeftPaddingPct { get; set; }
 		
-		[XmlAttribute("maxCropRight")]
-		[JsonProperty("maxCropRight")]
+		[XmlAttribute("maxPaddingRight")]
+		[JsonProperty("maxPaddingRight")]
 		public float MaxRightPaddingPct { get; set; }
 		
 		[XmlIgnore]

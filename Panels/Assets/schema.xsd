@@ -33,15 +33,15 @@
                       </xs:element>
                     </xs:sequence>
                     <xs:attribute name="image" type="xs:string" use="required" />
-                    <xs:attribute name="cropBottom" type="xs:string" use="optional" default="0" />
-                    <xs:attribute name="cropTop" type="xs:string" use="optional" default="0" />
+                    <xs:attribute name="paddingBottom" type="xs:string" use="optional" default="0" />
+                    <xs:attribute name="paddingTop" type="xs:string" use="optional" default="0" />
                     <xs:attribute name="fontSize" type="xs:string" use="optional" />
                   </xs:complexType>
                 </xs:element>
               </xs:sequence>
               <xs:attribute name="fontSize" type="xs:string" use="optional" />
-              <xs:attribute name="maxCropLeft" type="xs:string" use="optional" default="0" />
-              <xs:attribute name="maxCropRight" type="xs:string" use="optional" default="0" />
+              <xs:attribute name="maxPaddingLeft" type="xs:string" use="optional" default="0" />
+              <xs:attribute name="maxPaddingRight" type="xs:string" use="optional" default="0" />
             </xs:complexType>
           </xs:element>
         </xs:choice>
