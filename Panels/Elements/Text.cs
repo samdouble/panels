@@ -17,22 +17,22 @@ namespace Panels.Elements
 	{
 		private Document? document;
 		private Panel? parent;
-		private string? text;
 		protected Color color { get; set; } = ColorConstants.BLACK;
 		private const int LINE_HEIGHT = 11;
 		private const int MARGIN = 5;
 		private PdfFont font = PdfFontFactory.CreateFont(Properties.Resources.Comicsam_Bold, PdfEncodings.CP1252);
-		private int fontSize;
+		private float? fontSize;
 		private float left = 0;
+		private string? text;
 		private float top = 0;
 		private float? width;
 
-		[XmlAttribute("text")]
-		[JsonProperty("text")]
-		public string? TextContent
+		[XmlAttribute("fontSize")]
+		[JsonProperty("fontSize")]
+		public float FontSize
 		{
-			get { return text; }
-			set { text = value; }
+			get { return fontSize ?? parent?.FontSize ?? 12f; }
+			set { fontSize = value; }
 		}
 
 		[XmlAttribute("left")]
@@ -41,6 +41,14 @@ namespace Panels.Elements
 		{
 			get { return left; }
 			set { left = value; }
+		}
+
+		[XmlAttribute("text")]
+		[JsonProperty("text")]
+		public string? TextContent
+		{
+			get { return text; }
+			set { text = value; }
 		}
 
 		[XmlAttribute("top")]
@@ -62,7 +70,6 @@ namespace Panels.Elements
 		public Text()
 		{
 			this.font = PdfFontFactory.CreateFont(Properties.Resources.Comicsam_Bold, PdfEncodings.CP1252);
-			this.fontSize = 12;
 		}
 
 		public void Initialize(Document document, Panel parent)
@@ -94,7 +101,7 @@ namespace Panels.Elements
 			phrase.SetVerticalAlignment(iText.Layout.Properties.VerticalAlignment.TOP);
 			phrase.SetHeight(top - bottom);
 			phrase.SetFont(this.font);
-			phrase.SetFontSize(this.fontSize);
+			phrase.SetFontSize(this.FontSize);
 			phrase.SetFixedPosition(this.noPage, left, bottom, phraseWidth);
 			phrase.SetFontColor(this.color);
 			logWriter.Log("TEXT - " + this.text + " at " + left + ", " + bottom + " with width " + phraseWidth);
