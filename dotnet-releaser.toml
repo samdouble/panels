@@ -5,6 +5,7 @@ project = "Panels.sln"
 user = "samdouble"
 repo = "panels"
 branches = ["master"]
+version_prefix = "v"
 
 [brew]
 publish = false
