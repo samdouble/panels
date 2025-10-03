@@ -17,19 +17,19 @@ namespace Panels
 	{
 		[XmlIgnore]
 		[JsonIgnore]
-		private Document document;
+		private Document? document;
 
 		[XmlIgnore]
 		[JsonIgnore]
-		private Comic parent;
+		private Comic? parent;
 
 		[XmlIgnore]
 		[JsonIgnore]
-		private Image image;
+		private Image? image;
 
 		[XmlAttribute("image")]
 		[JsonProperty("image")]
-		public string ImagePath { get; set; }
+		public string? ImagePath { get; set; }
 
 		[XmlElement("description", Type = typeof(Description))]
 		[XmlElement("text", Type = typeof(Text))]
@@ -54,11 +54,12 @@ namespace Panels
 		{
 			get
 			{
-				return this.image.Height;
+				return this.image?.Height ?? 0f;
 			}
 			set
 			{
-				this.image.Height = value;
+				if (this.image != null)
+					this.image.Height = value;
 			}
 		}
 		
@@ -68,7 +69,7 @@ namespace Panels
 		{
 			get
 			{
-				return this.image.Width;
+				return this.image?.Width ?? 0f;
 			}
 		}
 
@@ -82,7 +83,7 @@ namespace Panels
 		{
 			this.document = document;
 			this.parent = parent;
-			if (!string.IsNullOrEmpty(this.ImagePath))
+			if (!string.IsNullOrEmpty(this.ImagePath) && !string.IsNullOrEmpty(parent.ImagesFolderPath))
 			{
 				var fullImagePath = Path.Combine(parent.ImagesFolderPath, this.ImagePath);
 				Console.WriteLine($"Getting image at {fullImagePath}");
@@ -117,7 +118,7 @@ namespace Panels
 			float leftCropping = 0
 		)
 		{
-			this.image.Crop(
+			this.image?.Crop(
 				topCropping,
 				rightCropping,
 				bottomCropping,
@@ -129,14 +130,14 @@ namespace Panels
 		public void SetPosition(int noPage, float x, float y)
 		{
 			this.Position = new PointF(x, y);
-			this.image.SetPosition(noPage, x, y);
+			this.image?.SetPosition(noPage, x, y);
 			this.elements.ForEach(element => element.SetPosition(noPage, x, y));
 		}
 
 		// IRenderable
 		public void Render(LogWriter logWriter)
 		{
-			this.image.Render(logWriter);
+			this.image?.Render(logWriter);
 			this.elements.ForEach(element => element.Render(logWriter));
 		}
 	}

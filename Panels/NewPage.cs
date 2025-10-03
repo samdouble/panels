@@ -13,9 +13,9 @@ namespace Panels
 	public class NewPage : IRenderable
 	{
 		[XmlIgnore]
-		private Document document;
+		private Document? document;
 		[XmlIgnore]
-		private Comic parent;
+		private Comic? parent;
 
 		public NewPage()
 		{
@@ -30,13 +30,16 @@ namespace Panels
 		// IRenderable
 		public void Render(LogWriter logWriter)
 		{
-			if (this.parent.CurrentX != 0 || this.parent.CurrentY != 0)
+			if (this.parent?.CurrentX != 0 || this.parent?.CurrentY != 0)
 			{
-				this.document.GetPdfDocument().AddNewPage();
-				this.parent.CurrentPage++;
-				this.parent.CurrentRow = this.parent.CurrentPage * this.parent.rowsPerPage;
-				this.parent.CurrentX = 0;
-				this.parent.CurrentY = 0;
+				this.document?.GetPdfDocument().AddNewPage();
+				if (this.parent != null)
+				{
+					this.parent.CurrentPage++;
+					this.parent.CurrentRow = this.parent.CurrentPage * this.parent.rowsPerPage;
+					this.parent.CurrentX = 0;
+					this.parent.CurrentY = 0;
+				}
 			}
 			logWriter.Log("NEW PAGE");
 		}

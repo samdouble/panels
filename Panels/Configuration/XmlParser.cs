@@ -31,11 +31,12 @@ namespace Panels.Configuration
 			XmlSerializer serializer = new XmlSerializer(typeof(Comic));
 			using (StringReader stringReader = new StringReader(document.OuterXml))
 			{
-				return (Comic)serializer.Deserialize(stringReader);
+				var result = serializer.Deserialize(stringReader);
+				return result as Comic ?? throw new InvalidOperationException("Failed to deserialize XML");
 			}
 		}
 
-		static void ComicsValidationEventHandler(object sender, ValidationEventArgs e)
+		static void ComicsValidationEventHandler(object? sender, ValidationEventArgs e)
 		{
 			if (e.Severity == XmlSeverityType.Warning)
 			{

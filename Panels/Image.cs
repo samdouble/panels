@@ -11,7 +11,7 @@ namespace Panels
 	public class Image : IPositionable, IRenderable
 	{
 		private readonly Document document;
-		private iText.Layout.Element.Image image;
+		private iText.Layout.Element.Image? image;
 		private int noPage;
 		private float x;
 		private float y;
@@ -44,19 +44,22 @@ namespace Panels
 		{
 			get
 			{
-				return this.image.GetImageScaledHeight();
+				return this.image?.GetImageScaledHeight() ?? 0f;
 			}
 			set
 			{
-				var pctScaling = value / this.image.GetImageHeight();
-				this.image.Scale(pctScaling, pctScaling);
+				if (this.image != null)
+				{
+					var pctScaling = value / this.image.GetImageHeight();
+					this.image.Scale(pctScaling, pctScaling);
+				}
 			}
 		}
 		public float Width
 		{
 			get
 			{
-				return this.image.GetImageScaledWidth();
+				return this.image?.GetImageScaledWidth() ?? 0f;
 			}
 		}
 
@@ -81,6 +84,8 @@ namespace Panels
 			float leftCropping = 0
 		)
 		{
+			if (this.image == null) return;
+
 			var horizontalOffset = leftCropping + rightCropping;
 			var verticalOffset = topCropping + bottomCropping;
 			this.image.SetFixedPosition(-leftCropping, -bottomCropping);
@@ -100,12 +105,14 @@ namespace Panels
 			this.noPage = noPage;
 			this.x = x;
 			this.y = y;
-			this.image.SetFixedPosition(this.noPage, this.x, this.y - this.image.GetImageScaledHeight());
+			this.image?.SetFixedPosition(this.noPage, this.x, this.y - (this.image?.GetImageScaledHeight() ?? 0f));
 		}
 
 		// IRenderable
 		public void Render(LogWriter logWriter)
 		{
+			if (this.image == null) return;
+
 			this.document.Add(this.image);
 
 			// Add borders

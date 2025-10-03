@@ -14,9 +14,9 @@ namespace Panels
 	public class Slot : IRenderable
 	{
 		[XmlIgnore]
-		private Document document;
+		private Document? document;
 		[XmlIgnore]
-		private Comic parent;
+		private Comic? parent;
 
 		[XmlElement("panel", Type = typeof(Panel))]
 		[JsonProperty("panels")]
@@ -72,7 +72,8 @@ namespace Panels
 		{
 			this.Height = height;
 			var nbPanelsInSlot = this.panels.Count;
-			var panelHeight = (height - (nbPanelsInSlot - 1) * parent.VerticalPanelSpacing) / nbPanelsInSlot;
+			var verticalSpacing = this.parent?.VerticalPanelSpacing ?? 0f;
+			var panelHeight = (height - (nbPanelsInSlot - 1) * verticalSpacing) / nbPanelsInSlot;
 			this.panels.ForEach(panel =>
 			{
 				panel.Height = panelHeight;
@@ -106,13 +107,14 @@ namespace Panels
 		public void SetPosition(int noPage, float x, float y)
 		{
 			var nbPanelsInSlot = this.panels.Count;
+			var verticalSpacing = this.parent?.VerticalPanelSpacing ?? 0f;
 			var panelHeight =
-				(this.Height - (nbPanelsInSlot - 1) * parent.VerticalPanelSpacing) / nbPanelsInSlot;
+				(this.Height - (nbPanelsInSlot - 1) * verticalSpacing) / nbPanelsInSlot;
 			for (var i = 0; i < nbPanelsInSlot; i++)
 			{
 				Panel panel = this.panels[i];
 				panel.Crop(0, 0, 0, 0);
-				panel.SetPosition(noPage, x, y - i * panelHeight - (i - 1) * parent.VerticalPanelSpacing);
+				panel.SetPosition(noPage, x, y - i * panelHeight - (i - 1) * verticalSpacing);
 			}
 		}
 

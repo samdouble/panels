@@ -37,7 +37,7 @@ namespace Panels.Configuration
 				TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
 				SerializationBinder = new CustomSerializationBinder()
 			};
-			return JsonConvert.DeserializeObject<Comic>(File.ReadAllText(jsonPath), settings);
+			return JsonConvert.DeserializeObject<Comic>(File.ReadAllText(jsonPath), settings) ?? throw new InvalidOperationException("Failed to deserialize JSON");
 		}
 
 		public static void Write(Comic comic, string jsonPath)
@@ -54,16 +54,16 @@ namespace Panels.Configuration
 
 		private class CustomSerializationBinder : ISerializationBinder
 		{
-			public void BindToName(Type serializedType, out string assemblyName, out string typeName)
-			{
-				assemblyName = null;
-				typeName = ReverseTypeMap.TryGetValue(serializedType, out var shortName) ? shortName : serializedType.FullName;
-			}
+		public void BindToName(Type serializedType, out string? assemblyName, out string? typeName)
+		{
+			assemblyName = null;
+			typeName = ReverseTypeMap.TryGetValue(serializedType, out var shortName) ? shortName : serializedType.FullName;
+		}
 
-			public Type BindToType(string assemblyName, string typeName)
-			{
-				return TypeMap.TryGetValue(typeName, out var type) ? type : Type.GetType($"{typeName}, {assemblyName}");
-			}
+		public Type BindToType(string? assemblyName, string typeName)
+		{
+			return TypeMap.TryGetValue(typeName, out var type) ? type : Type.GetType($"{typeName}, {assemblyName}") ?? throw new InvalidOperationException($"Type not found: {typeName}");
+		}
 		}
 	}
 }
