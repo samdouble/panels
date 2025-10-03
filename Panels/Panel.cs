@@ -21,15 +21,15 @@ namespace Panels
 
 		[XmlIgnore]
 		[JsonIgnore]
-		private Comic? parent;
+		private Slot? parent;
+
+		[XmlIgnore]
+		[JsonIgnore]
+		private float? fontSize;
 
 		[XmlIgnore]
 		[JsonIgnore]
 		private Image? image;
-
-		[XmlAttribute("image")]
-		[JsonProperty("image")]
-		public string? ImagePath { get; set; }
 
 		[XmlElement("description", Type = typeof(Description))]
 		[XmlElement("text", Type = typeof(Text))]
@@ -47,6 +47,18 @@ namespace Panels
 		[XmlAttribute("cropTop")]
 		[JsonProperty("cropTop")]
 		public float CropTop { get; set; }
+
+		[XmlAttribute("fontSize")]
+		[JsonProperty("fontSize")]
+		public float FontSize
+		{
+			get { return fontSize ?? parent?.FontSize ?? 12f; }
+			set { fontSize = value; }
+		}
+
+		[XmlAttribute("image")]
+		[JsonProperty("image")]
+		public string? ImagePath { get; set; }
 		
 		[XmlIgnore]
 		[JsonIgnore]
@@ -79,7 +91,7 @@ namespace Panels
 			this.CropTop = 0;
 		}
 
-		public void Initialize(Document document, Comic parent)
+		public void Initialize(Document document, Slot parent)
 		{
 			this.document = document;
 			this.parent = parent;

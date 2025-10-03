@@ -17,11 +17,25 @@ namespace Panels
 		private Document? document;
 		[XmlIgnore]
 		private Comic? parent;
-
-		[XmlElement("panel", Type = typeof(Panel))]
-		[JsonProperty("panels")]
-		public List<Panel> panels = new List<Panel>();
 		
+		[XmlIgnore]
+		[JsonIgnore]
+		private float? fontSize { get; set; }
+
+		[XmlAttribute("fontSize")]
+		[JsonProperty("fontSize")]
+		public float FontSize
+		{
+			get { return fontSize ?? parent?.fontSize ?? 12f; }
+			set { fontSize = value; }
+		}
+
+		[XmlIgnore]
+		[JsonIgnore]
+		public string? ImagesFolderPath {
+			get { return parent?.ImagesFolderPath; }
+		}
+
 		[XmlAttribute("maxCropLeft")]
 		[JsonProperty("maxCropLeft")]
 		public float MaxLeftPaddingPct { get; set; }
@@ -52,6 +66,10 @@ namespace Panels
 			}
 		}
 
+		[XmlElement("panel", Type = typeof(Panel))]
+		[JsonProperty("panels")]
+		public List<Panel> panels = new List<Panel>();
+
 		public Slot()
 		{
 			this.PaddingLeft = 0f;
@@ -64,7 +82,7 @@ namespace Panels
 			this.parent = parent;
 			foreach (var panel in this.panels)
 			{
-				panel.Initialize(document, parent);
+				panel.Initialize(document, this);
 			}
 		}
 

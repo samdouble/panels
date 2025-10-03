@@ -15,6 +15,7 @@
                       <xs:element name="text" minOccurs="0" maxOccurs="unbounded">
                         <xs:complexType>
                           <xs:attribute name="text" type="xs:string" use="required" />
+                          <xs:attribute name="fontSize" type="xs:string" use="optional" />
                           <xs:attribute name="left" type="xs:string" use="optional" />
                           <xs:attribute name="top" type="xs:string" use="optional" />
                           <xs:attribute name="width" type="xs:string" use="optional" />
@@ -23,6 +24,7 @@
                       <xs:element name="description" minOccurs="0" maxOccurs="unbounded">
                         <xs:complexType>
                           <xs:attribute name="text" type="xs:string" use="required" />
+                          <xs:attribute name="fontSize" type="xs:string" use="optional" />
                           <xs:attribute name="left" type="xs:string" use="optional" />
                           <xs:attribute name="top" type="xs:string" use="optional" />
                           <xs:attribute name="visible" type="xs:string" use="optional" />
@@ -33,9 +35,11 @@
                     <xs:attribute name="image" type="xs:string" use="required" />
                     <xs:attribute name="cropBottom" type="xs:string" use="optional" default="0" />
                     <xs:attribute name="cropTop" type="xs:string" use="optional" default="0" />
+                    <xs:attribute name="fontSize" type="xs:string" use="optional" />
                   </xs:complexType>
                 </xs:element>
               </xs:sequence>
+              <xs:attribute name="fontSize" type="xs:string" use="optional" />
               <xs:attribute name="maxCropLeft" type="xs:string" use="optional" default="0" />
               <xs:attribute name="maxCropRight" type="xs:string" use="optional" default="0" />
             </xs:complexType>
