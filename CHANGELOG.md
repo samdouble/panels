@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/samdouble/panels/compare/1.4.1...v1.4.2) (2025-10-13)
+
+
+### Bug Fixes
+
+* get correct XSD filepath ([1136820](https://github.com/samdouble/panels/commit/1136820b4dd4a3a8778ab0d57db7929bf92b30a3))
+
 ## [1.4.1](https://github.com/samdouble/panels/compare/v1.4.0...v1.4.1) (2025-10-03)
 
 
