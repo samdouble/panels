@@ -34,9 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Assets/schema.xsd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <EmbeddedResource Include="Assets/schema.xsd" />
   </ItemGroup>
 
 </Project>
