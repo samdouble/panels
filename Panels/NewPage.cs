@@ -1,10 +1,10 @@
 ﻿using iText.Layout;
+using Newtonsoft.Json;
 using Panels.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
-using Newtonsoft.Json;
 
 namespace Panels
 {

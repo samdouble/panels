@@ -3,11 +3,11 @@ using iText.Kernel.Colors;
 using iText.Kernel.Font;
 using iText.Layout;
 using iText.Layout.Element;
+using Newtonsoft.Json;
 using Panels.Utils;
 using System;
 using System.Xml;
 using System.Xml.Serialization;
-using Newtonsoft.Json;
 
 namespace Panels.Elements
 {
@@ -20,7 +20,7 @@ namespace Panels.Elements
 		protected Color color { get; set; } = ColorConstants.BLACK;
 		private const int LINE_HEIGHT = 11;
 		private const int MARGIN = 5;
-		private PdfFont font = PdfFontFactory.CreateFont(Properties.Resources.Comicsam_Bold, PdfEncodings.CP1252);
+		private PdfFont? font;
 		private float? fontSize;
 		private float left = 0;
 		private string? text;
@@ -69,13 +69,21 @@ namespace Panels.Elements
 
 		public Text()
 		{
-			this.font = PdfFontFactory.CreateFont(Properties.Resources.Comicsam_Bold, PdfEncodings.CP1252);
 		}
 
 		public void Initialize(Document document, Panel parent)
 		{
 			this.document = document;
 			this.parent = parent;
+		}
+
+		private PdfFont GetFont()
+		{
+			if (this.font == null)
+			{
+				this.font = PdfFontFactory.CreateFont(Properties.Resources.Comicsam_Bold, PdfEncodings.CP1252);
+			}
+			return this.font;
 		}
 
 		public override void Render(LogWriter logWriter)
@@ -100,7 +108,7 @@ namespace Panels.Elements
 			phrase.SetFixedLeading(LINE_HEIGHT);
 			phrase.SetVerticalAlignment(iText.Layout.Properties.VerticalAlignment.TOP);
 			phrase.SetHeight(top - bottom);
-			phrase.SetFont(this.font);
+			phrase.SetFont(this.GetFont());
 			phrase.SetFontSize(this.FontSize);
 			phrase.SetFixedPosition(this.noPage, left, bottom, phraseWidth);
 			phrase.SetFontColor(this.color);

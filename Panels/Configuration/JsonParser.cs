@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace Panels.Configuration
 {
@@ -54,16 +54,16 @@ namespace Panels.Configuration
 
 		private class CustomSerializationBinder : ISerializationBinder
 		{
-		public void BindToName(Type serializedType, out string? assemblyName, out string? typeName)
-		{
-			assemblyName = null;
-			typeName = ReverseTypeMap.TryGetValue(serializedType, out var shortName) ? shortName : serializedType.FullName;
-		}
+			public void BindToName(Type serializedType, out string? assemblyName, out string? typeName)
+			{
+				assemblyName = null;
+				typeName = ReverseTypeMap.TryGetValue(serializedType, out var shortName) ? shortName : serializedType.FullName;
+			}
 
-		public Type BindToType(string? assemblyName, string typeName)
-		{
-			return TypeMap.TryGetValue(typeName, out var type) ? type : Type.GetType($"{typeName}, {assemblyName}") ?? throw new InvalidOperationException($"Type not found: {typeName}");
-		}
+			public Type BindToType(string? assemblyName, string typeName)
+			{
+				return TypeMap.TryGetValue(typeName, out var type) ? type : Type.GetType($"{typeName}, {assemblyName}") ?? throw new InvalidOperationException($"Type not found: {typeName}");
+			}
 		}
 	}
 }

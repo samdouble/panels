@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.IO;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
-using Newtonsoft.Json;
 
 namespace Panels.Configuration
 {
@@ -38,7 +38,7 @@ namespace Panels.Configuration
 			// Try to read from embedded resource first
 			var assembly = Assembly.GetExecutingAssembly();
 			var resourceName = "Panels.Assets.schema.xsd";
-			
+
 			using (var stream = assembly.GetManifestResourceStream(resourceName))
 			{
 				if (stream != null)
