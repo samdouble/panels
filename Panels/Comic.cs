@@ -66,7 +66,6 @@ namespace Panels
 
 		public Comic()
 		{
-			Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 		}
 
 		public void Initialize(Document document, string imagesFolderPath)

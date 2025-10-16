@@ -10,13 +10,13 @@ namespace Panels
 {
 	public class Image : IPositionable, IRenderable
 	{
-		private readonly Document document;
+		private Document? document;
 		private iText.Layout.Element.Image? image;
 		private int noPage;
 		private float x;
 		private float y;
-		private readonly float originalHeight;
-		private readonly float originalWidth;
+		private float? originalHeight;
+		private float? originalWidth;
 
 		public float PaddingBottom
 		{
@@ -26,7 +26,8 @@ namespace Panels
 			}
 			set
 			{
-				this.Crop(0, 0, value * this.originalHeight / 100, 0);
+				if (this.originalHeight.HasValue)
+					this.Crop(0, 0, value * this.originalHeight.Value / 100, 0);
 			}
 		}
 		public float PaddingTop
@@ -37,7 +38,8 @@ namespace Panels
 			}
 			set
 			{
-				this.Crop(value * this.originalHeight / 100, 0, 0, 0);
+				if (this.originalHeight.HasValue)
+					this.Crop(value * this.originalHeight.Value / 100, 0, 0, 0);
 			}
 		}
 		public float Height
@@ -63,6 +65,11 @@ namespace Panels
 			}
 		}
 
+		public Image()
+		{
+			// Parameterless constructor for XML serialization
+		}
+
 		public Image(Document document, string src)
 		{
 			this.document = document;
@@ -75,6 +82,8 @@ namespace Panels
 		{
 			this.document = document;
 			this.image = new iText.Layout.Element.Image(ImageDataFactory.Create(bytes));
+			this.originalHeight = this.image.GetImageHeight();
+			this.originalWidth = this.image.GetImageWidth();
 		}
 
 		public void Crop(
@@ -84,7 +93,7 @@ namespace Panels
 			float leftCropping = 0
 		)
 		{
-			if (this.image == null) return;
+			if (this.image == null || this.document == null) return;
 
 			var horizontalOffset = leftCropping + rightCropping;
 			var verticalOffset = topCropping + bottomCropping;
@@ -111,7 +120,7 @@ namespace Panels
 		// IRenderable
 		public void Render(LogWriter logWriter)
 		{
-			if (this.image == null) return;
+			if (this.image == null || this.document == null) return;
 
 			this.document.Add(this.image);
 

@@ -18,12 +18,14 @@ namespace Panels.Elements
 
 		[XmlIgnore]
 		[JsonIgnore]
-		private new readonly Color color = ColorConstants.RED;
+		private new Color color = ColorConstants.RED;
+
+		[XmlIgnore]
+		[JsonIgnore]
 		private bool visible = true;
 
 		public Description()
 		{
-			this.color = ColorConstants.RED;
 		}
 
 		[XmlAttribute("visible")]
