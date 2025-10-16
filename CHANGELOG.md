@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.5](https://github.com/samdouble/panels/compare/1.4.4...v1.4.5) (2025-10-16)
+
+
+### Bug Fixes
+
+* make Comic a parameterless constructor ([1f8b6f9](https://github.com/samdouble/panels/commit/1f8b6f9bb9bb821b259c38aeb5307a2a812f4451))
+
 ## [1.4.4](https://github.com/samdouble/panels/compare/1.4.3...v1.4.4) (2025-10-16)
 
 
