@@ -1,11 +1,11 @@
 ﻿using iText.Layout;
+using Newtonsoft.Json;
 using Panels.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
-using Newtonsoft.Json;
 
 namespace Panels
 {
@@ -17,7 +17,7 @@ namespace Panels
 		private Document? document;
 		[XmlIgnore]
 		private Comic? parent;
-		
+
 		[XmlIgnore]
 		[JsonIgnore]
 		private float? fontSize { get; set; }
@@ -32,30 +32,31 @@ namespace Panels
 
 		[XmlIgnore]
 		[JsonIgnore]
-		public string? ImagesFolderPath {
+		public string? ImagesFolderPath
+		{
 			get { return parent?.ImagesFolderPath; }
 		}
 
 		[XmlAttribute("maxPaddingLeft")]
 		[JsonProperty("maxPaddingLeft")]
 		public float MaxLeftPaddingPct { get; set; }
-		
+
 		[XmlAttribute("maxPaddingRight")]
 		[JsonProperty("maxPaddingRight")]
 		public float MaxRightPaddingPct { get; set; }
-		
+
 		[XmlIgnore]
 		[JsonIgnore]
 		public float PaddingLeft { get; set; }
-		
+
 		[XmlIgnore]
 		[JsonIgnore]
 		public float PaddingRight { get; set; }
-		
+
 		[XmlIgnore]
 		[JsonIgnore]
 		public float Height { get; set; }
-		
+
 		[XmlIgnore]
 		[JsonIgnore]
 		public float Width

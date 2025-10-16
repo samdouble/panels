@@ -1,10 +1,10 @@
 ﻿using iText.Kernel.Colors;
 using iText.Layout;
+using Newtonsoft.Json;
 using Panels.Elements;
 using Panels.Utils;
 using System.Xml;
 using System.Xml.Serialization;
-using Newtonsoft.Json;
 
 namespace Panels.Elements
 {
@@ -18,7 +18,7 @@ namespace Panels.Elements
 
 		[XmlIgnore]
 		[JsonIgnore]
-		private new Color color = ColorConstants.RED;
+		private new readonly Color color = ColorConstants.RED;
 		private bool visible = true;
 
 		public Description()
