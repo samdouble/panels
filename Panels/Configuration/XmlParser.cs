@@ -36,7 +36,6 @@ namespace Panels.Configuration
 
 		private static string GetSchemaPath()
 		{
-			// Try to read from embedded resource first
 			var assembly = Assembly.GetExecutingAssembly();
 			var resourceName = "Panels.Assets.schema.xsd";
 
@@ -44,7 +43,6 @@ namespace Panels.Configuration
 			{
 				if (stream != null)
 				{
-					// Create a temporary file to hold the schema content
 					var tempPath = Path.Combine(Path.GetTempPath(), "schema.xsd");
 					using (var fileStream = File.Create(tempPath))
 					{
@@ -54,43 +52,7 @@ namespace Panels.Configuration
 					return tempPath;
 				}
 			}
-
-			// Fallback to file system search (for development or if resource is not found)
-			var possiblePaths = new[]
-			{
-				// Standard build output location
-				Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "schema.xsd"),
-				// Debian package location (primary)
-				Path.Combine("/usr", "share", "Panels", "Assets", "schema.xsd"),
-				// Alternative Debian package location
-				Path.Combine("/usr", "lib", "Panels", "Assets", "schema.xsd"),
-				// Assembly location (for embedded resources or side-by-side)
-				Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "", "Assets", "schema.xsd"),
-				// Current working directory
-				Path.Combine(Directory.GetCurrentDirectory(), "Assets", "schema.xsd"),
-				// Development/relative path
-				"Assets/schema.xsd"
-			};
-
-			// Debug: Print all paths being searched
-			Console.WriteLine("Embedded resource not found, searching for schema.xsd file in the following locations:");
-			foreach (var path in possiblePaths)
-			{
-				Console.WriteLine($"  - {path} (exists: {File.Exists(path)})");
-			}
-
-			foreach (var path in possiblePaths)
-			{
-				if (File.Exists(path))
-				{
-					Console.WriteLine($"Found schema.xsd file at {path}");
-					return path;
-				}
-			}
-
-			throw new FileNotFoundException(
-				$"Could not find schema.xsd file. Searched embedded resource '{resourceName}' and file paths: {string.Join(", ", possiblePaths)}"
-			);
+			throw new FileNotFoundException("Could not find schema.xsd file.");
 		}
 
 		static void ComicsValidationEventHandler(object? sender, ValidationEventArgs e)

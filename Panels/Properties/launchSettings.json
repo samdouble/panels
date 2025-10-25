@@ -2,7 +2,7 @@
   "profiles": {
     "Panels": {
       "commandName": "Project",
-      "commandLineArgs": "--output Images.pdf\r\n--config BD1/bd.xml\r\n--images BD1/images",
+      "commandLineArgs": "--output Images.pdf\r\n--config BD/bd.xml\r\n--images BD/images",
       "workingDirectory": "C:\\Users\\samle\\Desktop\\Projets\\BD"
     }
   }

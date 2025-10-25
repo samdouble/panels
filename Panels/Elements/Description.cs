@@ -22,18 +22,10 @@ namespace Panels.Elements
 
 		[XmlIgnore]
 		[JsonIgnore]
-		private bool visible = true;
+		private bool _visible = true;
 
 		public Description()
 		{
-		}
-
-		[XmlAttribute("visible")]
-		[JsonProperty("visible")]
-		public bool Visible
-		{
-			get { return visible; }
-			set { visible = value; }
 		}
 
 		[XmlAttribute("text")]
@@ -44,6 +36,14 @@ namespace Panels.Elements
 			set { base.TextContent = value; }
 		}
 
+		[XmlAttribute("visible")]
+		[JsonProperty("visible")]
+		public bool Visible
+		{
+			get { return _visible; }
+			set { _visible = value; }
+		}
+
 		public new void Initialize(Document document, Panel parent)
 		{
 			this.document = document;
@@ -52,7 +52,7 @@ namespace Panels.Elements
 
 		public override void Render(LogWriter logWriter)
 		{
-			if (this.visible)
+			if (this._visible)
 			{
 				base.Render(logWriter);
 			}

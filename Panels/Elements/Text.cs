@@ -22,10 +22,10 @@ namespace Panels.Elements
 		private const int MARGIN = 5;
 		private PdfFont? font;
 		private float? fontSize;
-		private float left = 0;
-		private string? text;
-		private float top = 0;
-		private float? width;
+		private float _left = 0;
+		private string? _text;
+		private float _top = 0;
+		private float? _width;
 
 		[XmlAttribute("fontSize")]
 		[JsonProperty("fontSize")]
@@ -39,32 +39,32 @@ namespace Panels.Elements
 		[JsonProperty("left")]
 		public float Left
 		{
-			get { return left; }
-			set { left = value; }
+			get { return _left; }
+			set { _left = value; }
 		}
 
 		[XmlAttribute("text")]
 		[JsonProperty("text")]
 		public string? TextContent
 		{
-			get { return text; }
-			set { text = value; }
+			get { return _text; }
+			set { _text = value; }
 		}
 
 		[XmlAttribute("top")]
 		[JsonProperty("top")]
 		public float Top
 		{
-			get { return top; }
-			set { top = value; }
+			get { return _top; }
+			set { _top = value; }
 		}
 
 		[XmlIgnore]
 		[JsonIgnore]
 		public float? Width
 		{
-			get { return width; }
-			set { width = value; }
+			get { return _width; }
+			set { _width = value; }
 		}
 
 		public Text()
@@ -88,23 +88,23 @@ namespace Panels.Elements
 
 		public override void Render(LogWriter logWriter)
 		{
-			if (this.parent == null || this.document == null || this.text == null) return;
+			if (this.parent == null || this.document == null || this._text == null) return;
 
-			var left = this.parent.Position.X + this.left + MARGIN;
+			var left = this.parent.Position.X + this._left + MARGIN;
 			float right;
-			if (this.width is float width)
+			if (this._width is float _width)
 			{
-				right = this.parent.Position.X + this.left + Math.Min(width, this.parent.Width - this.left) - MARGIN;
+				right = this.parent.Position.X + this._left + Math.Min(_width, this.parent.Width - this._left) - MARGIN;
 			}
 			else
 			{
 				right = this.parent.Position.X + this.parent.Width - MARGIN;
 			}
 
-			var top = this.parent.Position.Y - this.top - 3;
+			var top = this.parent.Position.Y - this._top - 3;
 			var bottom = this.parent.Position.Y - this.parent.Height + MARGIN;
 			var phraseWidth = right - left;
-			Paragraph phrase = new Paragraph(this.text);
+			Paragraph phrase = new Paragraph(this._text);
 			phrase.SetFixedLeading(LINE_HEIGHT);
 			phrase.SetVerticalAlignment(iText.Layout.Properties.VerticalAlignment.TOP);
 			phrase.SetHeight(top - bottom);
@@ -112,7 +112,7 @@ namespace Panels.Elements
 			phrase.SetFontSize(this.FontSize);
 			phrase.SetFixedPosition(this.noPage, left, bottom, phraseWidth);
 			phrase.SetFontColor(this.color);
-			logWriter.Log("TEXT - " + this.text + " at " + left + ", " + bottom + " with width " + phraseWidth);
+			logWriter.Log("TEXT - " + this._text + " at " + left + ", " + bottom + " with width " + phraseWidth);
 			this.document.Add(phrase);
 		}
 	}
