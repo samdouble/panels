@@ -144,13 +144,13 @@ Forces a page break. Can be placed between slots.
 ### Running Locally
 
 ```
-dotnet run --project Panels -- generate -c ~/Desktop/github_perso/bd1/BD0/bd.xml -i ~/Desktop/github_perso/bd1/BD0/images
+dotnet run --project Panels -- generate -c ~/Desktop/github_perso/bd/BD0/bd.xml -i ~/Desktop/github_perso/bd/BD0/images
 ```
 
 or:
 
 ```
-dotnet build && ./Panels/bin/Debug/net9.0/Panels generate -c ~/Desktop/github_perso/bd1/BD0/bd.xml -i ~/Desktop/github_perso/bd1/BD0/images
+dotnet build && ./Panels/bin/Debug/net9.0/Panels generate -c ~/Desktop/github_perso/bd/BD0/bd.xml -i ~/Desktop/github_perso/bd/BD0/images
 ```
 
 ### Testing
