@@ -12,5 +12,8 @@ branches = ["master"]
 [brew]
 publish = false
 
+[nuget]
+publish = false
+
 [scoop]
 publish = false

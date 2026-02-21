@@ -1,4 +1,4 @@
-name: Deploy
+name: Publish
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - 'v*'
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   publish:
@@ -15,12 +15,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+
       - name: Set up .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0'
+
       - name: Release
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -31,3 +31,12 @@ jobs:
             --force \
             --github-token $GITHUB_TOKEN \
             dotnet-releaser.toml
+
+      - name: Set package version from tag
+        env:
+          NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
+        run: |
+          export PACKAGE_VERSION=${GITHUB_REF#refs/tags/v}
+          dotnet restore Panels/Panels.csproj
+          dotnet pack Panels/Panels.csproj -c Release --no-restore -o ./nupkgs -p:PackageVersion=$PACKAGE_VERSION
+          dotnet nuget push ./nupkgs/*.nupkg --api-key $NUGET_TOKEN --source https://api.nuget.org/v3/index.json --skip-duplicate
