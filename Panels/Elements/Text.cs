@@ -59,8 +59,15 @@ namespace Panels.Elements
 			set { _top = value; }
 		}
 
+		[XmlAttribute("width")]
+		public string? WidthXml
+		{
+			get => _width.HasValue ? XmlConvert.ToString(_width.Value) : null;
+			set => _width = string.IsNullOrEmpty(value) ? null : (float?)XmlConvert.ToSingle(value);
+		}
+
 		[XmlIgnore]
-		[JsonIgnore]
+		[JsonProperty("width")]
 		public float? Width
 		{
 			get { return _width; }

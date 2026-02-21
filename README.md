@@ -1,9 +1,14 @@
-# Panels
-
 [![CI](https://github.com/samdouble/panels/actions/workflows/checks.yml/badge.svg)](https://github.com/samdouble/panels/actions/workflows/checks.yml)
 [![Coverage Status](https://coveralls.io/repos/samdouble/panels/badge.svg?branch=master&service=github)](https://coveralls.io/github/samdouble/panels?branch=master)
 
-Panels is a CLI tool that allows you to export a comic book in PDF format from an XML configuration and a set of images.
+[![C#](https://custom-icon-badges.demolab.com/badge/C%23-%23239120.svg?logo=cshrp&logoColor=white)](https://dotnet.microsoft.com/languages/csharp)
+[![.NET](https://img.shields.io/badge/.NET-512BD4?logo=dotnet&logoColor=fff)](https://dotnet.microsoft.com/)
+[![NuGet](https://img.shields.io/badge/NuGet-004880?logo=nuget&logoColor=fff)](https://www.nuget.org/packages/Panels/)
+[![XML](https://img.shields.io/badge/XML-767C52?logo=xml&logoColor=fff)](https://www.w3.org/XML/)
+
+# Panels
+
+Panels is a CLI tool that allows exporting a comic book in PDF format from an XML configuration and a set of images.
 
 ## Installation
 
@@ -150,7 +155,7 @@ dotnet run --project Panels -- generate -c ~/Desktop/github_perso/bd/BD0/bd.xml 
 or:
 
 ```
-dotnet build && ./Panels/bin/Debug/net9.0/Panels generate -c ~/Desktop/github_perso/bd/BD0/bd.xml -i ~/Desktop/github_perso/bd/BD0/images
+dotnet build && ./Panels/bin/Debug/net10.0/Panels generate -c ~/Desktop/github_perso/bd/BD0/bd.xml -i ~/Desktop/github_perso/bd/BD0/images
 ```
 
 ### Testing
