@@ -9,6 +9,7 @@ permissions:
 jobs:
   commitlint:
     runs-on: ubuntu-latest
+    timeout-minutes: 1
     steps:
       - name: Commitlint
         uses: wagoid/commitlint-github-action@v6
