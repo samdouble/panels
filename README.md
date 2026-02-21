@@ -75,8 +75,8 @@ The XML configuration file defines the structure and content of your comic. Here
   </slot>
   <slot>
     <panel image="0010.png">
-      <text text="Hi, how are you?" />
-      <text text="I'm good. How about you?" top="20" />
+      <text text="Hi, how are you?" character="Alice" />
+      <text text="I'm good. How about you?" character="Bob" top="20" />
     </panel>
   </slot>
 </comic>
@@ -124,6 +124,7 @@ A `<panel>` can contain multiple `<text>` and `<description>` elements.
 Adds a text bubble or caption to a panel. Attributes:
 
 - `text` (required): The text content.
+- `character` (optional): Name of the character speaking.
 - `fontSize` (optional): Font size for the text in the panel.
 - `left` (optional, default: 0): Positioning of the text within the panel.
 - `top` (optional, default: 0): Positioning of the text within the panel.
@@ -163,11 +164,3 @@ dotnet build && ./Panels/bin/Debug/net10.0/Panels generate -c ~/Desktop/github_p
 ```
 dotnet test
 ```
-
-## Technologies & Languages
-
-- C# 11
-- .NET 9
-- iText 9
-- GitHub Actions
-- GitHub Releases
