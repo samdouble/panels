@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.6.0](https://github.com/samdouble/panels/compare/v1.5.0...v1.6.0) (2026-02-21)
+
+
+### Features
+
+* add border: none option on panels ([0f0bffd](https://github.com/samdouble/panels/commit/0f0bffd41afd5d25ea369fdf90aeaed8f3184376))
+* add support for YAML configuration files ([9226623](https://github.com/samdouble/panels/commit/9226623c7aec8f2dea67a7a1ce623ee397db4ea4))
+
 ## [1.5.0](https://github.com/samdouble/panels/compare/v1.3.1...v1.5.0) (2026-02-21)
 
 
