@@ -1,5 +1,41 @@
 # Changelog
 
+## [1.5.0](https://github.com/samdouble/panels/compare/v1.3.1...v1.5.0) (2026-02-21)
+
+
+### Features
+
+* add cropBottom and CropTop option on panels ([492a821](https://github.com/samdouble/panels/commit/492a8211debbf80de4a381162924c26bc6485bdb))
+* add XSD validation ([96f4e27](https://github.com/samdouble/panels/commit/96f4e278c18c66302b9dfba25ac5effde404cece))
+* added character field to text tag ([5cc5ef4](https://github.com/samdouble/panels/commit/5cc5ef4a6b6e927822c4e0a5e957fe7e5a76f1dc))
+* be able to control font size through XML configuration ([fdedd51](https://github.com/samdouble/panels/commit/fdedd51699e4b2b8ff4e58f46b9d185b4e57cf44))
+* cease support for .NET 9 ([1a2fb59](https://github.com/samdouble/panels/commit/1a2fb59b772610c57552926118fd1edb2b8d4b2d))
+* rename crop by padding ([99100cf](https://github.com/samdouble/panels/commit/99100cfb5bad03179e820702ed529fae4cffb8ef))
+* rename margin attributes ([841c603](https://github.com/samdouble/panels/commit/841c6035ded98c2ac6826165ebf23e02b1165230))
+* split command-line parser into generate and validate commands ([cc68b4e](https://github.com/samdouble/panels/commit/cc68b4e96066a44b770016bd96186dc9c996c78b))
+* support JSON configurations ([765a365](https://github.com/samdouble/panels/commit/765a36517384363e75c309efcdf22e59fba4f73a))
+
+
+### Bug Fixes
+
+* add width property to XSD for text element ([bc56dae](https://github.com/samdouble/panels/commit/bc56daeec745125a751098181a9c2aa97d452017))
+* ci ([820f878](https://github.com/samdouble/panels/commit/820f8785b6c8b329877b6731ce7759df36f9ad12))
+* ci ([76d2a5f](https://github.com/samdouble/panels/commit/76d2a5fed2461b404ee953106eef10d6bf77c63f))
+* conflicts with master ([#6](https://github.com/samdouble/panels/issues/6)) ([9f5f001](https://github.com/samdouble/panels/commit/9f5f00136d43d668616f6dc5cfc262359d7ea27a))
+* do not trim unused code during publish ([0500cad](https://github.com/samdouble/panels/commit/0500cad4b6d3c18ab1c0b026f733cde23fbbeb60))
+* fix issue with description texts not showing ([eac1269](https://github.com/samdouble/panels/commit/eac12698857b948f098791f8234376fe44eef039))
+* fix issue with fontSize propagation to children ([4dfea10](https://github.com/samdouble/panels/commit/4dfea108622ebf1706acfd6fbaa0f5fa8da06a10))
+* fixed bug with new pages created when they should not ([#19](https://github.com/samdouble/panels/issues/19)) ([709e874](https://github.com/samdouble/panels/commit/709e8743d8abe1ab1f0e5e9a5d18fe6bfa5e6809))
+* fixed crash with CLI arguments on .NET 7 ([#13](https://github.com/samdouble/panels/issues/13)) ([16839c0](https://github.com/samdouble/panels/commit/16839c0097e55d0a600bfabd17459aa85d31c60e))
+* removed .NET 8 as target framework ([#20](https://github.com/samdouble/panels/issues/20)) ([ef1293d](https://github.com/samdouble/panels/commit/ef1293d0e16a00209f401392fd6b2bb150b2d69e))
+* text width is now respected ([5c4d8d2](https://github.com/samdouble/panels/commit/5c4d8d2f2e26af0b088b341ffd80f9aa22d82055))
+
+
+### Miscellaneous Chores
+
+* release 1.4.6 ([08d3142](https://github.com/samdouble/panels/commit/08d314240fca7b84e4e1742da20864d2541494f0))
+* release 1.5.0 ([4c1b362](https://github.com/samdouble/panels/commit/4c1b362f45e7807a639262672523a29623a36395))
+
 ## [1.4.6](https://github.com/samdouble/panels/compare/1.4.5...v1.4.6) (2025-10-16)
 
 
