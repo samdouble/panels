@@ -25,6 +25,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
-          dotnet tool install --global dotnet-releaser --version 0.17.0
+          dotnet tool install --global dotnet-releaser --version 0.14.0
           dotnet-releaser build dotnet-releaser.toml
           dotnet-releaser publish --force --github-token $GITHUB_TOKEN dotnet-releaser.toml

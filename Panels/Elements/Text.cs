@@ -1,4 +1,4 @@
-﻿using iText.IO.Font;
+using iText.IO.Font;
 using iText.Kernel.Colors;
 using iText.Kernel.Font;
 using iText.Layout;
@@ -22,10 +22,19 @@ namespace Panels.Elements
 		private const int MARGIN = 5;
 		private PdfFont? font;
 		private float? fontSize;
+		private string? _character;
 		private float _left = 0;
 		private string? _text;
 		private float _top = 0;
 		private float? _width;
+
+		[XmlAttribute("character")]
+		[JsonProperty("character")]
+		public string? Character
+		{
+			get { return _character; }
+			set { _character = value; }
+		}
 
 		[XmlAttribute("fontSize")]
 		[JsonProperty("fontSize")]
@@ -119,7 +128,8 @@ namespace Panels.Elements
 			phrase.SetFontSize(this.FontSize);
 			phrase.SetFixedPosition(this.noPage, left, bottom, phraseWidth);
 			phrase.SetFontColor(this.color);
-			logWriter.Log("TEXT - " + this._text + " at " + left + ", " + bottom + " with width " + phraseWidth);
+			var characterPrefix = string.IsNullOrEmpty(this._character) ? "" : "[" + this._character + "] ";
+			logWriter.Log("TEXT - " + characterPrefix + this._text + " at " + left + ", " + bottom + " with width " + phraseWidth);
 			this.document.Add(phrase);
 		}
 	}
