@@ -1,4 +1,4 @@
-﻿using iText.Layout;
+using iText.Layout;
 using Newtonsoft.Json;
 using Panels.Elements;
 using Panels.Utils;
@@ -40,13 +40,9 @@ namespace Panels
 		[JsonIgnore]
 		public PointF Position { get; private set; }
 
-		[XmlAttribute("paddingBottom")]
-		[JsonProperty("paddingBottom")]
-		public float PaddingBottom { get; set; }
-
-		[XmlAttribute("paddingTop")]
-		[JsonProperty("paddingTop")]
-		public float PaddingTop { get; set; }
+		[XmlAttribute("border")]
+		[JsonProperty("border")]
+		public string? Border { get; set; }
 
 		[XmlAttribute("fontSize")]
 		[JsonProperty("fontSize")]
@@ -59,6 +55,14 @@ namespace Panels
 		[XmlAttribute("image")]
 		[JsonProperty("image")]
 		public string? ImagePath { get; set; }
+
+		[XmlAttribute("paddingBottom")]
+		[JsonProperty("paddingBottom")]
+		public float PaddingBottom { get; set; }
+
+		[XmlAttribute("paddingTop")]
+		[JsonProperty("paddingTop")]
+		public float PaddingTop { get; set; }
 
 		[XmlIgnore]
 		[JsonIgnore]
@@ -109,6 +113,7 @@ namespace Panels
 			}
 			this.image.PaddingBottom = this.PaddingBottom;
 			this.image.PaddingTop = this.PaddingTop;
+			this.image.ShowBorder = !string.Equals(this.Border, "none", StringComparison.OrdinalIgnoreCase);
 
 			foreach (var element in this.elements)
 			{

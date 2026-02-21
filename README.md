@@ -3,8 +3,9 @@
 
 [![C#](https://custom-icon-badges.demolab.com/badge/C%23-%23239120.svg?logo=cshrp&logoColor=white)](https://dotnet.microsoft.com/languages/csharp)
 [![.NET](https://img.shields.io/badge/.NET-512BD4?logo=dotnet&logoColor=fff)](https://dotnet.microsoft.com/)
-[![NuGet](https://img.shields.io/badge/NuGet-004880?logo=nuget&logoColor=fff)](https://www.nuget.org/packages/Panels/)
+[![JSON](https://img.shields.io/badge/JSON-000?logo=json&logoColor=fff)](https://www.json.org/json-en.html)
 [![XML](https://img.shields.io/badge/XML-767C52?logo=xml&logoColor=fff)](https://www.w3.org/XML/)
+[![NuGet](https://img.shields.io/badge/NuGet-004880?logo=nuget&logoColor=fff)](https://www.nuget.org/packages/Panels/)
 
 # Panels
 
@@ -113,9 +114,10 @@ A `<slot>` can contain up to 2 `<panel>` elements.
 Represents a single panel in a slot. Attributes:
 
 - `image` (required): Filename of the image for this panel.
-- `paddingBottom` (optional, default: 0): Padding from the bottom of the panel's image, in % of the image's height
-- `paddingTop` (optional, default: 0): Padding from the top of the panel's image, in % of the image's height
+- `border` (optional): Set to `"none"` to hide the panel border. By default, panels have a black border.
 - `fontSize` (optional): Font size for the text in the panel.
+- `paddingBottom` (optional, default: 0): Padding from the bottom of the panel's image, in % of the image's height.
+- `paddingTop` (optional, default: 0): Padding from the top of the panel's image, in % of the image's height.
 
 A `<panel>` can contain multiple `<text>` and `<description>` elements.
 
