@@ -1,4 +1,4 @@
-﻿using iText.IO.Image;
+using iText.IO.Image;
 using iText.Kernel.Colors;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf.Xobject;
@@ -65,6 +65,8 @@ namespace Panels
 			}
 		}
 
+		public bool ShowBorder { get; set; } = true;
+
 		public Image()
 		{
 			// Parameterless constructor for XML serialization
@@ -124,12 +126,14 @@ namespace Panels
 
 			this.document.Add(this.image);
 
-			// Add borders
-			iText.Kernel.Pdf.Canvas.PdfCanvas canvas = new iText.Kernel.Pdf.Canvas.PdfCanvas(this.document.GetPdfDocument().GetPage(this.noPage));
-			canvas.SetStrokeColor(ColorConstants.BLACK);
-			canvas.SetLineWidth(2f);
-			canvas.Rectangle(this.x, this.y - image.GetImageScaledHeight(), image.GetImageScaledWidth(), image.GetImageScaledHeight());
-			canvas.Stroke();
+			if (this.ShowBorder)
+			{
+				iText.Kernel.Pdf.Canvas.PdfCanvas canvas = new iText.Kernel.Pdf.Canvas.PdfCanvas(this.document.GetPdfDocument().GetPage(this.noPage));
+				canvas.SetStrokeColor(ColorConstants.BLACK);
+				canvas.SetLineWidth(2f);
+				canvas.Rectangle(this.x, this.y - image.GetImageScaledHeight(), image.GetImageScaledWidth(), image.GetImageScaledHeight());
+				canvas.Stroke();
+			}
 			logWriter.Log($"IMAGE - {this.image.GetImageScaledWidth()}x{this.image.GetImageScaledHeight()} at {this.x}, {this.y}");
 		}
 	}
