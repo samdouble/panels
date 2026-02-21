@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
@@ -31,13 +31,18 @@ namespace Panels.Configuration
 
 		public static Comic Read(string jsonPath)
 		{
+			return ReadFromString(File.ReadAllText(jsonPath));
+		}
+
+		public static Comic ReadFromString(string json)
+		{
 			var settings = new JsonSerializerSettings
 			{
 				TypeNameHandling = TypeNameHandling.Auto,
 				TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
 				SerializationBinder = new CustomSerializationBinder()
 			};
-			return JsonConvert.DeserializeObject<Comic>(File.ReadAllText(jsonPath), settings) ?? throw new InvalidOperationException("Failed to deserialize JSON");
+			return JsonConvert.DeserializeObject<Comic>(json, settings) ?? throw new InvalidOperationException("Failed to deserialize JSON");
 		}
 
 		public static void Write(Comic comic, string jsonPath)
