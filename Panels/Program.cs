@@ -1,4 +1,4 @@
-﻿using iText.Kernel.Geom;
+using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using Panels.Configuration;
@@ -18,7 +18,7 @@ namespace Panels
 		{
 			Option<string> configOption = new("--config", "-c")
 			{
-				Description = "Path to the XML file",
+				Description = "Path to the configuration file (XML, JSON, or YAML)",
 				DefaultValueFactory = parseResult => string.Empty
 			};
 			RootCommand rootCommand = new("Panels: an app to create comics in PDF format from images and XML");
@@ -58,7 +58,7 @@ namespace Panels
 				var configPath = parseResult.GetValue(configOption);
 				if (!string.IsNullOrEmpty(configPath))
 				{
-					XmlParser.Read(configPath);
+					ConfigurationParser.Read(configPath);
 					Console.WriteLine("Config file is valid");
 				}
 				else

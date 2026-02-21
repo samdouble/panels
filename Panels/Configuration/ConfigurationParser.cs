@@ -1,4 +1,4 @@
-﻿using Panels;
+using Panels;
 using System;
 using System.IO;
 using System.Reflection;
@@ -20,6 +20,9 @@ namespace Panels.Configuration
 					return JsonParser.Read(configurationPath);
 				case ".xml":
 					return XmlParser.Read(configurationPath);
+				case ".yaml":
+				case ".yml":
+					return YamlParser.Read(configurationPath);
 				default:
 					throw new Exception($"Unsupported file extension: {extension}");
 			}

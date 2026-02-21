@@ -9,7 +9,7 @@
 
 # Panels
 
-Panels is a CLI tool that allows exporting a comic book in PDF format from an XML configuration and a set of images.
+Panels is a CLI tool that allows exporting a comic book in PDF format from a configuration file (XML, JSON, or YAML) and a set of images.
 
 ## Installation
 
@@ -31,12 +31,13 @@ Panels --help
 #### `generate`
 This command will use the raw images and the config file to generate the final PDF file.
 
-- `-c`, `--config` **(required)**: Path to the XML configuration file describing the comic structure.
+- `-c`, `--config` **(required)**: Path to the configuration file (`.xml`, `.json` or `.yaml`/`.yml`) describing the comic structure.
 - `-i`, `--images` **(required)**: Path to the directory containing the images used in the comic.
 - `-o`, `--output` *(optional)*: Path to the output PDF file. If not specified, the output will be named `output.pdf` in the current directory.
 - `-?`, `-h`, `--help`: Show help information.
 
 **Example:**
+
 ```
 dotnet run --project Panels -- generate -c path/to/config.xml -i path/to/images -o my_comic.pdf
 ```
@@ -44,15 +45,24 @@ dotnet run --project Panels -- generate -c path/to/config.xml -i path/to/images 
 #### `validate`
 This command will validate the config file.
 
-- `-c`, `--config` **(required)**: Path to the XML configuration file describing the comic structure.
+- `-c`, `--config` **(required)**: Path to the configuration file (XML, JSON, or YAML) to validate.
 - `-?`, `-h`, `--help`: Show help information.
 
 **Example:**
+
 ```
 dotnet run --project Panels -- validate -c path/to/config.xml
 ```
 
-### XML Configuration Reference
+### Configuration File Formats
+
+Configuration is supported in three formats:
+
+- **JSON** (`.json`) and **YAML** (`.yaml`, `.yml`): Same structure as JSON, with `$type` used for polymorphic nodes (e.g. `$type: slot`, `$type: panel`, `$type: text`, `$type: description`, `$type: newpage`). The root object is the comic; use a `children` array for slots and new pages.
+- **XML** (`.xml`): Schema-validated; see [XML Configuration Reference](#xml-configuration-reference) below.
+- **YAML** (`.yaml`, `.yml`): Same structure as JSON, with `$type` used for polymorphic nodes (e.g. `$type: slot`, `$type: panel`, `$type: text`, `$type: description`, `$type: newpage`). The root object is the comic; use a `children` array for slots and new pages.
+
+### Configuration Reference
 
 The XML configuration file defines the structure and content of your comic. Here is a minimal example:
 

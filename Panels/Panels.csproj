@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -26,6 +26,7 @@
     <PackageReference Include="itext.bouncy-castle-adapter" Version="8.0.5" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="YamlDotNet" Version="16.3.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.11" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta6.25358.103" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
