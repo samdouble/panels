@@ -5,6 +5,7 @@
 [![.NET](https://img.shields.io/badge/.NET-512BD4?logo=dotnet&logoColor=fff)](https://dotnet.microsoft.com/)
 [![JSON](https://img.shields.io/badge/JSON-000?logo=json&logoColor=fff)](https://www.json.org/json-en.html)
 [![XML](https://img.shields.io/badge/XML-767C52?logo=xml&logoColor=fff)](https://www.w3.org/XML/)
+[![YAML](https://img.shields.io/badge/YAML-CB171E?logo=yaml&logoColor=fff)](https://yaml.org/)
 [![NuGet](https://img.shields.io/badge/NuGet-004880?logo=nuget&logoColor=fff)](https://www.nuget.org/packages/Panels/)
 
 # Panels
@@ -39,7 +40,7 @@ This command will use the raw images and the config file to generate the final P
 **Example:**
 
 ```
-dotnet run --project Panels -- generate -c path/to/config.xml -i path/to/images -o my_comic.pdf
+Panels -- generate -c path/to/config.xml -i path/to/images -o my_comic.pdf
 ```
 
 #### `validate`
@@ -51,10 +52,12 @@ This command will validate the config file.
 **Example:**
 
 ```
-dotnet run --project Panels -- validate -c path/to/config.xml
+Panels -- validate -c path/to/config.xml
 ```
 
-### Configuration File Formats
+### Configuration
+
+#### File Formats
 
 Configuration is supported in three formats:
 
@@ -62,7 +65,7 @@ Configuration is supported in three formats:
 - **XML** (`.xml`): Schema-validated; see [XML Configuration Reference](#xml-configuration-reference) below.
 - **YAML** (`.yaml`, `.yml`): Same structure as JSON, with `$type` used for polymorphic nodes (e.g. `$type: slot`, `$type: panel`, `$type: text`, `$type: description`, `$type: newpage`). The root object is the comic; use a `children` array for slots and new pages.
 
-### Configuration Reference
+#### Schema Reference
 
 The XML configuration file defines the structure and content of your comic. Here is a minimal example:
 
@@ -99,13 +102,14 @@ The root element. Attributes:
 
 - `version` (required): Version of the schema (e.g. "1.0").
 - `fontSize` (optional, default: 12): Font size for text.
+- `horizontalPanelSpacing` (optional): Horizontal spacing between panels in pixels.
 - `marginTop` (optional): Margins in pixels.
 - `marginBottom` (optional): Margins in pixels.
 - `marginLeft` (optional): Margins in pixels.
 - `marginRight` (optional): Margins in pixels.
-- `horizontalPanelSpacing` (optional): Horizontal spacing between panels in pixels.
-- `verticalPanelSpacing` (optional): Vertical spacing between panels in pixels.
 - `rowsPerPage` (optional, default: 3): Number of rows per page.
+- `showPageNumbers` (optional, default: true): When true, shows page numbers at the bottom center of each page. Set to false to hide them.
+- `verticalPanelSpacing` (optional): Vertical spacing between panels in pixels.
 
 A `<comic>` can contain multiple `<slot>` and `<newpage />` elements.
 

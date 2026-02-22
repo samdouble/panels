@@ -1,6 +1,8 @@
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Layout;
+using iText.Layout.Element;
+using iText.Layout.Properties;
 using Panels.Configuration;
 using Panels.Utils;
 using System;
@@ -91,10 +93,30 @@ namespace Panels
 			Comic comic = ConfigurationParser.Read(configFile);
 			comic.Initialize(document, imagesFolderPath);
 			comic.Render(logWriter);
+			if (comic.ShowPageNumbers) {
+				AddPageNumbers(pdfDocument);
+			}
 			document.Close();
 			pdfDocument.Close();
 			logWriter.Log("Generated " + outputFile);
 			return logWriter.Contents;
+		}
+
+		private static void AddPageNumbers(PdfDocument pdfDocument)
+		{
+			int numberOfPages = pdfDocument.GetNumberOfPages();
+			if (numberOfPages == 0) return;
+			const float footerHeight = 64f;
+			for (int i = 1; i <= numberOfPages; i++)
+			{
+				var page = pdfDocument.GetPage(i);
+				var pageSizeForPage = page.GetPageSize();
+				var canvas = new iText.Kernel.Pdf.Canvas.PdfCanvas(page.NewContentStreamAfter(), page.GetResources(), pdfDocument);
+				var footerRect = new Rectangle(0, 0, pageSizeForPage.GetWidth(), footerHeight);
+				var layoutCanvas = new Canvas(canvas, footerRect);
+				layoutCanvas.Add(new Paragraph(i.ToString()).SetTextAlignment(TextAlignment.CENTER).SetFontSize(10));
+				layoutCanvas.Close();
+			}
 		}
 	}
 }

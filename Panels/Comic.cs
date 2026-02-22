@@ -1,4 +1,4 @@
-﻿using iText.Kernel.Geom;
+using iText.Kernel.Geom;
 using iText.Layout;
 using Newtonsoft.Json;
 using Panels.Configuration;
@@ -43,6 +43,10 @@ namespace Panels
 		[XmlAttribute("rowsPerPage")]
 		[JsonProperty("rowsPerPage")]
 		public int rowsPerPage { get; set; } = DEFAULT_ROWS_PER_PAGE;
+
+		[XmlAttribute("showPageNumbers")]
+		[JsonProperty("showPageNumbers")]
+		public bool ShowPageNumbers { get; set; } = true;
 
 		[XmlAttribute("horizontalPanelSpacing")]
 		[JsonProperty("horizontalPanelSpacing")]
