@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/samdouble/panels/compare/v1.6.0...v1.7.0) (2026-02-22)
+
+
+### Features
+
+* add page numbers at the bottom of the pages ([98dcd11](https://github.com/samdouble/panels/commit/98dcd11eecd4e8b8774c9032690ae7940c22a615))
+
 ## [1.6.0](https://github.com/samdouble/panels/compare/v1.5.0...v1.6.0) (2026-02-21)
 
 
