@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.8.0](https://github.com/samdouble/panels/compare/v1.7.0...v1.8.0) (2026-02-23)
+
+
+### Features
+
+* add bordersColor property on comic and panel ([b6a3391](https://github.com/samdouble/panels/commit/b6a3391a0306087ab4555d1f87b4ba42d2d349ae))
+* add bordersWidth property on comic and panel ([5659cc8](https://github.com/samdouble/panels/commit/5659cc82a0fbf9e10c8db69f2c7f2a452490e25a))
+
 ## [1.7.0](https://github.com/samdouble/panels/compare/v1.6.0...v1.7.0) (2026-02-22)
 
 
