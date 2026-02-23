@@ -20,9 +20,13 @@ namespace Panels
 		protected const int DEFAULT_FONT_SIZE = 12;
 		protected const int DEFAULT_ROWS_PER_PAGE = 3;
 
+		[XmlAttribute("bordersColor")]
+		[JsonProperty("bordersColor")]
+		public string? BordersColor { get; set; }
+
 		[XmlAttribute("bordersWidth")]
 		[JsonProperty("bordersWidth")]
-		public float? BordersWidth { get; set; }
+		public string? BordersWidth { get; set; }
 
 		[XmlAttribute("fontSize")]
 		[JsonProperty("fontSize")]
