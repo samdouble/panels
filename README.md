@@ -101,6 +101,8 @@ The XML configuration file defines the structure and content of your comic. Here
 The root element. Attributes:
 
 - `version` (required): Version of the schema (e.g. "1.0").
+- `bordersColor` (optional): Color for panel borders as a hex value (e.g. `#000000` for black). Defaults to black if neither comic nor panel specifies it. Can be overridden per panel with the panel's `bordersColor`.
+- `bordersWidth` (optional): Stroke width in points for panel borders. Defaults to 2 if neither comic nor panel specifies it. Can be overridden per panel with the panel's `bordersWidth`.
 - `fontSize` (optional, default: 12): Font size for text.
 - `horizontalPanelSpacing` (optional): Horizontal spacing between panels in pixels.
 - `marginTop` (optional): Margins in pixels.
@@ -109,7 +111,6 @@ The root element. Attributes:
 - `marginRight` (optional): Margins in pixels.
 - `rowsPerPage` (optional, default: 3): Number of rows per page.
 - `showPageNumbers` (optional, default: true): When true, shows page numbers at the bottom center of each page. Set to false to hide them.
-- `bordersWidth` (optional): Stroke width in points for panel borders. Defaults to 2 if neither comic nor panel specifies it. Can be overridden per panel with the panel's `bordersWidth`.
 - `verticalPanelSpacing` (optional): Vertical spacing between panels in pixels.
 
 A `<comic>` can contain multiple `<slot>` and `<newpage />` elements.
@@ -130,6 +131,7 @@ Represents a single panel in a slot. Attributes:
 
 - `image` (required): Filename of the image for this panel.
 - `borders` (optional): Set to `"none"` to hide the panel border. By default, panels have a black border.
+- `bordersColor` (optional): Color for this panel's border as a hex value (e.g. `#FF0000` for red). Overrides the comic's `bordersColor` when both are set.
 - `bordersWidth` (optional): Stroke width in points for this panel's border. Overrides the comic's `bordersWidth` when both are set.
 - `fontSize` (optional): Font size for the text in the panel.
 - `paddingBottom` (optional, default: 0): Padding from the bottom of the panel's image, in % of the image's height.

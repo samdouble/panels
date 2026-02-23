@@ -1,3 +1,4 @@
+using iText.Kernel.Colors;
 using iText.Layout;
 using Newtonsoft.Json;
 using Panels.Elements;
@@ -5,6 +6,7 @@ using Panels.Utils;
 using SixLabors.ImageSharp;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -44,9 +46,13 @@ namespace Panels
 		[JsonProperty("borders")]
 		public string? Borders { get; set; }
 
+		[XmlAttribute("bordersColor")]
+		[JsonProperty("bordersColor")]
+		public string? BordersColor { get; set; }
+
 		[XmlAttribute("bordersWidth")]
 		[JsonProperty("bordersWidth")]
-		public float? BordersWidth { get; set; }
+		public string? BordersWidth { get; set; }
 
 		[XmlAttribute("fontSize")]
 		[JsonProperty("fontSize")]
@@ -118,7 +124,8 @@ namespace Panels
 			this.image.PaddingBottom = this.PaddingBottom;
 			this.image.PaddingTop = this.PaddingTop;
 			this.image.ShowBorders = !string.Equals(this.Borders, "none", StringComparison.OrdinalIgnoreCase);
-			this.image.BorderWidth = this.BordersWidth ?? parent.Parent?.BordersWidth ?? 2f;
+			this.image.BorderColor = ParseBorderColor(this.BordersColor ?? parent.Parent?.BordersColor) ?? ColorConstants.BLACK;
+			this.image.BordersWidth = ParseBordersWidth(this.BordersWidth) ?? ParseBordersWidth(parent.Parent?.BordersWidth) ?? 2f;
 
 			foreach (var element in this.elements)
 			{
@@ -131,6 +138,31 @@ namespace Panels
 					text.Initialize(document, this);
 				}
 			}
+		}
+
+		private static iText.Kernel.Colors.Color? ParseBorderColor(string? hex)
+		{
+			if (string.IsNullOrWhiteSpace(hex)) {
+				return null;
+			}
+			var s = hex.TrimStart('#');
+			if (s.Length != 6) {
+				return null;
+			}
+			if (!int.TryParse(s.AsSpan(0, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int r) ||
+			    !int.TryParse(s.AsSpan(2, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int g) ||
+			    !int.TryParse(s.AsSpan(4, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int b)) {
+				return null;
+			}
+			return new DeviceRgb(r / 255f, g / 255f, b / 255f);
+		}
+
+		private static float? ParseBordersWidth(string? value)
+		{
+			if (string.IsNullOrWhiteSpace(value)) {
+				return null;
+			}
+			return float.TryParse(value.Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out float w) ? w : null;
 		}
 
 		public void Crop(
