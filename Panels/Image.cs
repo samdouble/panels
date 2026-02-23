@@ -18,6 +18,8 @@ namespace Panels
 		private float? originalHeight;
 		private float? originalWidth;
 
+		public float BorderWidth { get; set; } = 2f;
+
 		public float PaddingBottom
 		{
 			get
@@ -65,7 +67,7 @@ namespace Panels
 			}
 		}
 
-		public bool ShowBorder { get; set; } = true;
+		public bool ShowBorders { get; set; } = true;
 
 		public Image()
 		{
@@ -126,11 +128,11 @@ namespace Panels
 
 			this.document.Add(this.image);
 
-			if (this.ShowBorder)
+			if (this.ShowBorders)
 			{
 				iText.Kernel.Pdf.Canvas.PdfCanvas canvas = new iText.Kernel.Pdf.Canvas.PdfCanvas(this.document.GetPdfDocument().GetPage(this.noPage));
 				canvas.SetStrokeColor(ColorConstants.BLACK);
-				canvas.SetLineWidth(2f);
+				canvas.SetLineWidth(this.BorderWidth);
 				canvas.Rectangle(this.x, this.y - image.GetImageScaledHeight(), image.GetImageScaledWidth(), image.GetImageScaledHeight());
 				canvas.Stroke();
 			}

@@ -34,7 +34,8 @@
                       </xs:element>
                     </xs:sequence>
                     <xs:attribute name="image" type="xs:string" use="required" />
-                    <xs:attribute name="border" type="xs:string" use="optional" />
+                    <xs:attribute name="borders" type="xs:string" use="optional" />
+                    <xs:attribute name="bordersWidth" type="xs:decimal" use="optional" />
                     <xs:attribute name="paddingBottom" type="xs:string" use="optional" default="0" />
                     <xs:attribute name="paddingTop" type="xs:string" use="optional" default="0" />
                     <xs:attribute name="fontSize" type="xs:string" use="optional" />
@@ -58,6 +59,7 @@
       <xs:attribute name="showPages" type="xs:boolean" use="optional" default="true" />
       <xs:attribute name="horizontalPanelSpacing" type="xs:string" use="optional" />
       <xs:attribute name="verticalPanelSpacing" type="xs:string" use="optional" />
+      <xs:attribute name="bordersWidth" type="xs:decimal" use="optional" />
     </xs:complexType>
   </xs:element>
 
