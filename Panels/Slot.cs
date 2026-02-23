@@ -1,4 +1,4 @@
-﻿using iText.Layout;
+using iText.Layout;
 using Newtonsoft.Json;
 using Panels.Utils;
 using System;
@@ -15,8 +15,13 @@ namespace Panels
 	{
 		[XmlIgnore]
 		private Document? document;
+
 		[XmlIgnore]
 		private Comic? parent;
+
+		[XmlIgnore]
+		[JsonIgnore]
+		internal Comic? Parent => parent;
 
 		[XmlIgnore]
 		[JsonIgnore]

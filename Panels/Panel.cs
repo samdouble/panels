@@ -40,9 +40,13 @@ namespace Panels
 		[JsonIgnore]
 		public PointF Position { get; private set; }
 
-		[XmlAttribute("border")]
-		[JsonProperty("border")]
-		public string? Border { get; set; }
+		[XmlAttribute("borders")]
+		[JsonProperty("borders")]
+		public string? Borders { get; set; }
+
+		[XmlAttribute("bordersWidth")]
+		[JsonProperty("bordersWidth")]
+		public float? BordersWidth { get; set; }
 
 		[XmlAttribute("fontSize")]
 		[JsonProperty("fontSize")]
@@ -113,7 +117,8 @@ namespace Panels
 			}
 			this.image.PaddingBottom = this.PaddingBottom;
 			this.image.PaddingTop = this.PaddingTop;
-			this.image.ShowBorder = !string.Equals(this.Border, "none", StringComparison.OrdinalIgnoreCase);
+			this.image.ShowBorders = !string.Equals(this.Borders, "none", StringComparison.OrdinalIgnoreCase);
+			this.image.BorderWidth = this.BordersWidth ?? parent.Parent?.BordersWidth ?? 2f;
 
 			foreach (var element in this.elements)
 			{
