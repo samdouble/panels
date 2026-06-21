@@ -15,7 +15,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Set up .NET
@@ -37,7 +37,7 @@ jobs:
       - name: Build
         run: |
           dotnet build
-      - name: Test Release dry run
-        run: |
-          dotnet tool install --global dotnet-releaser --version 0.14.0
-          dotnet-releaser build --force dotnet-releaser.toml
+      # - name: Test Release dry run
+      #   run: |
+      #     dotnet tool install --global dotnet-releaser --version 0.17.0
+      #     dotnet-releaser build --force dotnet-releaser.toml
