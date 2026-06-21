@@ -20,23 +20,22 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set up .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: '10.0'
       - name: Restore
         run: dotnet restore Panels/Panels.csproj
-      - name: Publish Linux (amd64 + arm64)
+      - name: Publish binaries
         run: |
-          dotnet publish Panels/Panels.csproj \
-            -c Release -r linux-x64 \
-            --self-contained true -p:PublishSingleFile=true -p:PublishTrimmed=false \
-            -o publish/linux-x64
-          dotnet publish Panels/Panels.csproj \
-          -c Release -r linux-arm64 \
-            --self-contained true -p:PublishSingleFile=true -p:PublishTrimmed=false \
-            -o publish/linux-arm64
-      - name: Build .deb packages
+          for RID in linux-x64 linux-arm64 win-x64 osx-x64; do
+            dotnet publish Panels/Panels.csproj \
+              -c Release -r "$RID" \
+              --self-contained true -p:PublishSingleFile=true -p:PublishTrimmed=false \
+              -o "publish/$RID"
+          done
+      - name: Build release packages
         run: |
+          mkdir -p release-artifacts
           for RID in linux-x64 linux-arm64; do
             case $RID in
               linux-x64)   ARCH=amd64 ;;
@@ -47,14 +46,17 @@ jobs:
             cp "publish/$RID/Panels" "$DEB_ROOT/usr/bin/panels"
             chmod 755 "$DEB_ROOT/usr/bin/panels"
             printf 'Package: panels\nVersion: %s\nSection: utils\nPriority: optional\nArchitecture: %s\nMaintainer: samdouble\nDescription: panels\n Tool for comic/panel layout.\n' "$PACKAGE_VERSION" "$ARCH" > "$DEB_ROOT/DEBIAN/control"
-            dpkg-deb --root-owner-group --build "$DEB_ROOT" "panels_${PACKAGE_VERSION}_${ARCH}.deb"
+            dpkg-deb --root-owner-group --build "$DEB_ROOT" "release-artifacts/Panels.${PACKAGE_VERSION}-${ARCH}.deb"
           done
-          mkdir -p release-artifacts
-          mv panels_*.deb release-artifacts/
-      - name: Upload .deb to existing release
+          chmod 755 publish/linux-x64/Panels
+          (cd publish/linux-x64 && zip -r "../../release-artifacts/Panels.${PACKAGE_VERSION}-linux-x64.zip" Panels)
+          (cd publish/win-x64 && zip -r "../../release-artifacts/Panels.${PACKAGE_VERSION}-win-x64.zip" Panels.exe)
+          chmod 755 publish/osx-x64/Panels
+          (cd publish/osx-x64 && zip -r "../../release-artifacts/Panels.${PACKAGE_VERSION}-osx-x64.zip" Panels)
+      - name: Upload release artifacts
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: gh release upload ${{ github.ref_name }} release-artifacts/*.deb
+        run: gh release upload ${{ github.ref_name }} release-artifacts/* --clobber
       - name: Pack and push NuGet
         env:
           NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
