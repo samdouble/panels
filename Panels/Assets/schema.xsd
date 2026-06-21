@@ -5,7 +5,9 @@
     <xs:complexType>
       <xs:sequence>
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="newpage" minOccurs="0" maxOccurs="unbounded" />
+          <xs:element name="newpage" minOccurs="0" maxOccurs="unbounded">
+            <xs:complexType mixed="true" />
+          </xs:element>
           <xs:element name="slot" minOccurs="0" maxOccurs="unbounded">
             <xs:complexType>
               <xs:sequence>
@@ -13,7 +15,7 @@
                   <xs:complexType>
                     <xs:sequence>
                       <xs:element name="text" minOccurs="0" maxOccurs="unbounded">
-                        <xs:complexType>
+                        <xs:complexType mixed="true">
                           <xs:attribute name="text" type="xs:string" use="required" />
                           <xs:attribute name="character" type="xs:string" use="optional" />
                           <xs:attribute name="fontSize" type="xs:string" use="optional" />
@@ -23,7 +25,7 @@
                         </xs:complexType>
                       </xs:element>
                       <xs:element name="description" minOccurs="0" maxOccurs="unbounded">
-                        <xs:complexType>
+                        <xs:complexType mixed="true">
                           <xs:attribute name="text" type="xs:string" use="required" />
                           <xs:attribute name="fontSize" type="xs:string" use="optional" />
                           <xs:attribute name="left" type="xs:string" use="optional" />

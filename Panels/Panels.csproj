@@ -12,7 +12,7 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <Authors>samdouble</Authors>
     <PackageTags>releaser;packaging;deb;rpm;tool</PackageTags>
-    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/samdouble/panels</PackageProjectUrl>
     <PackageLicenseExpression>BSD-2-Clause</PackageLicenseExpression>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -36,6 +36,10 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Assets/schema.xsd" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>

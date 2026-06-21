@@ -16,11 +16,32 @@ Panels is a CLI tool that allows exporting a comic book in PDF format from a con
 
 ### Linux
 
+**Debian/Ubuntu (.deb)**
+
+Replace `VERSION` with the release version (e.g. `1.8.4`):
+
 ```
-curl -sL -o Panels.VERSION.linux-x64.deb https://github.com/samdouble/panels/releases/download/VERSION/Panels.VERSION.linux-x64.deb
-sudo apt install ./Panels.VERSION.linux-x64.deb
-export PATH=$PATH:/usr/share/Panels
-Panels --help
+curl -sL -o Panels.VERSION-amd64.deb https://github.com/samdouble/panels/releases/download/vVERSION/Panels.VERSION-amd64.deb
+sudo apt install "$(pwd)/Panels.VERSION-amd64.deb"
+panels --help
+```
+
+On ARM64 Linux, use `Panels.VERSION-arm64.deb` instead.
+
+The `.deb` installs a self-contained executable as `/usr/bin/panels` (lowercase). `/usr/bin` is already on your `PATH`, so no extra setup is needed.
+
+If `apt install` reports an unsupported file, check the download with `file Panels.VERSION-amd64.deb` — it should say `Debian binary package`. If it shows HTML or plain text, the URL or filename was wrong and you need to re-download. You can also install with:
+
+```
+sudo dpkg -i Panels.VERSION-amd64.deb
+```
+
+**Portable zip (x64)**
+
+```
+curl -sL -o Panels.VERSION-linux-x64.zip https://github.com/samdouble/panels/releases/download/vVERSION/Panels.VERSION-linux-x64.zip
+unzip Panels.VERSION-linux-x64.zip
+./Panels --help
 ```
 
 ## How to Use

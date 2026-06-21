@@ -19,7 +19,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set up .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
       - name: Audit
@@ -37,7 +37,3 @@ jobs:
       - name: Build
         run: |
           dotnet build
-      # - name: Test Release dry run
-      #   run: |
-      #     dotnet tool install --global dotnet-releaser --version 0.17.0
-      #     dotnet-releaser build --force dotnet-releaser.toml
