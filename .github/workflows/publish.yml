@@ -13,32 +13,51 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
+      - name: Set version from tag
+        run: echo "PACKAGE_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
-
       - name: Set up .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0'
-
-      - name: Release
+      - name: Restore
+        run: dotnet restore Panels/Panels.csproj
+      - name: Publish Linux (amd64 + arm64)
+        run: |
+          dotnet publish Panels/Panels.csproj \
+            -c Release -r linux-x64 \
+            --self-contained true -p:PublishSingleFile=true -p:PublishTrimmed=false \
+            -o publish/linux-x64
+          dotnet publish Panels/Panels.csproj \
+          -c Release -r linux-arm64 \
+            --self-contained true -p:PublishSingleFile=true -p:PublishTrimmed=false \
+            -o publish/linux-arm64
+      - name: Build .deb packages
+        run: |
+          for RID in linux-x64 linux-arm64; do
+            case $RID in
+              linux-x64)   ARCH=amd64 ;;
+              linux-arm64) ARCH=arm64 ;;
+            esac
+            DEB_ROOT="deb-build-$ARCH"
+            mkdir -p "$DEB_ROOT/usr/bin" "$DEB_ROOT/DEBIAN"
+            cp "publish/$RID/Panels" "$DEB_ROOT/usr/bin/panels"
+            chmod 755 "$DEB_ROOT/usr/bin/panels"
+            printf 'Package: panels\nVersion: %s\nSection: utils\nPriority: optional\nArchitecture: %s\nMaintainer: samdouble\nDescription: panels\n Tool for comic/panel layout.\n' "$PACKAGE_VERSION" "$ARCH" > "$DEB_ROOT/DEBIAN/control"
+            dpkg-deb --root-owner-group --build "$DEB_ROOT" "panels_${PACKAGE_VERSION}_${ARCH}.deb"
+          done
+          mkdir -p release-artifacts
+          mv panels_*.deb release-artifacts/
+      - name: Upload .deb to existing release
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: |
-          dotnet tool install --global dotnet-releaser --version 0.14.0
-          dotnet-releaser build dotnet-releaser.toml
-          dotnet-releaser publish \
-            --force \
-            --github-token $GITHUB_TOKEN \
-            dotnet-releaser.toml
-
-      - name: Set package version from tag
+        run: gh release upload ${{ github.ref_name }} release-artifacts/*.deb
+      - name: Pack and push NuGet
         env:
           NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
         run: |
-          export PACKAGE_VERSION=${GITHUB_REF#refs/tags/v}
-          dotnet restore Panels/Panels.csproj
           dotnet pack Panels/Panels.csproj -c Release --no-restore -o ./nupkgs -p:PackageVersion=$PACKAGE_VERSION
           dotnet nuget push ./nupkgs/*.nupkg --api-key $NUGET_TOKEN --source https://api.nuget.org/v3/index.json --skip-duplicate
