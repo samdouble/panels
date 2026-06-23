@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.1](https://github.com/samdouble/panels/compare/v1.8.0...v1.8.1) (2026-06-23)
+
+
+### Bug Fixes
+
+* replace showPages by showPageNumbers in XSD spec ([c5ca378](https://github.com/samdouble/panels/commit/c5ca3786b9df3b69809971eef0cf1ab1e23e3c90))
+
 ## [1.8.0](https://github.com/samdouble/panels/compare/v1.7.0...v1.8.0) (2026-02-23)
 
 
