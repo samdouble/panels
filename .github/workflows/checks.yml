@@ -36,12 +36,12 @@ jobs:
           dotnet format -v detailed
       - name: Test
         run: |
-          dotnet test --collect:"XPlat Code Coverage" --settings coverlet.runsettings --results-directory ./coverage
+          dotnet test
       - name: Upload coverage to Coveralls
         if: matrix.os == 'ubuntu-latest'
         uses: coverallsapp/github-action@v2
         with:
-          file: coverage/**/coverage.cobertura.xml
+          file: coverage/coverage.cobertura.xml
           format: cobertura
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build

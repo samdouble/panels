@@ -219,5 +219,7 @@ dotnet build && ./Panels/bin/Debug/net10.0/Panels generate -c ~/Desktop/github_p
 ### Running the tests
 
 ```
-dotnet test --collect:"XPlat Code Coverage" --settings coverlet.runsettings --results-directory ./coverage
+dotnet test
 ```
+
+Coverage is collected automatically. The Cobertura report is written to `coverage/coverage.cobertura.xml`. The build fails if total line coverage drops below **75%** (configured in `Panels.Tests/Panels.Tests.csproj`).
