@@ -16,9 +16,9 @@ Panels is a CLI tool that allows exporting a comic book in PDF format from a con
 
 ### Linux
 
-**Debian/Ubuntu (.deb)**
+**Debian/Ubuntu**
 
-Replace `VERSION` with the release version (e.g. `1.8.4`):
+Replace `VERSION` with the release version (e.g. `1.8.1`):
 
 ```
 curl -sL -o Panels.VERSION-amd64.deb https://github.com/samdouble/panels/releases/download/vVERSION/Panels.VERSION-amd64.deb
@@ -28,12 +28,10 @@ panels --help
 
 On ARM64 Linux, use `Panels.VERSION-arm64.deb` instead.
 
-The `.deb` installs a self-contained executable as `/usr/bin/panels` (lowercase). `/usr/bin` is already on your `PATH`, so no extra setup is needed.
-
-If `apt install` reports an unsupported file, check the download with `file Panels.VERSION-amd64.deb` — it should say `Debian binary package`. If it shows HTML or plain text, the URL or filename was wrong and you need to re-download. You can also install with:
-
 ```
-sudo dpkg -i Panels.VERSION-amd64.deb
+curl -sL -o Panels.VERSION-arm64.deb https://github.com/samdouble/panels/releases/download/vVERSION/Panels.VERSION-arm64.deb
+sudo apt install "$(pwd)/Panels.VERSION-arm64.deb"
+panels --help
 ```
 
 **Portable zip (x64)**
@@ -42,6 +40,22 @@ sudo dpkg -i Panels.VERSION-amd64.deb
 curl -sL -o Panels.VERSION-linux-x64.zip https://github.com/samdouble/panels/releases/download/vVERSION/Panels.VERSION-linux-x64.zip
 unzip Panels.VERSION-linux-x64.zip
 ./Panels --help
+```
+
+### macOS
+
+```
+curl -sL -o Panels.VERSION-osx-x64.zip https://github.com/samdouble/panels/releases/download/vVERSION/Panels.VERSION-osx-x64.zip
+unzip Panels.VERSION-osx-x64.zip
+./Panels --help
+```
+
+### Windows
+
+```
+curl -sL -o Panels.VERSION-win-x64.zip https://github.com/samdouble/panels/releases/download/vVERSION/Panels.VERSION-win-x64.zip
+unzip Panels.VERSION-win-x64.zip
+./Panels.exe --help
 ```
 
 ## How to Use
@@ -200,8 +214,8 @@ or:
 dotnet build && ./Panels/bin/Debug/net10.0/Panels generate -c ~/Desktop/github_perso/bd/BD0/bd.xml -i ~/Desktop/github_perso/bd/BD0/images
 ```
 
-### Testing
+### Running the tests
 
 ```
-dotnet test
+dotnet test --collect:"XPlat Code Coverage" --settings coverlet.runsettings --results-directory ./coverage
 ```
