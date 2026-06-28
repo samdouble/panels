@@ -19,9 +19,11 @@ namespace Panels.Configuration
 			settings.Schemas.Add(null, xsdPath);
 			settings.ValidationType = ValidationType.Schema;
 
-			XmlReader reader = XmlReader.Create(@$"{xmlPath}", settings);
 			XmlDocument document = new XmlDocument();
-			document.Load(reader);
+			using (XmlReader reader = XmlReader.Create(xmlPath, settings))
+			{
+				document.Load(reader);
+			}
 			ValidationEventHandler eventHandler = new ValidationEventHandler(ComicsValidationEventHandler);
 			document.Validate(eventHandler);
 
