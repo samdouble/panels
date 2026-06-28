@@ -4,6 +4,8 @@ Panels is a CLI tool that allows exporting a comic book in PDF format from a con
 
 [![CI](https://github.com/samdouble/panels/actions/workflows/checks.yml/badge.svg)](https://github.com/samdouble/panels/actions/workflows/checks.yml)
 [![Coverage Status](https://coveralls.io/repos/github/samdouble/panels/badge.svg?branch=master)](https://coveralls.io/github/samdouble/panels?branch=master)
+[![Release](https://img.shields.io/github/v/release/samdouble/panels)](https://github.com/samdouble/panels/releases/latest)
+[![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?logo=dotnet&logoColor=fff)](https://dotnet.microsoft.com/)
 
 [![C#](https://custom-icon-badges.demolab.com/badge/C%23-%23239120.svg?logo=cshrp&logoColor=white)](https://dotnet.microsoft.com/languages/csharp)
 [![.NET](https://img.shields.io/badge/.NET-512BD4?logo=dotnet&logoColor=fff)](https://dotnet.microsoft.com/)
