@@ -44,3 +44,37 @@ jobs:
       - name: Build
         run: |
           dotnet build
+
+  executable-checks:
+    strategy:
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0'
+      - name: Publish and smoke test
+        shell: bash
+        run: |
+          case "${{ runner.os }}" in
+            Linux)   RID=linux-x64 ;;
+            macOS)   RID=osx-arm64 ;;
+            Windows) RID=win-x64 ;;
+          esac
+          dotnet publish Panels/Panels.csproj \
+            -c Release -r "$RID" \
+            --self-contained true -p:PublishSingleFile=true -p:PublishTrimmed=false \
+            -o "publish/$RID"
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            EXE="publish/$RID/Panels.exe"
+          else
+            EXE="publish/$RID/Panels"
+          fi
+          "$EXE" validate -c Panels.Tests/Snapshot/testxml01/bd.xml
+          "$EXE" generate -c Panels.Tests/Snapshot/testxml01/bd.xml -i Panels.Tests/Snapshot/testxml01/images -o comic.pdf
+          test -f comic.pdf
