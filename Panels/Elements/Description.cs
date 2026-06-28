@@ -18,7 +18,7 @@ namespace Panels.Elements
 
 		[XmlIgnore]
 		[JsonIgnore]
-		private new Color color = ColorConstants.RED;
+		private new readonly Color color = ColorConstants.RED;
 
 		[XmlIgnore]
 		[JsonIgnore]

@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.IO;
 using YamlDotNet.Serialization;
@@ -11,10 +11,8 @@ namespace Panels.Configuration
 		{
 			using var reader = new StreamReader(yamlPath);
 			var deserializer = new Deserializer();
-			object? yamlObject = deserializer.Deserialize(reader);
-			if (yamlObject == null)
-				throw new InvalidOperationException("Failed to deserialize YAML");
-			string json = JsonConvert.SerializeObject(yamlObject);
+			var yamlObject = deserializer.Deserialize(reader) ?? throw new InvalidOperationException("Failed to deserialize YAML");
+			var json = JsonConvert.SerializeObject(yamlObject);
 			return JsonParser.ReadFromString(json);
 		}
 	}

@@ -1,4 +1,4 @@
-using Panels;
+﻿using Panels;
 using System;
 using System.IO;
 using System.Reflection;
