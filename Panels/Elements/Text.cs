@@ -1,4 +1,4 @@
-using iText.IO.Font;
+﻿using iText.IO.Font;
 using iText.Kernel.Colors;
 using iText.Kernel.Font;
 using iText.Layout;
@@ -72,7 +72,7 @@ namespace Panels.Elements
 		public string? WidthXml
 		{
 			get => _width.HasValue ? XmlConvert.ToString(_width.Value) : null;
-			set => _width = string.IsNullOrEmpty(value) ? null : (float?)XmlConvert.ToSingle(value);
+			set => _width = string.IsNullOrEmpty(value) ? null : (float?) XmlConvert.ToSingle(value);
 		}
 
 		[XmlIgnore]

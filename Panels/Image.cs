@@ -1,4 +1,4 @@
-using iText.IO.Image;
+﻿using iText.IO.Image;
 using iText.Kernel.Colors;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf.Xobject;
@@ -10,13 +10,13 @@ namespace Panels
 {
 	public class Image : IPositionable, IRenderable
 	{
-		private Document? document;
+		private readonly Document? document;
 		private iText.Layout.Element.Image? image;
 		private int noPage;
 		private float x;
 		private float y;
-		private float? originalHeight;
-		private float? originalWidth;
+		private readonly float? originalHeight;
+		private readonly float? originalWidth;
 
 		public Color BorderColor { get; set; } = ColorConstants.BLACK;
 

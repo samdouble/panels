@@ -1,4 +1,4 @@
-using iText.Layout;
+﻿using iText.Layout;
 using Newtonsoft.Json;
 using Panels.Utils;
 using System;

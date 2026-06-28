@@ -1,4 +1,4 @@
-using Panels.Configuration;
+﻿using Panels.Configuration;
 
 namespace Panels.Tests;
 

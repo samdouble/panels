@@ -1,4 +1,4 @@
-using iText.Kernel.Geom;
+﻿using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
@@ -93,7 +93,8 @@ namespace Panels
 			Comic comic = ConfigurationParser.Read(configFile);
 			comic.Initialize(document, imagesFolderPath);
 			comic.Render(logWriter);
-			if (comic.ShowPageNumbers) {
+			if (comic.ShowPageNumbers)
+			{
 				AddPageNumbers(pdfDocument);
 			}
 			document.Close();
@@ -104,10 +105,10 @@ namespace Panels
 
 		private static void AddPageNumbers(PdfDocument pdfDocument)
 		{
-			int numberOfPages = pdfDocument.GetNumberOfPages();
+			var numberOfPages = pdfDocument.GetNumberOfPages();
 			if (numberOfPages == 0) return;
 			const float footerHeight = 64f;
-			for (int i = 1; i <= numberOfPages; i++)
+			for (var i = 1; i <= numberOfPages; i++)
 			{
 				var page = pdfDocument.GetPage(i);
 				var pageSizeForPage = page.GetPageSize();

@@ -1,4 +1,4 @@
-using iText.Kernel.Colors;
+﻿using iText.Kernel.Colors;
 using iText.Layout;
 using Newtonsoft.Json;
 using Panels.Elements;
@@ -84,8 +84,7 @@ namespace Panels
 			}
 			set
 			{
-				if (this.image != null)
-					this.image.Height = value;
+				this.image?.Height = value;
 			}
 		}
 
@@ -142,16 +141,19 @@ namespace Panels
 
 		private static iText.Kernel.Colors.Color? ParseBorderColor(string? hex)
 		{
-			if (string.IsNullOrWhiteSpace(hex)) {
+			if (string.IsNullOrWhiteSpace(hex))
+			{
 				return null;
 			}
 			var s = hex.TrimStart('#');
-			if (s.Length != 6) {
+			if (s.Length != 6)
+			{
 				return null;
 			}
-			if (!int.TryParse(s.AsSpan(0, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int r) ||
-			    !int.TryParse(s.AsSpan(2, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int g) ||
-			    !int.TryParse(s.AsSpan(4, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int b)) {
+			if (!int.TryParse(s.AsSpan(0, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var r) ||
+				!int.TryParse(s.AsSpan(2, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var g) ||
+				!int.TryParse(s.AsSpan(4, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var b))
+			{
 				return null;
 			}
 			return new DeviceRgb(r / 255f, g / 255f, b / 255f);
@@ -159,10 +161,11 @@ namespace Panels
 
 		private static float? ParseBordersWidth(string? value)
 		{
-			if (string.IsNullOrWhiteSpace(value)) {
+			if (string.IsNullOrWhiteSpace(value))
+			{
 				return null;
 			}
-			return float.TryParse(value.Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out float w) ? w : null;
+			return float.TryParse(value.Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out var w) ? w : null;
 		}
 
 		public void Crop(

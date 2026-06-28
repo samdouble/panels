@@ -1,4 +1,4 @@
-using iText.Kernel.Geom;
+﻿using iText.Kernel.Geom;
 using iText.Layout;
 using Newtonsoft.Json;
 using Panels.Configuration;
