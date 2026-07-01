@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <AppDesigner Include="Properties\" />
-    <PackageReference Include="itext" Version="8.0.5" />
+    <PackageReference Include="itext" Version="9.6.0" />
     <PackageReference Include="itext.bouncy-castle-adapter" Version="8.0.5" />
     <PackageReference Include="BouncyCastle.Cryptography" Version="2.6.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
