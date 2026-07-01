@@ -66,13 +66,29 @@ namespace Panels
 		[JsonProperty("image")]
 		public string? ImagePath { get; set; }
 
+		[XmlIgnore]
+		[JsonIgnore]
+		public float PaddingBottomPct { get; set; }
+
+		[XmlIgnore]
+		[JsonIgnore]
+		public float PaddingTopPct { get; set; }
+
 		[XmlAttribute("paddingBottom")]
 		[JsonProperty("paddingBottom")]
-		public float PaddingBottom { get; set; }
+		public string PaddingBottom
+		{
+			get => PercentageParser.Format(this.PaddingBottomPct);
+			set => this.PaddingBottomPct = PercentageParser.ParseRequired(value, "paddingBottom");
+		}
 
 		[XmlAttribute("paddingTop")]
 		[JsonProperty("paddingTop")]
-		public float PaddingTop { get; set; }
+		public string PaddingTop
+		{
+			get => PercentageParser.Format(this.PaddingTopPct);
+			set => this.PaddingTopPct = PercentageParser.ParseRequired(value, "paddingTop");
+		}
 
 		[XmlIgnore]
 		[JsonIgnore]
@@ -100,8 +116,8 @@ namespace Panels
 
 		public Panel()
 		{
-			this.PaddingBottom = 0;
-			this.PaddingTop = 0;
+			this.PaddingBottomPct = 0;
+			this.PaddingTopPct = 0;
 		}
 
 		public void Initialize(Document document, Slot parent)
@@ -120,8 +136,8 @@ namespace Panels
 			{
 				this.image = new Image(document, Properties.Resources.temp);
 			}
-			this.image.PaddingBottom = this.PaddingBottom;
-			this.image.PaddingTop = this.PaddingTop;
+			this.image.PaddingBottom = this.PaddingBottomPct;
+			this.image.PaddingTop = this.PaddingTopPct;
 			this.image.ShowBorders = !string.Equals(this.Borders, "none", StringComparison.OrdinalIgnoreCase);
 			this.image.BorderColor = ParseBorderColor(this.BordersColor ?? parent.Parent?.BordersColor) ?? ColorConstants.BLACK;
 			this.image.BordersWidth = ParseBordersWidth(this.BordersWidth) ?? ParseBordersWidth(parent.Parent?.BordersWidth) ?? 2f;

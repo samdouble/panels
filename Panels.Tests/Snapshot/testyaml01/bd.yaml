@@ -20,8 +20,8 @@ children:
             left: 0
             top: 60
         image: "0000.png"
-        paddingBottom: 0
-        paddingTop: 0
+        paddingBottom: "0%"
+        paddingTop: "0%"
     maxPaddingLeft: "10%"
     maxPaddingRight: "15%"
   - $type: slot
@@ -37,7 +37,7 @@ children:
             left: 0
             top: 120
         image: "0100.png"
-        paddingBottom: 0
-        paddingTop: 0
+        paddingBottom: "0%"
+        paddingTop: "0%"
     maxPaddingLeft: "20%"
     maxPaddingRight: "10%"

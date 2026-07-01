@@ -28,8 +28,8 @@
             }
           ],
           "image": "0000.png",
-          "paddingBottom": 0.0,
-          "paddingTop": 0.0
+          "paddingBottom": "0%",
+          "paddingTop": "0%"
         }
       ],
       "maxPaddingLeft": "10%",
@@ -55,8 +55,8 @@
             }
           ],
           "image": "0100.png",
-          "paddingBottom": 0.0,
-          "paddingTop": 0.0
+          "paddingBottom": "0%",
+          "paddingTop": "0%"
         }
       ],
       "maxPaddingLeft": "20%",

@@ -39,8 +39,8 @@
                     <xs:attribute name="borders" type="xs:string" use="optional" />
                     <xs:attribute name="bordersColor" type="xs:string" use="optional" />
                     <xs:attribute name="bordersWidth" type="xs:decimal" use="optional" />
-                    <xs:attribute name="paddingBottom" type="xs:string" use="optional" default="0" />
-                    <xs:attribute name="paddingTop" type="xs:string" use="optional" default="0" />
+                    <xs:attribute name="paddingBottom" type="xs:string" use="optional" default="0%" />
+                    <xs:attribute name="paddingTop" type="xs:string" use="optional" default="0%" />
                     <xs:attribute name="fontSize" type="xs:string" use="optional" />
                   </xs:complexType>
                 </xs:element>
