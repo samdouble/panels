@@ -1,8 +1,8 @@
 # Panels
 
-Panels is a CLI tool that allows exporting a comic book in PDF format from a configuration file (XML, JSON, or YAML) and a set of images.
+A CLI tool that allows exporting a comic book in PDF format from a configuration file (XML, JSON, or YAML) and a set of images.
 
-[![CI](https://github.com/samdouble/panels/actions/workflows/checks.yml/badge.svg)](https://github.com/samdouble/panels/actions/workflows/checks.yml)
+[![CI](https://github.com/samdouble/panels/actions/workflows/checks.yml/badge.svg)](https://github.com/samdouble/panels/actions/workflows/checks.yml?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/samdouble/panels/badge.svg?branch=master)](https://coveralls.io/github/samdouble/panels?branch=master)
 [![Release](https://img.shields.io/github/v/release/samdouble/panels)](https://github.com/samdouble/panels/releases/latest)
 [![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?logo=dotnet&logoColor=fff)](https://dotnet.microsoft.com/)
@@ -13,6 +13,7 @@ Panels is a CLI tool that allows exporting a comic book in PDF format from a con
 [![XML](https://img.shields.io/badge/XML-767C52?logo=xml&logoColor=fff)](https://www.w3.org/XML/)
 [![YAML](https://img.shields.io/badge/YAML-CB171E?logo=yaml&logoColor=fff)](https://yaml.org/)
 [![NuGet](https://img.shields.io/badge/NuGet-004880?logo=nuget&logoColor=fff)](https://www.nuget.org/packages/Panels/)
+[![Dependabot](https://img.shields.io/badge/Dependabot-025E8C?logo=dependabot&logoColor=fff)](https://github.com/security/advanced-security)
 
 ## Installation
 
@@ -20,7 +21,7 @@ Panels is a CLI tool that allows exporting a comic book in PDF format from a con
 
 **Debian/Ubuntu**
 
-Replace `VERSION` with the release version (e.g. `1.8.1`):
+Replace `VERSION` with the release version (e.g. `2.0.0`):
 
 ```
 curl -sL -o Panels.VERSION-amd64.deb https://github.com/samdouble/panels/releases/download/vVERSION/Panels.VERSION-amd64.deb
@@ -60,7 +61,7 @@ unzip Panels.VERSION-win-x64.zip
 ./Panels.exe --help
 ```
 
-## How to Use
+## Usage
 
 ### Command-line Commands & Arguments
 
@@ -202,18 +203,22 @@ Adds a description or narration to a panel. Attributes:
 
 Forces a page break. Can be placed between slots.
 
+### Migrating from 1.x to 2.x
+
+- `maxPaddingLeft`, `maxPaddingRight`, `paddingBottom` and `paddingTop` now require to explicitly set the units as `%`. Simply add a `%` at the end of the value for these attributes.
+
 ## Development
 
 ### Running Locally
 
 ```
-dotnet run --project Panels -- generate -c ~/Desktop/github_perso/bd/BD0/bd.xml -i ~/Desktop/github_perso/bd/BD0/images
+dotnet run --project Panels -- generate -c ~/Desktop/github_perso/bd/BD00/bd.xml -i ~/Desktop/github_perso/bd/BD00/images
 ```
 
 or:
 
 ```
-dotnet build && ./Panels/bin/Debug/net10.0/Panels generate -c ~/Desktop/github_perso/bd/BD0/bd.xml -i ~/Desktop/github_perso/bd/BD0/images
+dotnet build && ./Panels/bin/Debug/net10.0/Panels generate -c ~/Desktop/github_perso/bd/BD00/bd.xml -i ~/Desktop/github_perso/bd/BD00/images
 ```
 
 ### Running the tests
@@ -221,5 +226,3 @@ dotnet build && ./Panels/bin/Debug/net10.0/Panels generate -c ~/Desktop/github_p
 ```
 dotnet test
 ```
-
-Coverage is collected automatically. The Cobertura report is written to `coverage/coverage.cobertura.xml`. The build fails if total line coverage drops below **75%** (configured in `Panels.Tests/Panels.Tests.csproj`).
