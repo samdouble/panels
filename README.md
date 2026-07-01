@@ -171,8 +171,8 @@ Represents a single panel in a slot. Attributes:
 - `bordersColor` (optional): Color for this panel's border as a hex value (e.g. `#FF0000` for red). Overrides the comic's `bordersColor` when both are set.
 - `bordersWidth` (optional): Stroke width in points for this panel's border. Overrides the comic's `bordersWidth` when both are set.
 - `fontSize` (optional): Font size for the text in the panel.
-- `paddingBottom` (optional, default: 0): Padding from the bottom of the panel's image, in % of the image's height.
-- `paddingTop` (optional, default: 0): Padding from the top of the panel's image, in % of the image's height.
+- `paddingBottom` (optional, default: `0%`): Padding cropped from the bottom of the panel's image. The value is a percentage of the image height, not pixels — for example, `15%` on an 800px-tall image means 120px of bottom padding.
+- `paddingTop` (optional, default: `0%`): Padding cropped from the top of the panel's image. Same unit as `paddingBottom`: a percentage of the image height (e.g. `10%` of 800px = 80px).
 
 A `<panel>` can contain multiple `<text>` and `<description>` elements.
 
