@@ -42,13 +42,29 @@ namespace Panels
 			get { return parent?.ImagesFolderPath; }
 		}
 
+		[XmlIgnore]
+		[JsonIgnore]
+		public float MaxLeftPaddingPct { get; set; }
+
+		[XmlIgnore]
+		[JsonIgnore]
+		public float MaxRightPaddingPct { get; set; }
+
 		[XmlAttribute("maxPaddingLeft")]
 		[JsonProperty("maxPaddingLeft")]
-		public float MaxLeftPaddingPct { get; set; }
+		public string MaxLeftPadding
+		{
+			get => PercentageParser.Format(this.MaxLeftPaddingPct);
+			set => this.MaxLeftPaddingPct = PercentageParser.ParseRequired(value, "maxPaddingLeft");
+		}
 
 		[XmlAttribute("maxPaddingRight")]
 		[JsonProperty("maxPaddingRight")]
-		public float MaxRightPaddingPct { get; set; }
+		public string MaxRightPadding
+		{
+			get => PercentageParser.Format(this.MaxRightPaddingPct);
+			set => this.MaxRightPaddingPct = PercentageParser.ParseRequired(value, "maxPaddingRight");
+		}
 
 		[XmlIgnore]
 		[JsonIgnore]

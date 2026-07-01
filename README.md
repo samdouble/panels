@@ -157,8 +157,8 @@ A `<comic>` can contain multiple `<slot>` and `<newpage />` elements.
 Defines a column of panels. Attributes:
 
 - `fontSize` (optional): Font size for the text in the slot.
-- `maxPaddingLeft` (optional, default: 0): Maximum padding for panels in this slot.
-- `maxPaddingRight` (optional, default: 0): Maximum padding for panels in this slot.
+- `maxPaddingLeft` (optional, default: `0%`): Maximum left padding that can be applied when cropping panels in this slot. The value is a percentage of the panel image width, not pixels — for example, `15%` on a 600px-wide image means up to 90px of left padding.
+- `maxPaddingRight` (optional, default: `0%`): Maximum right padding that can be applied when cropping panels in this slot. Same unit as `maxPaddingLeft`: a percentage of the panel image width (e.g. `15%` of 600px = 90px).
 
 A `<slot>` can contain up to 2 `<panel>` elements.
 

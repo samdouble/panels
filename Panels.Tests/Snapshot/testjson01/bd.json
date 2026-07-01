@@ -32,8 +32,8 @@
           "paddingTop": 0.0
         }
       ],
-      "maxPaddingLeft": 10.0,
-      "maxPaddingRight": 15.0
+      "maxPaddingLeft": "10%",
+      "maxPaddingRight": "15%"
     },
     {
       "$type": "slot",
@@ -59,8 +59,8 @@
           "paddingTop": 0.0
         }
       ],
-      "maxPaddingLeft": 20.0,
-      "maxPaddingRight": 10.0
+      "maxPaddingLeft": "20%",
+      "maxPaddingRight": "10%"
     }
   ]
 }
