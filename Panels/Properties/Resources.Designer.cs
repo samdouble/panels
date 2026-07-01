@@ -64,6 +64,36 @@ namespace Panels.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] Bangers_Regular {
+            get {
+                object obj = ResourceManager.GetObject("Bangers_Regular", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ComicNeue_Bold {
+            get {
+                object obj = ResourceManager.GetObject("ComicNeue_Bold", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ComicNeue_Regular {
+            get {
+                object obj = ResourceManager.GetObject("ComicNeue_Regular", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] Comicsam_Bold {
             get {
                 object obj = ResourceManager.GetObject("Comicsam_Bold", resourceCulture);

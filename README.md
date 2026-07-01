@@ -142,7 +142,7 @@ The root element. Attributes:
 - `bordersColor` (optional): Color for panel borders as a hex value (e.g. `#000000` for black). Defaults to black if neither comic nor panel specifies it. Can be overridden per panel with the panel's `bordersColor`.
 - `bordersWidth` (optional): Stroke width in points for panel borders. Defaults to 2 if neither comic nor panel specifies it. Can be overridden per panel with the panel's `bordersWidth`.
 - `fontSize` (optional, default: 12): Font size for text.
-- `font` (optional, default: `Comicsam-Bold`): Font for text. Use a built-in name (`Comicsam-Bold`, `Comicsam-Regular`) or a path to a `.ttf` file. Can be overridden at slot, panel, or text level.
+- `font` (optional, default: `Comic Neue Bold`): Font for text. Built-in options: `Comic Neue`, `Comic Neue Bold`, `Bangers`, `Comicsam-Bold`, `Comicsam-Regular`, or a path to a `.ttf` file. Can be overridden at slot, panel, or text level.
 - `horizontalPanelSpacing` (optional): Horizontal spacing between panels in pixels.
 - `marginTop` (optional): Margins in pixels.
 - `marginBottom` (optional): Margins in pixels.
