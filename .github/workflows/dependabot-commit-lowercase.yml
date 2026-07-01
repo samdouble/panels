@@ -1,8 +1,11 @@
 name: Fix Dependabot Commit Casing
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, edited]
+
+permissions:
+  pull-requests: write
 
 jobs:
   fix-commit-description:
@@ -10,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Make commit description commitlint compliant
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const title = context.payload.pull_request.title;
