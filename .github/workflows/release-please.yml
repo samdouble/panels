@@ -56,7 +56,7 @@ jobs:
       - build
     steps:
       - name: Release Please
-        uses: googleapis/release-please-action@v4
+        uses: googleapis/release-please-action@v5
         with:
           token: ${{ secrets.PAT }}
           release-type: simple
