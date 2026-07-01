@@ -46,8 +46,8 @@
                 </xs:element>
               </xs:sequence>
               <xs:attribute name="fontSize" type="xs:string" use="optional" />
-              <xs:attribute name="maxPaddingLeft" type="xs:string" use="optional" default="0" />
-              <xs:attribute name="maxPaddingRight" type="xs:string" use="optional" default="0" />
+              <xs:attribute name="maxPaddingLeft" type="xs:string" use="optional" default="0%" />
+              <xs:attribute name="maxPaddingRight" type="xs:string" use="optional" default="0%" />
             </xs:complexType>
           </xs:element>
         </xs:choice>
