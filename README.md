@@ -28,7 +28,7 @@ sudo apt install "$(pwd)/Panels.VERSION-amd64.deb"
 panels --help
 ```
 
-On ARM64 Linux, use `Panels.VERSION-arm64.deb` instead.
+On ARM64 Linux, use the following instead.
 
 ```
 curl -sL -o Panels.VERSION-arm64.deb https://github.com/samdouble/panels/releases/download/vVERSION/Panels.VERSION-arm64.deb
