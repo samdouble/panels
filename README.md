@@ -212,6 +212,8 @@ Forces a page break. Can be placed between slots.
 ### Migrating from 1.x to 2.x
 
 - `maxPaddingLeft`, `maxPaddingRight`, `paddingBottom` and `paddingTop` now require to explicitly set the units as `%`. Simply add a `%` at the end of the value for these attributes.
+- The default font is now `Comic Neue Bold`. To use the previous default font, set the `font` attribute to `Comicsam-Bold` in the `<comic>` element.
+- The first row of the first page is not skipped by default anymore. To keep the previous behavior, set the `skipFirstRow` attribute to `true` in the `<comic>` element.
 
 ## Development
 
