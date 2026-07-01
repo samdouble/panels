@@ -8,6 +8,11 @@ updates:
       prefix: "chore(deps)"
     labels:
       - dependencies
+    groups:
+      itext:
+        patterns:
+          - "itext*"
+          - "BouncyCastle.Cryptography"
 
   - package-ecosystem: github-actions
     directory: /
