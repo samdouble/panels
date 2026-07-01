@@ -61,9 +61,13 @@ namespace Panels
 		[JsonProperty("showPageNumbers")]
 		public bool ShowPageNumbers { get; set; } = true;
 
+		[XmlAttribute("skipFirstRow")]
+		[JsonProperty("skipFirstRow")]
+		public bool SkipFirstRow { get; set; } = false;
+
 		[XmlAttribute("horizontalPanelSpacing")]
 		[JsonProperty("horizontalPanelSpacing")]
-		public float horizontalPanelSpacing = 0;
+		public float HorizontalPanelSpacing { get; set; } = 0;
 
 		[XmlAttribute("verticalPanelSpacing")]
 		[JsonProperty("verticalPanelSpacing")]
@@ -108,7 +112,7 @@ namespace Panels
 			PageSize pageSize = this.document?.GetPdfDocument().GetDefaultPageSize() ?? PageSize.A4;
 			var panelHeight = (pageSize.GetHeight() - this.MarginTop - this.MarginBottom - (this.RowsPerPage - 1) * this.VerticalPanelSpacing) / this.RowsPerPage;
 			var rowWidth = pageSize.GetWidth() - this.MarginRight - this.MarginLeft;
-			this.CurrentY = panelHeight + this.VerticalPanelSpacing;
+			this.CurrentY = this.SkipFirstRow ? panelHeight + this.VerticalPanelSpacing : 0;
 			for (var i = 0; i < this.children.Count;)
 			{
 				// Handle newpage elements
@@ -131,10 +135,10 @@ namespace Panels
 					slot.SetHeight(panelHeight);
 					var minPanelWidth = slot.GetMinWidth();
 					var maxPanelWidth = slot.GetMaxWidth();
-					if (minWidth + minPanelWidth + (nbPanelsInRow >= 1 ? this.horizontalPanelSpacing : 0) > rowWidth)
+					if (minWidth + minPanelWidth + (nbPanelsInRow >= 1 ? this.HorizontalPanelSpacing : 0) > rowWidth)
 						break;
-					minWidth += minPanelWidth + (nbPanelsInRow >= 1 ? this.horizontalPanelSpacing : 0);
-					maxWidth += maxPanelWidth + (nbPanelsInRow >= 1 ? this.horizontalPanelSpacing : 0);
+					minWidth += minPanelWidth + (nbPanelsInRow >= 1 ? this.HorizontalPanelSpacing : 0);
+					maxWidth += maxPanelWidth + (nbPanelsInRow >= 1 ? this.HorizontalPanelSpacing : 0);
 				}
 
 				// =============================
@@ -198,7 +202,7 @@ namespace Panels
 					);
 					slot.Render(logWriter);
 
-					this.CurrentX += slot.Width + this.horizontalPanelSpacing;
+					this.CurrentX += slot.Width + this.HorizontalPanelSpacing;
 				}
 				this.CurrentX = 0;
 				i += nbPanelsInRow;
