@@ -5,6 +5,10 @@ namespace Panels.Tests;
 public class FontResolverTests
 {
 	[Theory]
+	[InlineData("Comic Neue")]
+	[InlineData("comic neue")]
+	[InlineData("Comic Neue Bold")]
+	[InlineData("Bangers")]
 	[InlineData("Comicsam-Bold")]
 	[InlineData("comicsam-bold")]
 	[InlineData("Comicsam-Regular")]
@@ -15,10 +19,11 @@ public class FontResolverTests
 	}
 
 	[Fact]
-	public void Create_uses_default_font_when_value_is_missing()
+	public void Create_uses_comic_neue_as_default_font()
 	{
-		var font = FontResolver.Create(null);
-		Assert.NotNull(font);
+		Assert.Equal("Comic Neue Bold", FontResolver.DefaultFontName);
+		Assert.NotNull(FontResolver.Create(null));
+		Assert.NotNull(FontResolver.Create(FontResolver.DefaultFontName));
 	}
 
 	[Fact]

@@ -8,11 +8,14 @@ namespace Panels.Utils
 {
 	public static class FontResolver
 	{
-		public const string DefaultFontName = "Comicsam-Bold";
+		public const string DefaultFontName = "Comic Neue Bold";
 
 		private static readonly Dictionary<string, byte[]> BuiltInFonts = new(StringComparer.OrdinalIgnoreCase)
 		{
-			[DefaultFontName] = Properties.Resources.Comicsam_Bold,
+			["Comic Neue"] = Properties.Resources.ComicNeue_Regular,
+			["Comic Neue Bold"] = Properties.Resources.ComicNeue_Bold,
+			["Bangers"] = Properties.Resources.Bangers_Regular,
+			["Comicsam-Bold"] = Properties.Resources.Comicsam_Bold,
 			["Comicsam-Regular"] = Properties.Resources.Comicsam_Regular,
 		};
 
