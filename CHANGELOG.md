@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.0.0](https://github.com/samdouble/panels/compare/v1.8.1...v2.0.0) (2026-07-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* add skipFirstRow attribute for comic tag
+* set default font as Comic Neue Bold
+* make paddingBottom and paddingTop use percentage units
+* make maxPaddingLeft and maxPaddingRight use percentage units
+
+### Features
+
+* add skipFirstRow attribute for comic tag ([d175f59](https://github.com/samdouble/panels/commit/d175f59ae5aa852b241e163556389d19bf1cc077))
+* allow setting the font ([ff7fc51](https://github.com/samdouble/panels/commit/ff7fc51210083f91fef223733be5f1f064c53ed1))
+* make maxPaddingLeft and maxPaddingRight use percentage units ([bd87366](https://github.com/samdouble/panels/commit/bd8736691715d08b0348b12cf5072451cf8df284))
+* make paddingBottom and paddingTop use percentage units ([45b5611](https://github.com/samdouble/panels/commit/45b56113b04ba299ddf492b8272754dd88a59b83))
+* set default font as Comic Neue Bold ([00a6b7b](https://github.com/samdouble/panels/commit/00a6b7b84601fd7d3319fd36e4e14accdd6a2b3e))
+
 ## [1.8.1](https://github.com/samdouble/panels/compare/v1.8.0...v1.8.1) (2026-06-23)
 
 
