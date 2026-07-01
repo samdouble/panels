@@ -33,7 +33,7 @@ jobs:
             "**/*.csproj", "**/*.nuspec", "**/AssemblyInfo.cs"
           version: ${{ steps.get-release-version.outputs.version }}
       - name: Create PR with version updated
-        uses: googleapis/code-suggester@v4
+        uses: googleapis/code-suggester@v5
         env:
           ACCESS_TOKEN: ${{ secrets.PAT }}
         with:
