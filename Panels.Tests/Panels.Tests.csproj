@@ -10,7 +10,7 @@
     <CoverletOutputFormat>cobertura</CoverletOutputFormat>
     <ExcludeByAttribute>Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute</ExcludeByAttribute>
     <ExcludeByFile>**/Properties/**</ExcludeByFile>
-    <Threshold>75</Threshold>
+    <Threshold>80</Threshold>
     <ThresholdType>line</ThresholdType>
     <ThresholdStat>total</ThresholdStat>
   </PropertyGroup>
