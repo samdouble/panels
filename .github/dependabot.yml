@@ -5,8 +5,7 @@ updates:
     schedule:
       interval: weekly
     commit-message:
-      prefix: chore
-      include: scope
+      prefix: "chore(deps)"
     labels:
       - dependencies
 
@@ -15,7 +14,6 @@ updates:
     schedule:
       interval: weekly
     commit-message:
-      prefix: ci
-      include: scope
+      prefix: "ci(actions)"
     labels:
       - dependencies
