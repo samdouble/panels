@@ -1,0 +1,25 @@
+name: Fix Dependabot Commit Casing
+
+on:
+  pull_request:
+    types: [opened, edited]
+
+jobs:
+  fix-commit-description:
+    if: github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Make commit description commitlint compliant
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = context.payload.pull_request.title;
+            const lowerTitle = title.replace('Bump', 'bump');
+            if (title !== lowerTitle) {
+              await github.rest.pulls.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.payload.pull_request.number,
+                title: lowerTitle
+              });
+            }

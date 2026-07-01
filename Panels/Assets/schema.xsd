@@ -18,6 +18,7 @@
                         <xs:complexType mixed="true">
                           <xs:attribute name="text" type="xs:string" use="required" />
                           <xs:attribute name="character" type="xs:string" use="optional" />
+                          <xs:attribute name="font" type="xs:string" use="optional" />
                           <xs:attribute name="fontSize" type="xs:string" use="optional" />
                           <xs:attribute name="left" type="xs:string" use="optional" />
                           <xs:attribute name="top" type="xs:string" use="optional" />
@@ -27,6 +28,7 @@
                       <xs:element name="description" minOccurs="0" maxOccurs="unbounded">
                         <xs:complexType mixed="true">
                           <xs:attribute name="text" type="xs:string" use="required" />
+                          <xs:attribute name="font" type="xs:string" use="optional" />
                           <xs:attribute name="fontSize" type="xs:string" use="optional" />
                           <xs:attribute name="left" type="xs:string" use="optional" />
                           <xs:attribute name="top" type="xs:string" use="optional" />
@@ -41,10 +43,12 @@
                     <xs:attribute name="bordersWidth" type="xs:decimal" use="optional" />
                     <xs:attribute name="paddingBottom" type="xs:string" use="optional" default="0%" />
                     <xs:attribute name="paddingTop" type="xs:string" use="optional" default="0%" />
+                    <xs:attribute name="font" type="xs:string" use="optional" />
                     <xs:attribute name="fontSize" type="xs:string" use="optional" />
                   </xs:complexType>
                 </xs:element>
               </xs:sequence>
+              <xs:attribute name="font" type="xs:string" use="optional" />
               <xs:attribute name="fontSize" type="xs:string" use="optional" />
               <xs:attribute name="maxPaddingLeft" type="xs:string" use="optional" default="0%" />
               <xs:attribute name="maxPaddingRight" type="xs:string" use="optional" default="0%" />
@@ -55,6 +59,7 @@
       <xs:attribute name="version" type="xs:string" use="required"/>
       <xs:attribute name="bordersColor" type="xs:string" use="optional" />
       <xs:attribute name="bordersWidth" type="xs:decimal" use="optional" />
+      <xs:attribute name="font" type="xs:string" use="optional" default="Comicsam-Bold"/>
       <xs:attribute name="fontSize" type="xs:string" use="optional" default="12"/>
       <xs:attribute name="marginBottom" type="xs:string" use="optional" />
       <xs:attribute name="marginLeft" type="xs:string" use="optional" />

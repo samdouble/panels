@@ -1,9 +1,6 @@
 ﻿using iText.Layout;
 using Newtonsoft.Json;
 using Panels.Utils;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml;
 using System.Xml.Serialization;
 
 namespace Panels
@@ -36,7 +33,7 @@ namespace Panels
 				if (this.parent != null)
 				{
 					this.parent.CurrentPage++;
-					this.parent.CurrentRow = this.parent.CurrentPage * this.parent.rowsPerPage;
+					this.parent.CurrentRow = this.parent.CurrentPage * this.parent.RowsPerPage;
 					this.parent.CurrentX = 0;
 					this.parent.CurrentY = 0;
 				}

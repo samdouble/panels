@@ -14,9 +14,6 @@ namespace Panels
 	public class Slot : IRenderable
 	{
 		[XmlIgnore]
-		private Document? document;
-
-		[XmlIgnore]
 		private Comic? parent;
 
 		[XmlIgnore]
@@ -25,13 +22,25 @@ namespace Panels
 
 		[XmlIgnore]
 		[JsonIgnore]
+		private string? font { get; set; }
+
+		[XmlIgnore]
+		[JsonIgnore]
 		private float? fontSize { get; set; }
+
+		[XmlAttribute("font")]
+		[JsonProperty("font")]
+		public string Font
+		{
+			get { return font ?? parent?.Font ?? FontResolver.DefaultFontName; }
+			set { font = value; }
+		}
 
 		[XmlAttribute("fontSize")]
 		[JsonProperty("fontSize")]
 		public float FontSize
 		{
-			get { return fontSize ?? parent?.fontSize ?? 12f; }
+			get { return fontSize ?? parent?.FontSize ?? 12f; }
 			set { fontSize = value; }
 		}
 
@@ -100,7 +109,6 @@ namespace Panels
 
 		public void Initialize(Document document, Comic parent)
 		{
-			this.document = document;
 			this.parent = parent;
 			foreach (var panel in this.panels)
 			{
