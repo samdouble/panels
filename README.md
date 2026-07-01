@@ -150,6 +150,7 @@ The root element. Attributes:
 - `marginRight` (optional): Margins in pixels.
 - `rowsPerPage` (optional, default: 3): Number of rows per page.
 - `showPageNumbers` (optional, default: true): When true, shows page numbers at the bottom center of each page. Set to false to hide them.
+- `skipFirstRow` (optional, default: false): When true, leaves the first row empty on the first page so content starts on the second row.
 - `verticalPanelSpacing` (optional): Vertical spacing between panels in pixels.
 
 A `<comic>` can contain multiple `<slot>` and `<newpage />` elements.

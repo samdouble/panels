@@ -1,6 +1,6 @@
 ﻿Starting PDF generation...
-IMAGE - 161.91457x231.33333 at 25, 546.6667
-TEXT - Hello ! at 30, 320.33337 with width 151.91457
-IMAGE - 160.86644x231.33333 at 196.91457, 546.6667
-TEXT - Bonjour ! at 201.91457, 320.33337 with width 150.86644
+IMAGE - 161.91457x231.33333 at 25, 788
+TEXT - Hello ! at 30, 561.6667 with width 151.91457
+IMAGE - 160.86644x231.33333 at 196.91457, 788
+TEXT - Bonjour ! at 201.91457, 561.6667 with width 150.86644
 Generated ./output.pdf

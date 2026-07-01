@@ -1,4 +1,4 @@
 ﻿Starting PDF generation...
-IMAGE - 160.9627x231.33333 at 25, 546.6667
-TEXT - Hi, I'm the first panel of this comic. at 30, 320.33337 with width 150.9627
+IMAGE - 160.9627x231.33333 at 25, 788
+TEXT - Hi, I'm the first panel of this comic. at 30, 561.6667 with width 150.9627
 Generated ./output.pdf
