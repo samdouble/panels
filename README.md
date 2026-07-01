@@ -142,6 +142,7 @@ The root element. Attributes:
 - `bordersColor` (optional): Color for panel borders as a hex value (e.g. `#000000` for black). Defaults to black if neither comic nor panel specifies it. Can be overridden per panel with the panel's `bordersColor`.
 - `bordersWidth` (optional): Stroke width in points for panel borders. Defaults to 2 if neither comic nor panel specifies it. Can be overridden per panel with the panel's `bordersWidth`.
 - `fontSize` (optional, default: 12): Font size for text.
+- `font` (optional, default: `Comicsam-Bold`): Font for text. Use a built-in name (`Comicsam-Bold`, `Comicsam-Regular`) or a path to a `.ttf` file. Can be overridden at slot, panel, or text level.
 - `horizontalPanelSpacing` (optional): Horizontal spacing between panels in pixels.
 - `marginTop` (optional): Margins in pixels.
 - `marginBottom` (optional): Margins in pixels.
@@ -158,6 +159,7 @@ A `<comic>` can contain multiple `<slot>` and `<newpage />` elements.
 Defines a column of panels. Attributes:
 
 - `fontSize` (optional): Font size for the text in the slot.
+- `font` (optional): Font for the text in the slot. Inherits from the comic when not set.
 - `maxPaddingLeft` (optional, default: `0%`): Maximum left padding that can be applied when cropping panels in this slot. The value is a percentage of the panel image width, not pixels — for example, `15%` on a 600px-wide image means up to 90px of left padding.
 - `maxPaddingRight` (optional, default: `0%`): Maximum right padding that can be applied when cropping panels in this slot. Same unit as `maxPaddingLeft`: a percentage of the panel image width (e.g. `15%` of 600px = 90px).
 
@@ -172,6 +174,7 @@ Represents a single panel in a slot. Attributes:
 - `bordersColor` (optional): Color for this panel's border as a hex value (e.g. `#FF0000` for red). Overrides the comic's `bordersColor` when both are set.
 - `bordersWidth` (optional): Stroke width in points for this panel's border. Overrides the comic's `bordersWidth` when both are set.
 - `fontSize` (optional): Font size for the text in the panel.
+- `font` (optional): Font for the text in the panel. Inherits from the slot or comic when not set.
 - `paddingBottom` (optional, default: `0%`): Padding cropped from the bottom of the panel's image. The value is a percentage of the image height, not pixels — for example, `15%` on an 800px-tall image means 120px of bottom padding.
 - `paddingTop` (optional, default: `0%`): Padding cropped from the top of the panel's image. Same unit as `paddingBottom`: a percentage of the image height (e.g. `10%` of 800px = 80px).
 
@@ -183,6 +186,7 @@ Adds a text bubble or caption to a panel. Attributes:
 
 - `text` (required): The text content.
 - `character` (optional): Name of the character speaking.
+- `font` (optional): Font for this text element. Inherits from the panel, slot, or comic when not set.
 - `fontSize` (optional): Font size for the text in the panel.
 - `left` (optional, default: 0): Positioning of the text within the panel.
 - `top` (optional, default: 0): Positioning of the text within the panel.
@@ -193,6 +197,7 @@ Adds a text bubble or caption to a panel. Attributes:
 Adds a description or narration to a panel. Attributes:
 
 - `text` (required): The description content.
+- `font` (optional): Font for this description element. Inherits from the panel, slot, or comic when not set.
 - `fontSize` (optional): Font size for the text in the panel.
 - `left` (optional, default: 0): Positioning of the description.
 - `top` (optional, default: 0): Positioning of the description.

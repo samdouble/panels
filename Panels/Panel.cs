@@ -27,6 +27,10 @@ namespace Panels
 
 		[XmlIgnore]
 		[JsonIgnore]
+		private string? font;
+
+		[XmlIgnore]
+		[JsonIgnore]
 		private float? fontSize;
 
 		[XmlIgnore]
@@ -53,6 +57,14 @@ namespace Panels
 		[XmlAttribute("bordersWidth")]
 		[JsonProperty("bordersWidth")]
 		public string? BordersWidth { get; set; }
+
+		[XmlAttribute("font")]
+		[JsonProperty("font")]
+		public string Font
+		{
+			get { return font ?? parent?.Font ?? FontResolver.DefaultFontName; }
+			set { font = value; }
+		}
 
 		[XmlAttribute("fontSize")]
 		[JsonProperty("fontSize")]

@@ -1,5 +1,4 @@
-﻿using iText.IO.Font;
-using iText.Kernel.Colors;
+﻿using iText.Kernel.Colors;
 using iText.Kernel.Font;
 using iText.Layout;
 using iText.Layout.Element;
@@ -20,7 +19,8 @@ namespace Panels.Elements
 		protected Color color { get; set; } = ColorConstants.BLACK;
 		private const int LINE_HEIGHT = 11;
 		private const int MARGIN = 5;
-		private PdfFont? font;
+		private PdfFont? resolvedFont;
+		private string? font;
 		private float? fontSize;
 		private string? _character;
 		private float _left = 0;
@@ -34,6 +34,14 @@ namespace Panels.Elements
 		{
 			get { return _character; }
 			set { _character = value; }
+		}
+
+		[XmlAttribute("font")]
+		[JsonProperty("font")]
+		public string Font
+		{
+			get { return font ?? parent?.Font ?? FontResolver.DefaultFontName; }
+			set { font = value; }
 		}
 
 		[XmlAttribute("fontSize")]
@@ -95,11 +103,11 @@ namespace Panels.Elements
 
 		private PdfFont GetFont()
 		{
-			if (this.font == null)
+			if (this.resolvedFont == null)
 			{
-				this.font = PdfFontFactory.CreateFont(Properties.Resources.Comicsam_Bold, PdfEncodings.CP1252);
+				this.resolvedFont = FontResolver.Create(this.Font);
 			}
-			return this.font;
+			return this.resolvedFont;
 		}
 
 		public override void Render(LogWriter logWriter)

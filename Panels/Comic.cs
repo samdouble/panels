@@ -17,6 +17,7 @@ namespace Panels
 	public class Comic : IRenderable
 	{
 		private Document? document;
+		protected const string DEFAULT_FONT = FontResolver.DefaultFontName;
 		protected const int DEFAULT_FONT_SIZE = 12;
 		protected const int DEFAULT_ROWS_PER_PAGE = 3;
 
@@ -28,29 +29,33 @@ namespace Panels
 		[JsonProperty("bordersWidth")]
 		public string? BordersWidth { get; set; }
 
+		[XmlAttribute("font")]
+		[JsonProperty("font")]
+		public string Font = DEFAULT_FONT;
+
 		[XmlAttribute("fontSize")]
 		[JsonProperty("fontSize")]
-		public int fontSize = DEFAULT_FONT_SIZE;
+		public int FontSize = DEFAULT_FONT_SIZE;
 
 		[XmlAttribute("marginLeft")]
 		[JsonProperty("marginLeft")]
-		public float marginLeft = 0;
+		public float MarginLeft = 0;
 
 		[XmlAttribute("marginRight")]
 		[JsonProperty("marginRight")]
-		public float marginRight = 0;
+		public float MarginRight = 0;
 
 		[XmlAttribute("marginTop")]
 		[JsonProperty("marginTop")]
-		public float marginTop = 0;
+		public float MarginTop = 0;
 
 		[XmlAttribute("marginBottom")]
 		[JsonProperty("marginBottom")]
-		public float marginBottom = 0;
+		public float MarginBottom = 0;
 
 		[XmlAttribute("rowsPerPage")]
 		[JsonProperty("rowsPerPage")]
-		public int rowsPerPage { get; set; } = DEFAULT_ROWS_PER_PAGE;
+		public int RowsPerPage { get; set; } = DEFAULT_ROWS_PER_PAGE;
 
 		[XmlAttribute("showPageNumbers")]
 		[JsonProperty("showPageNumbers")]
@@ -101,8 +106,8 @@ namespace Panels
 		public void Render(LogWriter logWriter)
 		{
 			PageSize pageSize = this.document?.GetPdfDocument().GetDefaultPageSize() ?? PageSize.A4;
-			var panelHeight = (pageSize.GetHeight() - this.marginTop - this.marginBottom - (this.rowsPerPage - 1) * this.VerticalPanelSpacing) / this.rowsPerPage;
-			var rowWidth = pageSize.GetWidth() - this.marginRight - this.marginLeft;
+			var panelHeight = (pageSize.GetHeight() - this.MarginTop - this.MarginBottom - (this.RowsPerPage - 1) * this.VerticalPanelSpacing) / this.RowsPerPage;
+			var rowWidth = pageSize.GetWidth() - this.MarginRight - this.MarginLeft;
 			this.CurrentY = panelHeight + this.VerticalPanelSpacing;
 			for (var i = 0; i < this.children.Count;)
 			{
@@ -188,8 +193,8 @@ namespace Panels
 					slot.Crop();
 					slot.SetPosition(
 						this.CurrentPage,
-						this.marginLeft + this.CurrentX,
-						pageSize.GetHeight() - this.marginTop - this.CurrentY
+						this.MarginLeft + this.CurrentX,
+						pageSize.GetHeight() - this.MarginTop - this.CurrentY
 					);
 					slot.Render(logWriter);
 
@@ -199,7 +204,7 @@ namespace Panels
 				i += nbPanelsInRow;
 				++this.CurrentRow;
 
-				if (this.CurrentRow % this.rowsPerPage == 0)
+				if (this.CurrentRow % this.RowsPerPage == 0)
 				{
 					this.document?.GetPdfDocument().AddNewPage();
 					++this.CurrentPage;
