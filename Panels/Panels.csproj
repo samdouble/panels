@@ -22,8 +22,8 @@
 
   <ItemGroup>
     <AppDesigner Include="Properties\" />
-    <PackageReference Include="itext" Version="9.6.0" />
-    <PackageReference Include="itext.bouncy-castle-adapter" Version="9.6.0" />
+    <PackageReference Include="itext" Version="9.7.0" />
+    <PackageReference Include="itext.bouncy-castle-adapter" Version="9.7.0" />
     <PackageReference Include="BouncyCastle.Cryptography" Version="2.6.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="YamlDotNet" Version="18.1.0" />
