@@ -8,8 +8,10 @@ permissions:
 
 jobs:
   commitlint:
+    name: Commitlint
     runs-on: ubuntu-latest
     timeout-minutes: 1
+    if: github.actor != 'dependabot[bot]'
     steps:
       - name: Checkout
         uses: actions/checkout@v7
