@@ -19,7 +19,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get release version
-        uses: wemogy/get-release-version-action@v4.3.3
+        uses: wemogy/get-release-version-action@v4.3.5
         id: get-release-version
         with:
           create-tag: false
