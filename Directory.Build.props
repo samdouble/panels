@@ -1,0 +1,7 @@
+﻿<Project>
+  <PropertyGroup>
+    <!-- Verify 33+ checks this at build time. Renew the month before it lapses (at most 12 months out). -->
+    <Verify_SponsorshipExemption>OpenSource</Verify_SponsorshipExemption>
+    <Verify_SponsorshipExemptionUntil>2027-11</Verify_SponsorshipExemptionUntil>
+  </PropertyGroup>
+</Project>

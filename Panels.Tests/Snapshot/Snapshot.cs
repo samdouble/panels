@@ -1,11 +1,16 @@
 ﻿using Panels;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Xunit;
 
 namespace Panels.Tests.Snapshot
 {
 	public class Snapshot
 	{
+		[ModuleInitializer]
+		internal static void InitVerify() =>
+			VerifierSettings.IgnoreParameters();
+
 		private static readonly VerifySettings Settings;
 
 		static Snapshot()
